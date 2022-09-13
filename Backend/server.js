@@ -34,6 +34,7 @@ app.use(fileUpload());
 ////////USER CONTROLLERS////////
 
 ////////POST CONTROLLERS////////
+const getPost = require('./controllers/posts/getPost');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -71,7 +72,7 @@ app.use(fileUpload());
 /* app.get('/posts', getPosts); */
 
 // Lista un post
-/* app.get('/posts/:idPost', getPost); */
+app.get('/posts/:idPost', getPost);
 
 // Eliminar un post
 /* app.delete('/posts/:idPost', isAuth, deletePost); */
