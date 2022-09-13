@@ -53,14 +53,14 @@ app.use(fileUpload());
 // Login de usuario
 /* app.post('/login', loginUser); */
 
-// Recuperar datos de un usuario
+// Mostrar perfil de usuario
 /* app.get('/users/:idUser', getUser); */
 
 // Modifica datos de usuario (name, username, lastname, avatar, bio, url, password, email, privacy)
-/* app.put('/users/:idUser', isAuth, canEditUser, modifyUser); */
+/* app.put('/users/:idUser', isAuth, modifyUser); */
 
 // Eliminar al usuario
-/* app.delete('/users/:idUser', isAuth, canEditUser, deleteUser); */
+/* app.delete('/users/:idUser', isAuth, deleteUser); */
 
 ////////ENDPOINTS POST////////
 
@@ -74,18 +74,11 @@ app.use(fileUpload());
 /* app.get('/posts/:idPost', getPost); */
 
 // Eliminar un post
-/* app.delete('/posts/:idPost', isAuth, canEditPost, deletePost); */
-
-////////ENDPOINTS PHOTOS////////
-// Lista todas las fotos
-/* app.get('/photos', getPhotos); */
+/* app.delete('/posts/:idPost', isAuth, deletePost); */
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
 /* app.post('/comments/new', isAuth, newComment); */
-
-// Lista todos los commentarios
-/* app.get('/comments', getComments); */
 
 ////////ENDPOINTS FOLLOWERS////////
 // Recupera datos de un follower
@@ -98,8 +91,6 @@ app.use(fileUpload());
 /* app.delete('/follower/:idUser', isAuth, deleteFollower); */
 
 ////////ENDPOINTS LIKES////////
-// Recupera likes
-/* app.get('/likes', isAuth, getLikes); */
 
 // Añade nuevo like
 /* app.post('/likes/new', isAuth, addLike); */
