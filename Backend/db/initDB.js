@@ -36,7 +36,7 @@ async function main() {
             bio VARCHAR(500),
             url VARCHAR(255),
             privacy ENUM ('private', 'public') DEFAULT 'public',
-            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
                 `);
 
         await connection.query(`
@@ -62,6 +62,7 @@ async function main() {
                 ON DELETE CASCADE
             )
         `);
+
         await connection.query(`
         CREATE TABLE IF NOT EXISTS photo (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -79,7 +80,7 @@ async function main() {
             ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,
             FOREIGN KEY (idUser) REFERENCES user (id)
-            ON DELETE CASCADE
+            ON DELETE CASCADE)
         `);
 
         await connection.query(`
