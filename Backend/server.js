@@ -33,6 +33,10 @@ app.use(fileUpload());
 const tokenMatches = require('./middlewares/tokenMatches');
 
 ////////USER CONTROLLERS////////
+const userNew = require('./controllers/user/userNew');
+const userLogin = require('./controllers/user/userLogin');
+const userModify = require('./controllers/user/userModify');
+const userDelete = require('./controllers/user/userDelete');
 
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
@@ -52,19 +56,19 @@ const newPost = require('./controllers/posts/newPost');
 ////////ENDPOINTS USERS////////
 
 // Registra un usuario
-/* app.post('/register', newUser); */
+app.post('/register', userNew);
 
 // Login de usuario
-/* app.post('/login', loginUser); */
+app.post('/login', userLogin);
 
 // Mostrar perfil de usuario
 /* app.get('/users/:idUser', getUser); */
 
 // Modifica datos de usuario (name, username, lastname, avatar, bio, url, password, email, privacy)
-/* app.put('/users/:idUser', tokenMatches, modifyUser); */
+app.put('/users/:idUser', tokenMatches, userModify);
 
 // Eliminar al usuario
-/* app.delete('/users/:idUser', tokenMatches, deleteUser); */
+app.delete('/users/:idUser', tokenMatches, userDelete);
 
 ////////ENDPOINTS POST////////
 
