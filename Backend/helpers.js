@@ -7,7 +7,7 @@ const uuid = require('uuid'); */
 const avatarsDir = path.join(__dirname, 'static/avatars');
 
 //Creamos la ruta absoluta a la carpeta de productos
-const postsDir = path.join(__dirname, 'static/products');
+const postsDir = path.join(__dirname, 'static/posts');
 
 //Función que genera un error
 function generateError(message, code) {
