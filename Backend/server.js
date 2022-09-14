@@ -36,6 +36,7 @@ app.use(fileUpload());
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
 const getPosts = require('./controllers/posts/getPosts');
+const newPost = require('./controllers/posts/newPost');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -67,7 +68,7 @@ const getPosts = require('./controllers/posts/getPosts');
 ////////ENDPOINTS POST////////
 
 // Nuevo post (fotos, comentario autor, hastags)
-/* app.post('/posts/new', isAuth, newPost); */
+app.post('/posts/new', isAuth, newPost);
 
 // Lista todos los post
 app.get('/posts', getPosts);
