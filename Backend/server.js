@@ -35,6 +35,7 @@ app.use(fileUpload());
 
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
+const getPosts = require('./controllers/posts/getPosts');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -69,7 +70,7 @@ const getPost = require('./controllers/posts/getPost');
 /* app.post('/posts/new', isAuth, newPost); */
 
 // Lista todos los post
-/* app.get('/posts', getPosts); */
+app.get('/posts', getPosts);
 
 // Lista un post
 app.get('/posts/:idPost', getPost);
