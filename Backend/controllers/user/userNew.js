@@ -1,5 +1,5 @@
-const getDB = require ('../../../db/getDB');
-const generateError = require ('../../../helpers');
+const getDB = require ('../../db/getDB');
+const generateError = require ('../../helpers');
 const bcrypt = require('bcrypt');
 
 
@@ -26,7 +26,7 @@ try {
    const hashedPassword = await bcrypt.hash(password,10);
 
    await connection.query(`
-   insert into user (name, username, email, password, privacy, createdAt) values (?,?,?,?,?,?)`,[name, username,email,password, public, new Date() ]);
+   insert into user (name, username, email, password, privacy, createdAt) values (?,?,?,?,?,?)`,[name, username,email,password, 'public', new Date() ]);
 
    res.send ({
       status: 'Ok',
