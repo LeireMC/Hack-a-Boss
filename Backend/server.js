@@ -33,15 +33,16 @@ app.use(fileUpload());
 const tokenMatches = require('./middlewares/tokenMatches');
 
 ////////USER CONTROLLERS////////
-const userNew = require('./controllers/user/userNew');
+/* const userNew = require('./controllers/user/userNew');
 const userLogin = require('./controllers/user/userLogin');
 const userModify = require('./controllers/user/userModify');
-const userDelete = require('./controllers/user/userDelete');
+const userDelete = require('./controllers/user/userDelete'); */
 
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
 const getPosts = require('./controllers/posts/getPosts');
 const newPost = require('./controllers/posts/newPost');
+const deletePost = require('./controllers/posts/deletePost');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -56,24 +57,24 @@ const newPost = require('./controllers/posts/newPost');
 ////////ENDPOINTS USERS////////
 
 // Registra un usuario
-app.post('/register', userNew);
+/* app.post('/register', userNew); */
 
 // Login de usuario
-app.post('/login', userLogin);
+/* app.post('/login', userLogin); */
 
 // Mostrar perfil de usuario
 /* app.get('/users/:idUser', getUser); */
 
 // Modifica datos de usuario (name, username, lastname, avatar, bio, url, password, email, privacy)
-app.put('/users/:idUser', tokenMatches, userModify);
+/* app.put('/users/:idUser', tokenMatches, userModify); */
 
 // Eliminar al usuario
-app.delete('/users/:idUser', tokenMatches, userDelete);
+/* app.delete('/users/:idUser', tokenMatches, userDelete); */
 
 ////////ENDPOINTS POST////////
 
 // Nuevo post (fotos, comentario autor, hastags)
-app.post('/posts/new', tokenMatches, newPost);
+app.post('/posts/new', /* tokenMatches, */ newPost);
 
 // Lista todos los post
 app.get('/posts', getPosts);
@@ -82,7 +83,7 @@ app.get('/posts', getPosts);
 app.get('/posts/:idPost', getPost);
 
 // Eliminar un post
-/* app.delete('/posts/:idPost', tokenMatches, deletePost); */
+app.delete('/posts/:idPost', /* tokenMatches, */ deletePost);
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
