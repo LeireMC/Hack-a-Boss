@@ -5,6 +5,17 @@ function generateError(message, code) {
     return error;
 }
 
+//Función que valida un schema
+async function validate(schema, data) {
+    try {
+        await schema.validateAsync(data);
+    } catch (error) {
+        error.httpStatus = 400;
+        throw error;
+    }
+}
+
 module.exports = {
     generateError,
+    validate,
 };
