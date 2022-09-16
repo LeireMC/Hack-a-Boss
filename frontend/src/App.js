@@ -4,11 +4,19 @@ import { BrowserRouter /*  Routes, Route */ } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
-      <header></header>
+      {/* <MainPage>
+        <LoginPage></LoginPage>
 
-      <main></main>
+        <RegisterPage></RegisterPage>
 
-      <footer></footer>
+        <HomePage>
+          <Header></Header>
+
+          <Main></Main>
+
+          <Footer></Footer>
+        </HomePage>
+      </MainPage> */}
     </BrowserRouter>
   );
 }
