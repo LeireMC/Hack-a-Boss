@@ -77,6 +77,7 @@ async function main() {
         CREATE TABLE IF NOT EXISTS likes (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idPost INT UNSIGNED NOT NULL,
+            liked  TINYINT DEFAULT 0,
             FOREIGN KEY (idPost) REFERENCES post (id)
             ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,

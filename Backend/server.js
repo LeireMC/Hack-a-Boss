@@ -51,6 +51,7 @@ const deletePost = require('./controllers/posts/deletePost');
 ////////FOLLOWERS CONTROLLERS////////
 
 ////////LIKES CONTROLLERS////////
+const userLikesPost = require('./controllers/likes/userLikesPost');
 
 ////////FAVORITES CONTROLLERS////////
 
@@ -101,11 +102,8 @@ app.delete('/posts/:idPost', /* tokenMatches, */ deletePost);
 
 ////////ENDPOINTS LIKES////////
 
-// Añade nuevo like
-/* app.post('/likes/new', tokenMatches, addLike); */
-
-// Elimina like
-/* app.delete('/likes/:idLike', tokenMatches, deleteLike); */
+// Añade y elimina likes
+app.post('/post/:postId/like', /* tokenMatches, */ userLikesPost);
 
 ////////ENDPOINTS FAVORITES////////
 // Recupera fovoritos

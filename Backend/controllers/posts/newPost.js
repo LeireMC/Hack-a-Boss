@@ -1,23 +1,20 @@
-const { validate, generateError, savePhoto } = require('../../helpers');
-const getDB = require('../../db/getDB');
+const { validate, generateError } = require('../../helpers');
 const { newPostSchema } = require('../../schemas/newPostSchema');
 const {
     createPost,
     insertPhoto,
+    insertLike,
 } = require('../../repositories/post-repositories');
 
 const newPost = async (req, res, next) => {
-    let connection;
     try {
-        connection = await getDB();
-
         //Validar los datos recibidos por el body
         await validate(newPostSchema, req.body);
 
         //Recuperamos los datos del body de la request
         const { authorComment, hashtag } = req.body;
 
-        if (hashtag.split(',').length > 10) {
+        if (hashtag && hashtag.split(',').length > 10) {
             throw generateError('No puedes incluir más de 10 hashtags', 400);
         }
 
@@ -35,39 +32,34 @@ const newPost = async (req, res, next) => {
         //Si nos indica el comentario, insertamos los datos en la base de datos y recuperamos el id del post
         const postId = await createPost(authorComment, hashtag, userId);
 
-        console.log(postId);
-        //Añadimos en una variable los datos d elas fotos obtenidos de la request
-        const postPhotos = req.files.post_photo;
+        //Añadimos en una variable los datos de las fotos obtenidos de la request
+        let postPhotos;
 
-        //Creamos el array donde almacenaremos los nombres de las fotos una vez guardadas
-        /* let photosName = [];
+        if (Array.isArray(req.files.post_photo)) {
+            postPhotos = req.files.post_photo;
+        } else {
+            postPhotos = [req.files.post_photo];
+        }
 
-        //Ponemos un name a cada photo y guardamos cada foto en la carpeta static
-        for (let i = 0; i < postsPhotos.length; i++) {
-            console.log(postsPhotos[i].data);
-            const photoName = await savePhoto(postsPhotos[i], 1);
-
-            await connection.query(
-                `INSERT INTO photo (name, idPost)
-            VALUES (?,?)`,
-                [photoName, postId]
-            );
-
-            photosName.push(photoName);
-        } */
-
+        //Renombramos y guardamos las fotos en el servidor y las añadimos a la BBDD
         const photosNames = await insertPhoto(postPhotos, postId);
-        console.log(photosNames);
+
+        //Añadimos el valor false a la tabla like
+        await insertLike(postId, userId);
 
         res.send({
             status: 'Ok',
             message: 'Post creado con éxito!',
-            data: { id: postId, authorComment, hashtag, photosNames },
+            data: {
+                id: postId,
+                authorComment,
+                hashtag,
+                photosNames,
+                liked: false,
+            },
         });
     } catch (error) {
         next(error);
-    } finally {
-        if (connection) connection.release();
     }
 };
 

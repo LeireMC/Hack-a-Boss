@@ -1,19 +1,21 @@
-const getDB = require('../../db/getDB');
 const { deletePhoto, generateError } = require('../../helpers');
+const {
+    getPostById,
+    postPhotos,
+    deletePhotofromDB,
+    deletePostfromDB,
+} = require('../../repositories/post-repositories');
 
 const deletePost = async (req, res, next) => {
-    let connection;
     try {
-        connection = await getDB();
-
         //recuperamos el id del post que queremos eliminar
         const { idPost } = req.params;
-
-        const [post] = await connection.query(
+        let post;
+        post = await getPostById(post, idPost); /* await connection.query(
             `
         SELECT * FROM post where id=?`,
             [idPost]
-        );
+        ); */
 
         //Si no hay ningun post asociado a ese id, se lanza error
         if (post.length === 0) {
@@ -22,10 +24,10 @@ const deletePost = async (req, res, next) => {
 
         //Si exite el post, primero eliminamos las fotos del post
         //Primero seleccionamos todas las fotos asociadas al post
-        const [photos] = await connection.query(
+        const photos = await postPhotos(idPost); /* await connection.query(
             `SELECT name FROM photo WHERE idPost = ?`,
             [idPost]
-        );
+        ); */
 
         //Una vez seleccionadas, recorremos el array para acceder a cada nombre de la foto y borrarla del servidor
         for (let i = 0; i < photos.length; i++) {
@@ -33,10 +35,12 @@ const deletePost = async (req, res, next) => {
         }
 
         //Eliminamos los campos de la foto de la base de datos
-        await connection.query(`DELETE FROM photo WHERE idPost = ?`, [idPost]);
+        await deletePhotofromDB(idPost);
+        /*  await connection.query(`DELETE FROM photo WHERE idPost = ?`, [idPost]); */
 
-        //Eliminamos el producto de la base de datos
-        await connection.query(`DELETE FROM post WHERE id = ?`, [idPost]);
+        //Eliminamos el post de la base de datos
+        await deletePostfromDB(idPost);
+        /* await connection.query(`DELETE FROM post WHERE id = ?`, [idPost]); */
 
         res.send({
             status: 'ok',
@@ -44,8 +48,6 @@ const deletePost = async (req, res, next) => {
         });
     } catch (error) {
         next(error);
-    } finally {
-        if (connection) connection.release();
     }
 };
 
