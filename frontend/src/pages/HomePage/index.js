@@ -1,30 +1,23 @@
 import "./styles.css";
 /* import Header from "../../components/Header"; */
 import Footer from "../../components/Footer";
-import Cabecera from "../../components/Cabecera";
+import Header from "../../components/Header";
 import usePosts from "../../hooks/usePosts";
 import PostsList from "../../components/PostsList";
+import MenuTrendingToppics from "../../components/MenuTrendingToppics";
 
 const HomePage = () => {
   const { posts, loading, error } = usePosts();
-
-  if (loading) return <p>Cargando posts...</p>;
-  if (error) return <p>{error}</p>;
 
   console.log(posts);
 
   return (
     <>
-      {/* <Header /> */}
-      <Cabecera />
+      <Header />
       <main>
-        <section className="menuTrendingToppic">
-          <button>Aventura</button>
-          <button>Naturaleza</button>
-          <button>Comida</button>
-          <button>Deportes</button>
-          <button>Viajes</button>
-        </section>
+        <MenuTrendingToppics />
+        {loading && <p>Cargando posts...</p>}
+        {error && <p>{error}</p>}
         <section className="postListContainer">
           <PostsList posts={posts} />
         </section>
