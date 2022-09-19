@@ -24,9 +24,9 @@ const getPosts = async (req, res, next) => {
 
         //si existe 'search', la consulta se hará añadiendo la bíusqueda
         if (search) {
-            posts = await getPostsBySearch(posts, orderDirection, search);
+            posts = await getPostsBySearch(orderDirection, search);
         } else {
-            posts = await getPostsByOrderDirection(posts, orderDirection);
+            posts = await getPostsByOrderDirection(orderDirection);
         }
 
         //Array que devulverá la respuesta
@@ -46,7 +46,7 @@ const getPosts = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            postsInfo: postsInfo,
+            data: postsInfo,
         });
     } catch (error) {
         next(error);

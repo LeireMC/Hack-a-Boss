@@ -11,8 +11,8 @@ const getPost = async (req, res, next) => {
         const { idPost } = req.params;
 
         //Seleccionamos de la base de datos los datos del post
-        let post;
-        post = await getPostById(post, idPost);
+
+        const post = await getPostById(idPost);
 
         //Comprobamos que el post existe, sino lanzamos un error
         if (post.length < 1) {
@@ -32,7 +32,7 @@ const getPost = async (req, res, next) => {
         postInfo.push(...post, photos, comments);
 
         //mandamos la respuesta
-        res.send({ status: 'ok', postInfo: postInfo });
+        res.send({ status: 'ok', data: postInfo });
     } catch (error) {
         next(error);
     }

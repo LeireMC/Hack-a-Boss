@@ -72,6 +72,7 @@ async function deletePhoto(photoName, type) {
         } else if (type === 1) {
             photoPath = path.join(postsDir, photoName);
         }
+        console.log(photoPath);
 
         await unlink(photoPath);
     } catch (error) {

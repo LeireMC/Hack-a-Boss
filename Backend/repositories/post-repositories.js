@@ -64,12 +64,12 @@ async function insertLike(postId, userId) {
 }
 
 //Función que devuelve los post en base a una búsqueda
-async function getPostsBySearch(posts, orderDirection, search) {
+async function getPostsBySearch(orderDirection, search) {
     let connection;
     try {
         connection = await getDB();
 
-        [posts] = await connection.query(
+        const [posts] = await connection.query(
             `
         SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
         FROM post INNER JOIN user ON post.idUser = user.id
@@ -81,16 +81,17 @@ async function getPostsBySearch(posts, orderDirection, search) {
         return posts;
     } finally {
         if (connection) connection.release();
+        console.log('getbyserach', !connection);
     }
 }
 
 //Función que devuelve todos los post
-async function getPostsByOrderDirection(posts, orderDirection) {
+async function getPostsByOrderDirection(orderDirection) {
     let connection;
     try {
         connection = await getDB();
 
-        [posts] = await connection.query(`
+        const [posts] = await connection.query(`
             SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
             FROM post INNER JOIN user ON post.idUser = user.id
             ORDER BY post.createdAt ${orderDirection}`);
@@ -102,16 +103,35 @@ async function getPostsByOrderDirection(posts, orderDirection) {
 }
 
 //Función que devuelve un post por ID
-async function getPostById(post, idPost) {
+async function getPostById(idPost) {
     let connection;
     try {
         connection = await getDB();
 
-        [post] = await connection.query(
+        const [post] = await connection.query(
             `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ?`,
             [idPost]
+        );
+
+        return post;
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
+//Función que devuelve un post por ID y usuario
+async function getPostByIdandUser(idPost, idUser) {
+    let connection;
+    try {
+        connection = await getDB();
+
+        const [post] = await connection.query(
+            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
+            FROM post INNER JOIN user ON (post.idUser = user.id)
+            WHERE post.id = ? AND post.idUser = ?`,
+            [idPost, idUser]
         );
 
         return post;
@@ -192,4 +212,5 @@ module.exports = {
     getPostById,
     deletePhotofromDB,
     deletePostfromDB,
+    getPostByIdandUser,
 };
