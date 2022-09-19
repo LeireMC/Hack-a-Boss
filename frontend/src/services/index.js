@@ -9,5 +9,5 @@ export const getAllPostsService = async () => {
     );
   }
 
-  return body.postsInfo;
+  return body.data;
 };

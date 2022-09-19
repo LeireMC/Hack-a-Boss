@@ -5,10 +5,12 @@ import logoHackAGram from "../../assets/images/logo.png";
 import MenuIcon from "../MenuIcon";
 import HomeIcon from "../HomeIcon";
 import SearchBar from "../SearchBar";
+import { useTokenContext } from "../../Contexts/TokenContext";
 import NotLoggedUserMenu from "../NotLoggedUserMenu";
-/* import LoggedUserMenu from "../LoggedUserMenu"; */
+import LoggedUserMenu from "../LoggedUserMenu";
 
 const Header = () => {
+  const { token } = useTokenContext();
   const [menu, setMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -31,8 +33,8 @@ const Header = () => {
       <button onClick={toggleMenu} className="header-button">
         <MenuIcon />
       </button>
-      <NotLoggedUserMenu menu={menu} />
-      {/* <LoggedUserMenu menu={menu} /> */}
+      {!token && <NotLoggedUserMenu menu={menu} />}
+      {token && <LoggedUserMenu menu={menu} />}
     </header>
   );
 };
