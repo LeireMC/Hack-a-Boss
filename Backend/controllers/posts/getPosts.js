@@ -1,5 +1,4 @@
-/* const getDB = require('../../db/getDB'); */
-
+const { generateError } = require('../../helpers');
 const {
     getPostsBySearch,
     getPostsByOrderDirection,
@@ -27,6 +26,12 @@ const getPosts = async (req, res, next) => {
             posts = await getPostsBySearch(orderDirection, search);
         } else {
             posts = await getPostsByOrderDirection(orderDirection);
+        }
+
+        if (posts.length === 0) {
+            throw generateError(
+                'No hay ningun post relacionado con ese término que estás buscando'
+            );
         }
 
         //Array que devulverá la respuesta

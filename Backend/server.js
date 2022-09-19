@@ -33,10 +33,11 @@ app.use(fileUpload());
 const tokenMatches = require('./middlewares/tokenMatches');
 
 ////////USER CONTROLLERS////////
-/* const userNew = require('./controllers/user/userNew');
+const userNew = require('./controllers/user/userNew');
 const userLogin = require('./controllers/user/userLogin');
-const userModify = require('./controllers/user/userModify');
-const userDelete = require('./controllers/user/userDelete'); */
+const userDelete = require('./controllers/user/userDelete');
+const userEdit = require('./controllers/user/userEdit');
+const userProfile = require('./controllers/user/userProfile');
 
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
@@ -58,24 +59,24 @@ const userLikesPost = require('./controllers/likes/userLikesPost');
 ////////ENDPOINTS USERS////////
 
 // Registra un usuario
-/* app.post('/register', userNew); */
+app.post('/register', userNew);
 
 // Login de usuario
-/* app.post('/login', userLogin); */
+app.post('/login', userLogin);
 
 // Mostrar perfil de usuario
-/* app.get('/users/:idUser', getUser); */
+app.get('/user/:idUser', userProfile);
 
-// Modifica datos de usuario (name, username, lastname, avatar, bio, url, password, email, privacy)
-/* app.put('/users/:idUser', tokenMatches, userModify); */
+// Modifica datos del usuario (name, lastname, bio, url, privacy, email, username, avatar)
+app.put('/user/data', tokenMatches, userEdit);
 
 // Eliminar al usuario
-/* app.delete('/users/:idUser', tokenMatches, userDelete); */
+app.delete('/user/:idUser/delete', tokenMatches, userDelete);
 
 ////////ENDPOINTS POST////////
 
 // Nuevo post (fotos, comentario autor, hastags)
-app.post('/posts/new', /* tokenMatches, */ newPost);
+app.post('/posts/new', tokenMatches, newPost);
 
 // Lista todos los post
 app.get('/posts', getPosts);
@@ -84,7 +85,7 @@ app.get('/posts', getPosts);
 app.get('/posts/:idPost', getPost);
 
 // Eliminar un post
-app.delete('/posts/:idPost', /* tokenMatches, */ deletePost);
+app.delete('/posts/:idPost', tokenMatches, deletePost);
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
@@ -103,7 +104,7 @@ app.delete('/posts/:idPost', /* tokenMatches, */ deletePost);
 ////////ENDPOINTS LIKES////////
 
 // Añade y elimina likes
-app.post('/post/:postId/like', /* tokenMatches, */ userLikesPost);
+app.post('/post/:postId/like', tokenMatches, userLikesPost);
 
 ////////ENDPOINTS FAVORITES////////
 // Recupera fovoritos

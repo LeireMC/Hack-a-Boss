@@ -2,7 +2,7 @@ const { savePhoto } = require('../helpers');
 const getDB = require('../db/getDB');
 
 //Función que añade a la tabla post los datos recibidos
-async function createPost(authorComment, hashtag, userId) {
+async function createPost(authorComment, hashtag, idUser) {
     let connection;
     try {
         connection = await getDB();
@@ -10,7 +10,7 @@ async function createPost(authorComment, hashtag, userId) {
         const [{ insertId }] = await connection.query(
             `INSERT INTO post (authorComment, hashtag, createdAt, idUser)
                 VALUES (?, ?, ?, ?)`,
-            [authorComment, hashtag, new Date(), userId]
+            [authorComment, hashtag, new Date(), idUser]
         );
 
         return insertId;
@@ -27,7 +27,6 @@ async function insertPhoto(postPhotos, postId) {
 
         //Creamos el array que devolverá los nombres de las fotos
         let photosNames = [];
-        console.log(postPhotos);
         //Ponemos un name a cada photo y guardamos cada foto en la carpeta static
         for (let i = 0; i < postPhotos.length; i++) {
             console.log(postPhotos[i].data);
@@ -81,7 +80,6 @@ async function getPostsBySearch(orderDirection, search) {
         return posts;
     } finally {
         if (connection) connection.release();
-        console.log('getbyserach', !connection);
     }
 }
 
@@ -103,12 +101,12 @@ async function getPostsByOrderDirection(orderDirection) {
 }
 
 //Función que devuelve un post por ID
-async function getPostById(idPost) {
+async function getPostById(post, idPost) {
     let connection;
     try {
         connection = await getDB();
 
-        const [post] = await connection.query(
+        [post] = await connection.query(
             `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ?`,
@@ -199,7 +197,21 @@ async function deletePostfromDB(idPost) {
     }
 }
 
-//Eliminamos el post de la base de datos
+//Función que selecciona que la contraseña del usuario
+async function selectPassword(idUser) {
+    let connection;
+    try {
+        connection = await getDB();
+
+        const [user] = await connection.query(
+            `select password from user where id = ?`,
+            [idUser]
+        );
+        return user;
+    } finally {
+        if (connection) connection.release();
+    }
+}
 
 module.exports = {
     createPost,
@@ -213,4 +225,5 @@ module.exports = {
     deletePhotofromDB,
     deletePostfromDB,
     getPostByIdandUser,
+    selectPassword,
 };

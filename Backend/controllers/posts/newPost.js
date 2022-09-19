@@ -26,11 +26,10 @@ const newPost = async (req, res, next) => {
             throw generateError('No puedes subir más de 5 fotografías', 400);
         }
         //Recuperamos el id del usuario
-        const userId =
-            '2'; /* cambiar cuando este los controllers de usuario a req.userAuth.id; */
+        const idUser = req.userAuth.id;
 
         //Si nos indica el comentario, insertamos los datos en la base de datos y recuperamos el id del post
-        const postId = await createPost(authorComment, hashtag, userId);
+        const postId = await createPost(authorComment, hashtag, idUser);
 
         //Añadimos en una variable los datos de las fotos obtenidos de la request
         let postPhotos;
@@ -45,7 +44,7 @@ const newPost = async (req, res, next) => {
         const photosNames = await insertPhoto(postPhotos, postId);
 
         //Añadimos el valor false a la tabla like
-        await insertLike(postId, userId);
+        await insertLike(postId, idUser);
 
         res.send({
             status: 'Ok',

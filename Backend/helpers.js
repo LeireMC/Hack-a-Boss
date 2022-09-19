@@ -4,10 +4,10 @@ const sharp = require('sharp');
 const uuid = require('uuid');
 
 // Creamos la ruta absoluta a la carpeta de avatares
-const avatarsDir = path.join(__dirname, 'static/avatars');
+const avatarDir = path.join(__dirname, 'static/avatar');
 
 //Creamos la ruta absoluta a la carpeta de productos
-const postsDir = path.join(__dirname, 'static/posts');
+const postDir = path.join(__dirname, 'static/post');
 
 //Función que genera un error
 function generateError(message, code) {
@@ -43,13 +43,13 @@ async function savePhoto(imagen, type) {
         // Segun el tipo de la imagen, creamos una ruta absoluta junto al nombre al directorio de avatars o products
         if (type === 0) {
             // Si el type es 0 es un avatar
-            imageDirectory = path.join(avatarsDir, imageName);
+            imageDirectory = path.join(avatarDir, imageName);
 
             // Como es una imagen de avatar, vamos a redimensionarla para que sea más pequeña
             sharpImage.resize(150, 150);
         } else if (type === 1) {
             // Si es una imagen de tipo producto, es una ruta distinta
-            imageDirectory = path.join(postsDir, imageName);
+            imageDirectory = path.join(postDir, imageName);
         }
 
         // Guardar la imagen
@@ -68,11 +68,10 @@ async function deletePhoto(photoName, type) {
         let photoPath;
 
         if (type === 0) {
-            photoPath = path.join(avatarsDir, photoName);
+            photoPath = path.join(avatarDir, photoName);
         } else if (type === 1) {
-            photoPath = path.join(postsDir, photoName);
+            photoPath = path.join(postDir, photoName);
         }
-        console.log(photoPath);
 
         await unlink(photoPath);
     } catch (error) {
