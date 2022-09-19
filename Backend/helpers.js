@@ -6,7 +6,7 @@ const uuid = require('uuid');
 // Creamos la ruta absoluta a la carpeta de avatares
 const avatarDir = path.join(__dirname, 'static/avatar');
 
-//Creamos la ruta absoluta a la carpeta de productos
+//Creamos la ruta absoluta a la carpeta de post
 const postDir = path.join(__dirname, 'static/post');
 
 //Función que genera un error
@@ -32,6 +32,7 @@ async function deletePhoto(photoName, type) {
         let photoPath;
 
         if (type === 0) {
+
             photoPath = path.join(avatarDir, photoName);
         } else if (type === 1) {
             photoPath = path.join(postDir, photoName);
@@ -44,6 +45,7 @@ async function deletePhoto(photoName, type) {
         );
     }
 }
+
 
 //Función para guardar imágenes
 async function savePhoto(imagen, type) {
@@ -73,4 +75,5 @@ module.exports = {
     deletePhoto,
     validate,
     savePhoto,
+
 };

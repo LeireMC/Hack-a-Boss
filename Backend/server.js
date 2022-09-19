@@ -42,6 +42,7 @@ const userProfile = require('./controllers/user/userProfile');
 ////////POST CONTROLLERS////////
 const getPost = require('./controllers/posts/getPost');
 const getPosts = require('./controllers/posts/getPosts');
+const newPost = require('./controllers/posts/newPost');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -70,10 +71,11 @@ app.put('/user/data', tokenMatches, userEdit);
 // Eliminar al usuario
 app.delete('/user/:idUser/delete', tokenMatches, userDelete);
 
+
 ////////ENDPOINTS POST////////
 
 // Nuevo post (fotos, comentario autor, hastags)
-/* app.post('/posts/new', isAuth, newPost); */
+app.post('/posts/new', tokenMatches, newPost);
 
 // Lista todos los post
 app.get('/posts', getPosts);
@@ -82,39 +84,39 @@ app.get('/posts', getPosts);
 app.get('/posts/:idPost', getPost);
 
 // Eliminar un post
-/* app.delete('/posts/:idPost', isAuth, deletePost); */
+/* app.delete('/posts/:idPost', tokenMatches, deletePost); */
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
-/* app.post('/comments/new', isAuth, newComment); */
+/* app.post('/comments/new', tokenMatches, newComment); */
 
 ////////ENDPOINTS FOLLOWERS////////
 // Recupera datos de un follower
-/* app.get('/follower/:idUser', isAuth, getFollower); */
+/* app.get('/follower/:idUser', tokenMatches, getFollower); */
 
 // Añade nuevo follower
-/* app.post('/follower/new', isAuth, addFollower); */
+/* app.post('/follower/new', tokenMatches, addFollower); */
 
 // Elimina follower
-/* app.delete('/follower/:idUser', isAuth, deleteFollower); */
+/* app.delete('/follower/:idUser', tokenMatches, deleteFollower); */
 
 ////////ENDPOINTS LIKES////////
 
 // Añade nuevo like
-/* app.post('/likes/new', isAuth, addLike); */
+/* app.post('/likes/new', tokenMatches, addLike); */
 
 // Elimina like
-/* app.delete('/likes/:idLike', isAuth, deleteLike); */
+/* app.delete('/likes/:idLike', tokenMatches, deleteLike); */
 
 ////////ENDPOINTS FAVORITES////////
 // Recupera fovoritos
-/* app.get('/favorites', isAuth, getFavorites); */
+/* app.get('/favorites', tokenMatches, getFavorites); */
 
 // Añade nuevo like
-/* app.post('/favorites/new', isAuth, addFavorite); */
+/* app.post('/favorites/new', tokenMatches, addFavorite); */
 
 // Elimina like
-/* app.delete('/favorites/:idFavorite', isAuth, deleteFavorite); */
+/* app.delete('/favorites/:idFavorite', tokenMatches, deleteFavorite); */
 
 // Middleware de ERROR
 app.use((error, req, res, next) => {
