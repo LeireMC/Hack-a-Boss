@@ -1,12 +1,13 @@
 const { unlink } = require('fs/promises');
-const path = require('path'); // dependencia que nos sirve para crear rutas absolutas
+const path = require('path');
 const sharp = require('sharp');
 const uuid = require('uuid');
 
 // Creamos la ruta absoluta a la carpeta de avatares
 const avatarDir = path.join(__dirname, 'static/avatar');
 
-//Creamos la ruta absoluta a la carpeta de productos
+
+//Creamos la ruta absoluta a la carpeta de post
 const postDir = path.join(__dirname, 'static/post');
 
 //Función que genera un error
@@ -26,44 +27,6 @@ async function validate(schema, data) {
     }
 }
 
-// Funcion que guarda una foto en el servidor, devolverá el nombre de la foto para guardarlo en la base de datos
-async function savePhoto(imagen, type) {
-    // recibimos la imagen y el tipo, para diferenciar si se guarda en la carpeta avatars o products
-
-    try {
-        // Convertir la imagen en un objeto sharp
-        const sharpImage = sharp(imagen.data);
-
-        // Variable que guardará la ruta absoluta a la carpeta donde se guarda la imagen junto a su nombre
-        let imageDirectory;
-
-        // Generar un nombre único a la imagen
-        const imageName = uuid.v4() + '.jpg';
-
-        // Segun el tipo de la imagen, creamos una ruta absoluta junto al nombre al directorio de avatars o products
-        if (type === 0) {
-            // Si el type es 0 es un avatar
-            imageDirectory = path.join(avatarDir, imageName);
-
-            // Como es una imagen de avatar, vamos a redimensionarla para que sea más pequeña
-            sharpImage.resize(150, 150);
-        } else if (type === 1) {
-            // Si es una imagen de tipo producto, es una ruta distinta
-            imageDirectory = path.join(postDir, imageName);
-
-            //redimensionamos la imagen
-            sharpImage.resize(1000, 1000);
-        }
-
-        // Guardar la imagen
-        await sharpImage.toFile(imageDirectory);
-
-        // Retornar el nombre único de la imagen para guardarla en base de datos
-        return imageName;
-    } catch (error) {
-        throw new Error('Error al procesar la imagen');
-    }
-}
 
 //Función para borrar imágenes
 async function deletePhoto(photoName, type) {
@@ -75,9 +38,7 @@ async function deletePhoto(photoName, type) {
         } else if (type === 1) {
             photoPath = path.join(postDir, photoName);
         }
-
-        console.log(photoPath);
-
+        
         await unlink(photoPath);
     } catch (error) {
         throw new Error(
@@ -86,9 +47,34 @@ async function deletePhoto(photoName, type) {
     }
 }
 
+
+//Función para guardar imágenes
+async function savePhoto(imagen, type) {
+    try {
+        const sharpImage = sharp(imagen.data);
+        let imageDirectory;
+        const imageName = uuid.v4() + '.jpg';
+
+        if (type === 0) {
+            imageDirectory = path.join(avatarDir, imageName);
+            sharpImage.resize(150, 150);
+        } else if (type === 1) {
+            imageDirectory = path.join(postDir, imageName);
+            sharpImage.resize(1000, 1000);
+        }
+        await sharpImage.toFile(imageDirectory);
+
+        return imageName;
+    } catch (error) {
+        throw new Error(
+            'Ha habido un error al procesar la imagen. Intentalo de nuevo.'
+        );
+    }
+}
+
 module.exports = {
     generateError,
+    deletePhoto,
     validate,
     savePhoto,
-    deletePhoto,
 };
