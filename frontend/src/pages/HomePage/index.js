@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="homePage">
         <MenuTrendingToppics />
         {loading && <Spinner />}
 
@@ -23,6 +23,7 @@ const HomePage = () => {
 
         {errorMessage && <ErrorMessage msg={errorMessage} />}
       </main>
+
       <Footer />
     </>
   );
