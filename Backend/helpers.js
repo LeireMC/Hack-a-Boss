@@ -50,6 +50,9 @@ async function savePhoto(imagen, type) {
         } else if (type === 1) {
             // Si es una imagen de tipo producto, es una ruta distinta
             imageDirectory = path.join(postDir, imageName);
+
+            //redimensionamos la imagen
+            sharpImage.resize(1000, 1000);
         }
 
         // Guardar la imagen
