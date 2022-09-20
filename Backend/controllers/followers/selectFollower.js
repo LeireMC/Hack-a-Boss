@@ -7,9 +7,9 @@ const {
 const selectFollowerUSer = async (req, res, next) => {
     try {
         //recuperamos el id del usuario que quiere marcar un follower
-        const userId = 1; /* req.userAuth.id */
+        const userId = req.userAuth.id;
 
-        //recuperamos el id del usuario que será marcado como follower  = req.params;
+        //Recuperamos el id del usuario que será marcado como follower  ;
         const { followerId } = req.params;
 
         console.log(followerId);

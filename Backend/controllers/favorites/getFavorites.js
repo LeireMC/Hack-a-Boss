@@ -6,12 +6,9 @@ const getFavorites = async (req, res, next) => {
 
     try {
         connection = await getDB();
-        /////////////////////////
 
-        /* const idUser = req.userAuth.id */
-        const idUser = 1;
-
-        ////////////////////////
+        //Recuperamos usuario
+        const idUser = req.userAuth.id;
 
         //Recuperamos idFavorito, todo de post e id.user
         let favorites;

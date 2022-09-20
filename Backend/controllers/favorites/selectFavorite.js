@@ -7,8 +7,8 @@ const {
 const selectFavorite = async (req, res, next) => {
     try {
         //recuperamos el id del usuario que quiere marcar favorito
-        const userId = 1; /* req.userAuth.id */
-
+        const userId = req.userAuth.id;
+        console.log(req.userAuth.id);
         //recuperamos el id del post que será marcado como favorito
         const { postId } = req.params;
 

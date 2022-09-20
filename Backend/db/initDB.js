@@ -68,8 +68,8 @@ async function main() {
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR (255),
             idPost INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idPost) REFERENCES post (id)
-            ON DELETE CASCADE
+                FOREIGN KEY (idPost) REFERENCES post (id)
+                ON DELETE CASCADE
             )
         `);
 
@@ -77,22 +77,23 @@ async function main() {
         CREATE TABLE IF NOT EXISTS likes (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idPost INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idPost) REFERENCES post (id)
-            ON DELETE CASCADE,
+            liked  TINYINT DEFAULT 0,
+                FOREIGN KEY (idPost) REFERENCES post (id)
+                ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idUser) REFERENCES user (id)
-            ON DELETE CASCADE)
+                FOREIGN KEY (idUser) REFERENCES user (id)
+                ON DELETE CASCADE)
         `);
 
         await connection.query(`
       CREATE TABLE IF NOT EXISTS favorite (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idPost INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idPost) REFERENCES post (id)
-            ON DELETE CASCADE,
+                FOREIGN KEY (idPost) REFERENCES post (id)
+                ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idUser) REFERENCES user (id)
-            ON DELETE CASCADE
+                FOREIGN KEY (idUser) REFERENCES user (id)
+                ON DELETE CASCADE
             );
         `);
 
@@ -102,11 +103,11 @@ async function main() {
             body VARCHAR (500) NOT NULL,
             createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             idPost INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idPost) REFERENCES post (id)
-            ON DELETE CASCADE,
+                FOREIGN KEY (idPost) REFERENCES post (id)
+                ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,
-            FOREIGN KEY (idUser) REFERENCES user (id)
-            ON DELETE CASCADE
+                FOREIGN KEY (idUser) REFERENCES user (id)
+                ON DELETE CASCADE
             )
         `);
 

@@ -6,10 +6,9 @@ const getFollowUsers = async (req, res, next) => {
 
     try {
         connection = await getDB();
-        /////////////////////////
 
-        /* const idUser = req.userAuth.id */
-        const idUser = 2;
+        //Recuperamos id del usuario logado
+        const idUser = req.userAuth.id;
 
         ////////////////////////
 

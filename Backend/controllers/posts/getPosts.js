@@ -1,10 +1,14 @@
-const getDB = require('../../db/getDB');
+/* const getDB = require('../../db/getDB'); */
+
+const {
+    getPostsBySearch,
+    getPostsByOrderDirection,
+    postPhotos,
+    postComments,
+} = require('../../repositories/post-repositories');
 
 const getPosts = async (req, res, next) => {
-    let connection;
     try {
-        connection = await getDB();
-
         //Recibir los query params para filtrar los post que se quieren monstrar
         const { search, direction } = req.query;
 
@@ -20,37 +24,19 @@ const getPosts = async (req, res, next) => {
 
         //si existe 'search', la consulta se hará añadiendo la bíusqueda
         if (search) {
-            [posts] = await connection.query(
-                `
-            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
-            FROM post INNER JOIN user ON post.idUser = user.id
-            WHERE authorComment LIKE ? OR hashtag LIKE ?
-            ORDER BY post.createdAt ${orderDirection}`,
-                [`%${search}%`, `%${search}%`]
-            );
+            posts = await getPostsBySearch(orderDirection, search);
         } else {
-            [posts] = await connection.query(`
-            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
-            FROM post INNER JOIN user ON post.idUser = user.id
-            ORDER BY post.createdAt ${orderDirection}`);
+            posts = await getPostsByOrderDirection(orderDirection);
         }
 
-        //Array que devulverá la respuesta
+        //Array que devolverá la respuesta
         const postsInfo = [];
 
         //Cada post tiene sus imagenes y comentarios-> recorrer con un bucle los post recibidos y buscar sus fotos y comentarios
         for (let i = 0; i < posts.length; i++) {
-            const [photos] = await connection.query(
-                `SELECT name FROM photo
-            WHERE idPost = ?`,
-                [posts[i].idPost]
-            );
+            const photos = await postPhotos(posts[i].idPost);
 
-            const [comments] = await connection.query(
-                `SELECT comment.body FROM comment
-                WHERE idPost = ?`,
-                [posts[i].idPost]
-            );
+            const comments = await postComments(posts[i].idPost);
 
             //añadimos los datos recuperados al array que devolverá la respuesta
             postsInfo.push({ ...posts[i], photos, comments });
@@ -60,12 +46,10 @@ const getPosts = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            postsInfo: postsInfo,
+            data: postsInfo,
         });
     } catch (error) {
         next(error);
-    } finally {
-        if (connection) connection.release();
     }
 };
 
