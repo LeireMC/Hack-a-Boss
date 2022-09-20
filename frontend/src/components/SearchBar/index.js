@@ -9,7 +9,7 @@ const SearchBar = () => {
   return (
     <form
       className="header-searcher"
-      onSubmit={async (event) => {
+      /* onSubmit={async (event) => {
         try {
           event.preventDefault();
 
@@ -26,7 +26,7 @@ const SearchBar = () => {
         } catch (error) {
           console.log(error);
         }
-      }}
+      }} */
     >
       <input
         type="search"

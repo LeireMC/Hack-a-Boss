@@ -31,7 +31,7 @@ const PhotoSlider = ({ photos, username }) => {
             {index === currentPhoto && (
               <img
                 className="PostPhoto"
-                src={`${process.env.REACT_APP_API_URL}/posts/${photo.name}`}
+                src={`${process.env.REACT_APP_API_URL}/post/${photo.name}`}
                 alt={`Created by ${username}`}
               />
             )}

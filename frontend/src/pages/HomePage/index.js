@@ -9,8 +9,6 @@ import MenuTrendingToppics from "../../components/MenuTrendingToppics";
 const HomePage = () => {
   const { posts, loading, error } = usePosts();
 
-  console.log(posts);
-
   return (
     <>
       <Header />

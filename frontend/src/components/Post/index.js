@@ -2,17 +2,15 @@ import PhotoSlider from "../PhotoSlider";
 import "./styles.css";
 
 const Post = ({ post }) => {
-  const { photos, username } = post;
+  const { photos, username, idPost } = post;
+  console.log(post);
+
+  console.log(post.idPost);
   return (
     <>
-      {/* {photos.length > 0 && (
-        <img
-          className="PostPhoto"
-          src={`${process.env.REACT_APP_API_URL}/posts/${photos[0].name}`}
-          alt={`Created by ${username}`}
-        />
-      )} */}
-      {photos.length > 0 && <PhotoSlider photos={photos} username={username} />}
+      {photos.length > 0 && (
+        <PhotoSlider idPost={idPost} photos={photos} username={username} />
+      )}
     </>
   );
 };
