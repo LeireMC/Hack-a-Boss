@@ -11,6 +11,7 @@ const getPost = async (req, res, next) => {
         const { idPost } = req.params;
 
         //Seleccionamos de la base de datos los datos del post
+
         let post;
         post = await getPostById(idPost);
 

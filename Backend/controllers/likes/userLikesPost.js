@@ -1,4 +1,6 @@
+
 const { generateError } = require('../../helpers');
+
 const {
     checkLikes,
     userLikes,
@@ -38,6 +40,7 @@ const userLikesPost = async (req, res, next) => {
 
         //Si no tiene like(0), lo cambiamos(1)
         else if (checkLike[0].liked === 0) {
+
             await userLikes(postId);
 
             res.send({

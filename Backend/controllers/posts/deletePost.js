@@ -13,6 +13,7 @@ const deletePost = async (req, res, next) => {
     try {
         //recuperamos el id del usuario que quiere eliminar el post
         const idUser = req.userAuth.id;
+
         //recuperamos el id del post que queremos eliminar
         const { idPost } = req.params;
 
@@ -27,6 +28,7 @@ const deletePost = async (req, res, next) => {
                 'No eres el propietario del post a eliminar o el post no existe'
             );
         }
+
 
         //Se comprueba que la contraseña introducida es la correcta
         if (!password) {
@@ -47,6 +49,7 @@ const deletePost = async (req, res, next) => {
         }
 
         //Si exite el post y la contraseña es correcta, primero eliminamos las fotos del post
+
         //Primero seleccionamos todas las fotos asociadas al post
         const photos = await postPhotos(idPost);
 

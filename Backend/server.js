@@ -33,6 +33,7 @@ app.use(fileUpload());
 const tokenMatches = require('./middlewares/tokenMatches');
 
 ////////USER CONTROLLERS////////
+
 const userNew = require('./controllers/user/userNew');
 const userLogin = require('./controllers/user/userLogin');
 const userDelete = require('./controllers/user/userDelete');
@@ -40,6 +41,7 @@ const userEdit = require('./controllers/user/userEdit');
 const userProfile = require('./controllers/user/userProfile');
 
 ////////POST CONTROLLERS////////
+
 const getPost = require('./controllers/posts/getPost');
 const getPosts = require('./controllers/posts/getPosts');
 const newPost = require('./controllers/posts/newPost');
@@ -48,22 +50,24 @@ const deletePost = require('./controllers/posts/deletePost');
 ////////PHOTOS CONTROLLERS////////
 
 ////////COMMENTS CONTROLLERS////////
+const newComent = require('./controllers/comment/newComent');
 
 ////////FOLLOWERS CONTROLLERS////////
+const getFollowUsers = require('./controllers/followers/getFollowUsers');
 
 ////////LIKES CONTROLLERS////////
 const userLikesPost = require('./controllers/likes/userLikesPost');
 
 ////////FAVORITES CONTROLLERS////////
+const getFavorites = require('./controllers/favorites/getFavorites');
+const selectFavorite = require('./controllers/favorites/selectFavorite');
+const selectFollowerUSer = require('./controllers/followers/selectFollower');
 
 ////////ENDPOINTS USERS////////
-
 // Registra un usuario
 app.post('/register', userNew);
-
 // Login de usuario
 app.post('/login', userLogin);
-
 // Mostrar perfil de usuario
 app.get('/user/:idUser', userProfile);
 
@@ -74,47 +78,34 @@ app.put('/user/data', tokenMatches, userEdit);
 app.delete('/user/:idUser/delete', tokenMatches, userDelete);
 
 ////////ENDPOINTS POST////////
-
 // Nuevo post (fotos, comentario autor, hastags)
 app.post('/posts/new', tokenMatches, newPost);
-
 // Lista todos los post
 app.get('/posts', getPosts);
-
 // Lista un post
 app.get('/posts/:idPost', getPost);
-
 // Eliminar un post
 app.delete('/posts/:idPost', tokenMatches, deletePost);
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
-/* app.post('/comments/new', tokenMatches, newComment); */
+app.post('/comments/new/:idPost', tokenMatches, newComent);
 
 ////////ENDPOINTS FOLLOWERS////////
 // Recupera datos de un follower
-/* app.get('/follower/:idUser', tokenMatches, getFollower); */
-
-// Añade nuevo follower
-/* app.post('/follower/new', tokenMatches, addFollower); */
-
-// Elimina follower
-/* app.delete('/follower/:idUser', tokenMatches, deleteFollower); */
+app.get('/follower', tokenMatches, getFollowUsers);
+// Añade o quita un follower
+app.post('/user/:followerId/follower', tokenMatches, selectFollowerUSer);
 
 ////////ENDPOINTS LIKES////////
-
 // Añade y elimina likes
 app.post('/post/:postId/like', tokenMatches, userLikesPost);
 
 ////////ENDPOINTS FAVORITES////////
-// Recupera fovoritos
-/* app.get('/favorites', tokenMatches, getFavorites); */
-
-// Añade nuevo like
-/* app.post('/favorites/new', tokenMatches, addFavorite); */
-
-// Elimina like
-/* app.delete('/favorites/:idFavorite', tokenMatches, deleteFavorite); */
+// Recupera favoritos
+app.get('/favorites', tokenMatches, getFavorites);
+// Añade o quita de favoritos
+app.post('/post/:postId/favorite', tokenMatches, selectFavorite);
 
 // Middleware de ERROR
 app.use((error, req, res, next) => {

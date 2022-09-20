@@ -33,11 +33,13 @@ async function userLikesFirst(postId, userId) {
         if (connection) connection.release();
     }
 }
+
 //Función que pone la propiedad liked de la tabla likes en true(1)
 async function userLikes(postId) {
     let connection;
     try {
         connection = await getDB();
+
         await connection.query(`UPDATE likes SET liked = 1 WHERE idPost=?`, [
             postId,
         ]);
@@ -51,6 +53,7 @@ async function userUnlikes(postId) {
     let connection;
     try {
         connection = await getDB();
+
         await connection.query(`UPDATE likes SET liked = 0 WHERE idPost=?`, [
             postId,
         ]);
@@ -60,3 +63,4 @@ async function userUnlikes(postId) {
 }
 
 module.exports = { checkLikes, userLikes, userUnlikes, userLikesFirst };
+

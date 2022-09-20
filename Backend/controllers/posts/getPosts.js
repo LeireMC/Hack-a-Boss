@@ -1,4 +1,5 @@
 const { generateError } = require('../../helpers');
+
 const {
     getPostsBySearch,
     getPostsByOrderDirection,
@@ -26,6 +27,7 @@ const getPosts = async (req, res, next) => {
             posts = await getPostsBySearch(orderDirection, search);
         } else {
             posts = await getPostsByOrderDirection(orderDirection);
+
         }
 
         if (posts.length === 0) {
@@ -34,7 +36,7 @@ const getPosts = async (req, res, next) => {
             );
         }
 
-        //Array que devulverá la respuesta
+        //Array que devolverá la respuesta
         const postsInfo = [];
 
         //Cada post tiene sus imagenes y comentarios-> recorrer con un bucle los post recibidos y buscar sus fotos y comentarios

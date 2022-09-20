@@ -1,4 +1,5 @@
 const { unlink } = require('fs/promises');
+
 const path = require('path');
 const sharp = require('sharp');
 const uuid = require('uuid');
@@ -27,7 +28,6 @@ async function validate(schema, data) {
     }
 }
 
-
 //Función para borrar imágenes
 async function deletePhoto(photoName, type) {
     try {
@@ -38,7 +38,7 @@ async function deletePhoto(photoName, type) {
         } else if (type === 1) {
             photoPath = path.join(postDir, photoName);
         }
-        
+
         await unlink(photoPath);
     } catch (error) {
         throw new Error(
@@ -74,7 +74,7 @@ async function savePhoto(imagen, type) {
 
 module.exports = {
     generateError,
-    deletePhoto,
     validate,
     savePhoto,
+    deletePhoto,
 };

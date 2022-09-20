@@ -2,6 +2,7 @@ const { savePhoto } = require('../helpers');
 const getDB = require('../db/getDB');
 
 //Función que añade a la tabla post los datos recibidos
+
 async function createPost(authorComment, hashtag, idUser) {
     let connection;
     try {
@@ -10,6 +11,7 @@ async function createPost(authorComment, hashtag, idUser) {
         const [{ insertId }] = await connection.query(
             `INSERT INTO post (authorComment, hashtag, createdAt, idUser)
                 VALUES (?, ?, ?, ?)`,
+
             [authorComment, hashtag, new Date(), idUser]
         );
 
@@ -27,6 +29,7 @@ async function insertPhoto(postPhotos, postId) {
 
         //Creamos el array que devolverá los nombres de las fotos
         let photosNames = [];
+
         //Ponemos un name a cada photo y guardamos cada foto en la carpeta static
         for (let i = 0; i < postPhotos.length; i++) {
             console.log(postPhotos[i].data);
@@ -196,6 +199,7 @@ async function deletePostfromDB(idPost) {
         if (connection) connection.release();
     }
 }
+
 
 //Función que selecciona que la contraseña del usuario
 async function selectPassword(idUser) {
