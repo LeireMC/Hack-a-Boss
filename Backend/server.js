@@ -43,6 +43,7 @@ const userProfile = require('./controllers/user/userProfile');
 const getPost = require('./controllers/posts/getPost');
 const getPosts = require('./controllers/posts/getPosts');
 const newPost = require('./controllers/posts/newPost');
+const deletePost = require('./controllers/posts/deletePost');
 
 ////////PHOTOS CONTROLLERS////////
 
@@ -51,6 +52,7 @@ const newPost = require('./controllers/posts/newPost');
 ////////FOLLOWERS CONTROLLERS////////
 
 ////////LIKES CONTROLLERS////////
+const userLikesPost = require('./controllers/likes/userLikesPost');
 
 ////////FAVORITES CONTROLLERS////////
 
@@ -71,7 +73,6 @@ app.put('/user/data', tokenMatches, userEdit);
 // Eliminar al usuario
 app.delete('/user/:idUser/delete', tokenMatches, userDelete);
 
-
 ////////ENDPOINTS POST////////
 
 // Nuevo post (fotos, comentario autor, hastags)
@@ -84,7 +85,7 @@ app.get('/posts', getPosts);
 app.get('/posts/:idPost', getPost);
 
 // Eliminar un post
-/* app.delete('/posts/:idPost', tokenMatches, deletePost); */
+app.delete('/posts/:idPost', tokenMatches, deletePost);
 
 ////////ENDPOINTS COMMENTS////////
 // Nuevo comentario
@@ -102,11 +103,8 @@ app.get('/posts/:idPost', getPost);
 
 ////////ENDPOINTS LIKES////////
 
-// Añade nuevo like
-/* app.post('/likes/new', tokenMatches, addLike); */
-
-// Elimina like
-/* app.delete('/likes/:idLike', tokenMatches, deleteLike); */
+// Añade y elimina likes
+app.post('/post/:postId/like', tokenMatches, userLikesPost);
 
 ////////ENDPOINTS FAVORITES////////
 // Recupera fovoritos
