@@ -78,8 +78,8 @@ async function main() {
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idPost INT UNSIGNED NOT NULL,
             liked  TINYINT DEFAULT 0,
-                FOREIGN KEY (idPost) REFERENCES post (id)
-                ON DELETE CASCADE,
+            FOREIGN KEY (idPost) REFERENCES post (id)
+            ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL,
                 FOREIGN KEY (idUser) REFERENCES user (id)
                 ON DELETE CASCADE)

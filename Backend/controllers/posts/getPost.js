@@ -12,7 +12,8 @@ const getPost = async (req, res, next) => {
 
         //Seleccionamos de la base de datos los datos del post
 
-        const post = await getPostById(idPost);
+        let post;
+        post = await getPostById(idPost);
 
         //Comprobamos que el post existe, sino lanzamos un error
         if (post.length < 1) {

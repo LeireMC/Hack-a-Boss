@@ -19,12 +19,28 @@ async function checkLikes(postId, userId) {
     }
 }
 
+//Función que crea nueva fila para un primer like de un usuario a un post
+async function userLikesFirst(postId, userId) {
+    let connection;
+    try {
+        connection = await getDB();
+        await connection.query(
+            `INSERT INTO likes (idPost, liked, idUser)
+        VALUES (?,?,?)`,
+            [postId, 1, userId]
+        );
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
 //Función que pone la propiedad liked de la tabla likes en true(1)
 async function userLikes(postId) {
     let connection;
     try {
         connection = await getDB();
-        await connection.query(`UPDATE likes SET liked = 1 WHERE id=?`, [
+
+        await connection.query(`UPDATE likes SET liked = 1 WHERE idPost=?`, [
             postId,
         ]);
     } finally {
@@ -37,7 +53,8 @@ async function userUnlikes(postId) {
     let connection;
     try {
         connection = await getDB();
-        await connection.query(`UPDATE likes SET liked = 0 WHERE id=?`, [
+
+        await connection.query(`UPDATE likes SET liked = 0 WHERE idPost=?`, [
             postId,
         ]);
     } finally {
@@ -45,4 +62,5 @@ async function userUnlikes(postId) {
     }
 }
 
-module.exports = { checkLikes, userLikes, userUnlikes };
+module.exports = { checkLikes, userLikes, userUnlikes, userLikesFirst };
+

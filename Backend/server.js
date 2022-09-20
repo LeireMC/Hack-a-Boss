@@ -70,8 +70,10 @@ app.post('/register', userNew);
 app.post('/login', userLogin);
 // Mostrar perfil de usuario
 app.get('/user/:idUser', userProfile);
+
 // Modifica datos del usuario (name, lastname, bio, url, privacy, email, username, avatar)
 app.put('/user/data', tokenMatches, userEdit);
+
 // Eliminar al usuario
 app.delete('/user/:idUser/delete', tokenMatches, userDelete);
 
