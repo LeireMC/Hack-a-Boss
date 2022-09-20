@@ -48,10 +48,7 @@ const deletePost = async (req, res, next) => {
 
         //Si exite el post y la contraseña es correcta, primero eliminamos las fotos del post
         //Primero seleccionamos todas las fotos asociadas al post
-        const photos = await postPhotos(idPost); /* await connection.query(
-            `SELECT name FROM photo WHERE idPost = ?`,
-            [idPost]
-        ); */
+        const photos = await postPhotos(idPost);
 
         //Una vez seleccionadas, recorremos el array para acceder a cada nombre de la foto y borrarla del servidor
         for (let i = 0; i < photos.length; i++) {
@@ -60,11 +57,9 @@ const deletePost = async (req, res, next) => {
 
         //Eliminamos los campos de la foto de la base de datos
         await deletePhotofromDB(idPost);
-        /*  await connection.query(`DELETE FROM photo WHERE idPost = ?`, [idPost]); */
 
         //Eliminamos el post de la base de datos
         await deletePostfromDB(idPost);
-        /* await connection.query(`DELETE FROM post WHERE id = ?`, [idPost]); */
 
         res.send({
             status: 'ok',

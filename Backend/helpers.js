@@ -76,10 +76,12 @@ async function deletePhoto(photoName, type) {
             photoPath = path.join(postDir, photoName);
         }
 
+        console.log(photoPath);
+
         await unlink(photoPath);
     } catch (error) {
         throw new Error(
-            'Se ha producido un error al eliminar la imagen del servidor. Por favor intenta de nuevo.'
+            'Se ha producido un error al eliminar la imagen del servidor. Por favor intentalo de nuevo.'
         );
     }
 }

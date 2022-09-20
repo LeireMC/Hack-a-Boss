@@ -1,9 +1,11 @@
+const { generateError } = require('../../helpers');
 const {
     checkLikes,
     userLikes,
     userUnlikes,
     userLikesFirst,
 } = require('../../repositories/likes-repositories');
+const { getPostById } = require('../../repositories/post-repositories');
 
 const userLikesPost = async (req, res, next) => {
     try {
@@ -13,10 +15,15 @@ const userLikesPost = async (req, res, next) => {
         //recuperamos el id del post
         const { postId } = req.params;
 
+        //comprobamos que existe el post al que se quiere hacer like
+        const post = await getPostById(postId);
+
+        if (post.length === 0) {
+            throw generateError('El post al que quieres dar like no existe');
+        }
+
         //Miramos en la base de datos si este post tiene o no like
         const checkLike = await checkLikes(postId, userId);
-
-        console.log(checkLike.length === 0);
 
         //Si nunca le ha hecho like el usuario, creamos la fila correspondiente
         if (checkLike.length === 0) {

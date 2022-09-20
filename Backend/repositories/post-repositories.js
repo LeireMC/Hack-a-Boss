@@ -101,12 +101,12 @@ async function getPostsByOrderDirection(orderDirection) {
 }
 
 //Función que devuelve un post por ID
-async function getPostById(post, idPost) {
+async function getPostById(idPost) {
     let connection;
     try {
         connection = await getDB();
 
-        [post] = await connection.query(
+        const [post] = await connection.query(
             `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ?`,
