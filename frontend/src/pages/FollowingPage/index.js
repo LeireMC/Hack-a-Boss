@@ -1,3 +1,15 @@
-const FollowingPage = () => {};
+import "./styles.css";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+
+const FollowingPage = () => {
+  return (
+    <>
+      <Header />
+      <main></main>
+      <Footer />
+    </>
+  );
+};
 
 export default FollowingPage;
