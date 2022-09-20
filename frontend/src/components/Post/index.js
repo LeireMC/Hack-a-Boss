@@ -1,11 +1,9 @@
-import PhotoSlider from "../PhotoSlider";
 import "./styles.css";
+import PhotoSlider from "../PhotoSlider";
 
 const Post = ({ post }) => {
   const { photos, username, idPost } = post;
-  console.log(post);
 
-  console.log(post.idPost);
   return (
     <>
       {photos.length > 0 && (

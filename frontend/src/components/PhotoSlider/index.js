@@ -1,8 +1,11 @@
 import "./styles.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { RightArrow, LeftArrow } from "../ArrowIcons";
 
-const PhotoSlider = ({ photos, username }) => {
+const PhotoSlider = ({ idPost, photos, username }) => {
+  const navigate = useNavigate();
+
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
   const previousPhoto = () => {
@@ -33,6 +36,10 @@ const PhotoSlider = ({ photos, username }) => {
                 className="PostPhoto"
                 src={`${process.env.REACT_APP_API_URL}/post/${photo.name}`}
                 alt={`Created by ${username}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/post/${idPost}`);
+                }}
               />
             )}
           </>

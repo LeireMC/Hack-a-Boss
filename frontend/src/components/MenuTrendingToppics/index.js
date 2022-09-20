@@ -8,6 +8,7 @@ const MenuTrendingToppics = () => {
       <button>Comida</button>
       <button>Deportes</button>
       <button>Viajes</button>
+      <button>Coches</button>
     </section>
   );
 };

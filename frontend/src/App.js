@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/following" element={<FollowingPage />} />
         </Routes>
+        <ToastContainer position="bottom-center" newestOnTop={true} />
       </CustomTokenContextProvider>
     </BrowserRouter>
   );

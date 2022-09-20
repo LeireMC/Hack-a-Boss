@@ -21,7 +21,7 @@ const LoggedUserMenu = ({ menu }) => {
         </li>
         <li className="header-li">
           <Link
-            to="/login"
+            to="/"
             onClick={() => {
               setToken("");
             }}

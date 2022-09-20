@@ -4,7 +4,7 @@ export const RightArrow = () => {
       xmlns="http://www.w3.org/2000/svg"
       width="16"
       height="16"
-      fill="#ffffff8c"
+      fill="#9e2a2b"
       className="bi bi-arrow-right-circle-fill"
       viewBox="0 0 16 16"
     >
@@ -19,7 +19,7 @@ export const LeftArrow = () => {
       xmlns="http://www.w3.org/2000/svg"
       width="16"
       height="16"
-      fill="#ffffff8c"
+      fill="#9e2a2b"
       className="bi bi-arrow-left-circle-fill"
       viewBox="0 0 16 16"
     >

@@ -1,24 +1,27 @@
 import "./styles.css";
-/* import Header from "../../components/Header"; */
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import usePosts from "../../hooks/usePosts";
 import PostsList from "../../components/PostsList";
 import MenuTrendingToppics from "../../components/MenuTrendingToppics";
+import Spinner from "../../components/Spinner";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const HomePage = () => {
-  const { posts, loading, error } = usePosts();
+  const { posts, loading, errorMessage } = usePosts();
 
   return (
     <>
       <Header />
       <main>
         <MenuTrendingToppics />
-        {loading && <p>Cargando posts...</p>}
-        {error && <p>{error}</p>}
+        {loading && <Spinner />}
+
         <section className="postListContainer">
-          <PostsList posts={posts} />
+          {posts.length > 0 && <PostsList posts={posts} />}
         </section>
+
+        {errorMessage && <ErrorMessage msg={errorMessage} />}
       </main>
       <Footer />
     </>

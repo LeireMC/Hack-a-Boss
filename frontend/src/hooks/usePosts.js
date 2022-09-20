@@ -4,7 +4,7 @@ import { getAllPostsService } from "../services";
 const usePosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -16,7 +16,7 @@ const usePosts = () => {
         setPosts(data);
       } catch (error) {
         console.error(error.message);
-        setError(error.message);
+        setErrorMessage(error.message);
       } finally {
         setLoading(false);
       }
@@ -25,7 +25,7 @@ const usePosts = () => {
     loadPosts();
   }, []);
 
-  return { posts, loading, error };
+  return { posts, loading, errorMessage };
 };
 
 export default usePosts;
