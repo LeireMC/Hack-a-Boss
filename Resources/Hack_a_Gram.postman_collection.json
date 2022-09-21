@@ -217,13 +217,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{server}}/user/4",
+							"raw": "{{server}}/user/1",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -241,8 +241,59 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Nerea\",\n    \"lastname\":\"Terremoto\",\n    \"bio\":\"Solo tengo 9 años\",\n    \"url\": \"\",\n    \"privacy\":\"\",\n    \"oldPass\":\"\",\n    \"newPass\":\"\",\n    \"email\":\"\",\n    \"username\":\"\"\n}",
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Nereita",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "url",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "privacy",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "oldpass",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "newpass",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/hack/Downloads/dog-g24cee6f1a_640.jpg"
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
