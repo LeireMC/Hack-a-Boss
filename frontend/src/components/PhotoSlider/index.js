@@ -1,15 +1,22 @@
 import "./styles.css";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 /* import { useNavigate } from "react-router-dom"; */
 import { RightArrow, LeftArrow } from "../ArrowIcons";
-/* import Modal from "../Modal"; */
 
-const PhotoSlider = ({ photos, username, setOpenModal }) => {
+const PhotoSlider = ({
+  photos,
+  username,
+  setOpenModal,
+  setSelectPost,
+  post,
+}) => {
   /*   const navigate = useNavigate(); */
 
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  const previousPhoto = () => {
+  const previousPhoto = (e) => {
+    e.stopPropagation();
     if (currentPhoto === photos.length - 1) {
       setCurrentPhoto(0);
       return;
@@ -18,7 +25,8 @@ const PhotoSlider = ({ photos, username, setOpenModal }) => {
     setCurrentPhoto(currentPhoto + 1);
   };
 
-  const nextPhoto = () => {
+  const nextPhoto = (e) => {
+    e.stopPropagation();
     if (currentPhoto === 0) {
       setCurrentPhoto(photos.length - 1);
       return;
@@ -28,22 +36,31 @@ const PhotoSlider = ({ photos, username, setOpenModal }) => {
   };
 
   return (
-    <section className="photo-slider">
+    <section
+      className="photo-slider"
+      onClick={() => {
+        setOpenModal(true);
+        setSelectPost(post);
+      }}
+    >
       {photos.map((photo, index) => {
         return (
-          <>
+          <Fragment key={index}>
             {index === currentPhoto && (
               <img
                 className="PostPhoto"
                 src={`${process.env.REACT_APP_API_URL}/post/${photo.name}`}
                 alt={`Created by ${username}`}
+                onLoad={() => {
+                  setImageLoaded(true);
+                }}
               />
             )}
-          </>
+          </Fragment>
         );
       })}
 
-      {photos.length > 1 && (
+      {photos.length > 1 && imageLoaded && (
         <>
           <button className="previous_photo" onClick={previousPhoto}>
             <LeftArrow />

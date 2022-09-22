@@ -57,6 +57,7 @@ const getFollowUsers = require('./controllers/followers/getFollowUsers');
 
 ////////LIKES CONTROLLERS////////
 const userLikesPost = require('./controllers/likes/userLikesPost');
+const postIsLikedByUser = require('./controllers/likes/postIsLikedByUser');
 
 ////////FAVORITES CONTROLLERS////////
 const getFavorites = require('./controllers/favorites/getFavorites');
@@ -100,6 +101,8 @@ app.post('/user/:followerId/follower', tokenMatches, selectFollowerUSer);
 ////////ENDPOINTS LIKES////////
 // Añade y elimina likes
 app.post('/post/:postId/like', tokenMatches, userLikesPost);
+//Nos dice si un post esta dado like o no o por un usuario
+app.get('/post/:postId/isLiked', tokenMatches, postIsLikedByUser);
 
 ////////ENDPOINTS FAVORITES////////
 // Recupera favoritos

@@ -73,10 +73,10 @@ async function getPostsBySearch(orderDirection, search) {
 
         const [posts] = await connection.query(
             `
-        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
+        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
         FROM post INNER JOIN user ON post.idUser = user.id
         WHERE authorComment LIKE ? OR hashtag LIKE ?
-        ORDER BY post.createdAt ${orderDirection}`,
+        ORDER BY post.createdAt ${orderDirection} `,
             [`%${search}%`, `%${search}%`]
         );
 
@@ -92,10 +92,55 @@ async function getPostsByOrderDirection(orderDirection) {
     try {
         connection = await getDB();
 
-        const [posts] = await connection.query(`
-            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
+        console.log(orderDirection);
+
+        const [posts] = await connection.query(
+            `
+            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
             FROM post INNER JOIN user ON post.idUser = user.id
-            ORDER BY post.createdAt ${orderDirection}`);
+            ORDER BY post.createdAt ${orderDirection}`
+        );
+
+        return posts;
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
+//Función que devuelve los post de usuarios publicos en base a una búsqueda
+async function getPublicPostsBySearch(orderDirection, search) {
+    let connection;
+    try {
+        connection = await getDB();
+
+        const [posts] = await connection.query(
+            `
+        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+        FROM post INNER JOIN user ON post.idUser = user.id
+        WHERE user.privacy = ? AND authorComment LIKE ? OR hashtag LIKE ?
+        ORDER BY post.createdAt ${orderDirection}`,
+            ['public', `%${search}%`, `%${search}%`]
+        );
+
+        return posts;
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
+//Función que devuelve los post publicos
+async function getPublicPostsByOrderDirection(orderDirection) {
+    let connection;
+    try {
+        connection = await getDB();
+
+        const [posts] = await connection.query(
+            `
+            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+            FROM post INNER JOIN user ON post.idUser = user.id WHERE user.privacy = ?
+            ORDER BY post.createdAt ${orderDirection}`,
+            ['public']
+        );
 
         return posts;
     } finally {
@@ -110,7 +155,7 @@ async function getPostById(idPost) {
         connection = await getDB();
 
         const [post] = await connection.query(
-            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
+            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar,user.privacy
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ?`,
             [idPost]
@@ -166,8 +211,9 @@ async function postComments(idPost) {
         connection = await getDB();
 
         const [comments] = await connection.query(
-            `SELECT comment.body FROM comment
-            WHERE idPost = ?`,
+            `SELECT comment.body, comment.idUser, user.name, user.username, user.avatar FROM comment INNER JOIN user ON (comment.idUser=user.id)
+            WHERE idPost = ? 
+            ORDER BY comment.createdAt DESC`,
             [idPost]
         );
         return comments;
@@ -200,7 +246,6 @@ async function deletePostfromDB(idPost) {
     }
 }
 
-
 //Función que selecciona que la contraseña del usuario
 async function selectPassword(idUser) {
     let connection;
@@ -223,6 +268,8 @@ module.exports = {
     insertLike,
     getPostsBySearch,
     getPostsByOrderDirection,
+    getPublicPostsBySearch,
+    getPublicPostsByOrderDirection,
     postPhotos,
     postComments,
     getPostById,

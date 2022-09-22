@@ -8,17 +8,35 @@ import Spinner from "../../components/Spinner";
 import ErrorMessage from "../../components/ErrorMessage";
 
 const HomePage = () => {
-  const { posts, loading, errorMessage } = usePosts();
+  const {
+    searchParams,
+    setSearchParams,
+    posts,
+    loading,
+    errorMessage,
+    selectPost,
+    setSelectPost,
+    addComment,
+    addLike,
+  } = usePosts();
 
   return (
     <>
-      <Header />
+      <Header searchParams={searchParams} setSearchParams={setSearchParams} />
       <main className="homePage">
         <MenuTrendingToppics />
         {loading && <Spinner />}
 
         <section className="postListContainer">
-          {posts.length > 0 && <PostsList posts={posts} />}
+          {posts.length > 0 && (
+            <PostsList
+              posts={posts}
+              selectPost={selectPost}
+              setSelectPost={setSelectPost}
+              addComment={addComment}
+              addLike={addLike}
+            />
+          )}
         </section>
 
         {errorMessage && <ErrorMessage msg={errorMessage} />}

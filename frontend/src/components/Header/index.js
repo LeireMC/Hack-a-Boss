@@ -9,7 +9,7 @@ import { useTokenContext } from "../../Contexts/TokenContext";
 import NotLoggedUserMenu from "../NotLoggedUserMenu";
 import LoggedUserMenu from "../LoggedUserMenu";
 
-const Header = () => {
+const Header = ({ setSearchParams, searchParams }) => {
   const { token } = useTokenContext();
   const [menu, setMenu] = useState(false);
 
@@ -26,7 +26,10 @@ const Header = () => {
           alt="Logo Hack a Gram"
         />
       </Link>
-      <SearchBar />
+      <SearchBar
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+      />
       <button className="header-button">
         <HomeIcon />
       </button>

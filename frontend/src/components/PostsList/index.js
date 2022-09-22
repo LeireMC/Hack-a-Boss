@@ -1,33 +1,43 @@
 import "./styles.css";
 import PostModal from "../PostModal";
 import Post from "../Post";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
-const PostsList = ({ posts }) => {
+const PostsList = ({ posts, addComment, addLike }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const [selectPost, setSelectPost] = useState([]);
+
   return posts.length ? (
     <ul className="postListPhotos">
       {posts.map((post, index) => {
         return (
-          <>
+          <Fragment key={index}>
             <li
-              key={index}
               className="photoColumn"
               onClick={() => {
                 setOpenModal(true);
                 setSelectPost(post);
               }}
             >
-              <Post post={post} setOpenModal={setOpenModal} />
+              <Post
+                post={post}
+                setOpenModal={setOpenModal}
+                setSelectPost={setSelectPost}
+              />
             </li>
             <section className="modalWindow">
               {openModal && (
-                <PostModal setOpenModal={setOpenModal} post={selectPost} />
+                <PostModal
+                  setOpenModal={setOpenModal}
+                  post={selectPost}
+                  setSelectPost={setSelectPost}
+                  addComment={addComment}
+                  addLike={addLike}
+                />
               )}
             </section>
-          </>
+          </Fragment>
         );
       })}
     </ul>

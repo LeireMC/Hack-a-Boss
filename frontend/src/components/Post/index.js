@@ -2,7 +2,7 @@ import "./styles.css";
 import PhotoSlider from "../PhotoSlider";
 /* import Modal from "../Modal"; */
 
-const Post = ({ post, setOpenModal }) => {
+const Post = ({ post, setOpenModal, setSelectPost }) => {
   const { photos, username, idPost } = post;
 
   return (
@@ -13,6 +13,7 @@ const Post = ({ post, setOpenModal }) => {
           photos={photos}
           username={username}
           setOpenModal={setOpenModal}
+          setSelectPost={setSelectPost}
         />
       )}
       {/*       <Modal /> */}

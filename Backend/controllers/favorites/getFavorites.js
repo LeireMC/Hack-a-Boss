@@ -13,12 +13,20 @@ const getFavorites = async (req, res, next) => {
         //Recuperamos idFavorito, todo de post e id.user
         let favorites;
 
-        [favorites] = await connection.query(`
-            SELECT *
-            FROM post p INNER JOIN favorite f
-            ON p.id = f.idPost INNER JOIN user u
-            ON f.idPost = u.id
-            `);
+        [favorites] = await connection.query(
+            `
+        SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=?
+            `,
+            [idUser]
+        );
+
+        //Comprobamos que el usuario tiene post favoritos, sino lanzamos un error
+        if (favorites.length < 1) {
+            throw generateError(
+                `No hay ningun post favorito asociado al usuario con id ${idUser}`,
+                404
+            );
+        }
 
         //Array que devuelve la respuesta
         const favoritesList = [];

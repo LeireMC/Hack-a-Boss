@@ -1,4 +1,3 @@
-
 const { generateError } = require('../../helpers');
 
 const {
@@ -6,6 +5,7 @@ const {
     userLikes,
     userUnlikes,
     userLikesFirst,
+    likesCounter,
 } = require('../../repositories/likes-repositories');
 const { getPostById } = require('../../repositories/post-repositories');
 
@@ -31,30 +31,35 @@ const userLikesPost = async (req, res, next) => {
         if (checkLike.length === 0) {
             await userLikesFirst(postId, userId);
 
+            const numLikes = await likesCounter(postId);
+
             res.send({
                 status: 'ok',
                 message: 'like insertado con exito!',
-                data: { userId, postId, liked: true },
+                data: { userId, postId, liked: true, numLikes },
             });
         }
 
         //Si no tiene like(0), lo cambiamos(1)
         else if (checkLike[0].liked === 0) {
+            await userLikes(postId, userId);
 
-            await userLikes(postId);
+            const numLikes = await likesCounter(postId);
 
             res.send({
                 status: 'ok',
                 message: 'like insertado con exito!',
-                data: { userId, postId, liked: true },
+                data: { userId, postId, liked: true, numLikes },
             });
         } else {
             //Si tiene like(1), lo cambiamos(0)
-            await userUnlikes(postId);
+            await userUnlikes(postId, userId);
+
+            const numLikes = await likesCounter(postId);
             res.send({
                 status: 'ok',
                 message: 'like borrado con exito!',
-                data: { userId, postId, liked: false },
+                data: { userId, postId, liked: false, numLikes },
             });
         }
     } catch (error) {
