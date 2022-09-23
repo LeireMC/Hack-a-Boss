@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PhotoSlider from "../PhotoSlider";
 import { toast } from "react-toastify";
 import CloseButton from "../CloseButton";
@@ -7,15 +7,10 @@ import UserDefaultAvatar from "../UserDefaultAvatar";
 import { useTokenContext } from "../../Contexts/TokenContext";
 import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
 import { LikedIcon, UnlikedIcon } from "../LikeIcons";
+import { getPostnumLikes } from "../../services";
 /* import { getLikeStatus } from "../../services"; */
 
-const PostModal = ({
-  post,
-  setOpenModal,
-  setSelectPost,
-  addComment,
-  addLike,
-}) => {
+const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
   const {
     authorComment,
     avatar,
@@ -32,17 +27,30 @@ const PostModal = ({
   console.log(post);
 
   const [newComment, setNewComment] = useState("");
-  const [numLikes, setNumLikes] = useState(likes.numLikes);
+  const [numLikes, setNumLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [isFavorite, setIsFavorite] = useState();
+  const [hashtagArray, setHashtagArray] = useState([]);
 
-  let hashtagArray = [];
-  if (hashtag) {
-    hashtagArray = hashtag.replace(/\s+/g, "").split(",");
-  }
+  useEffect(() => {
+    const loadPostLikes = async () => {
+      try {
+        const data = await getPostnumLikes(idPost);
+        console.log(data);
+        setNumLikes(data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
 
-  setIsLiked(addLike(idPost, numLikes));
-  console.log(isLiked);
+    loadPostLikes();
+
+    if (hashtag) {
+      setHashtagArray(hashtag.replace(/\s+/g, "").split(","));
+    }
+  }, []);
+
+  console.log(numLikes);
 
   return (
     <>

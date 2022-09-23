@@ -17,7 +17,6 @@ const HomePage = () => {
     selectPost,
     setSelectPost,
     addComment,
-    addLike,
   } = usePosts();
 
   return (
@@ -34,7 +33,6 @@ const HomePage = () => {
               selectPost={selectPost}
               setSelectPost={setSelectPost}
               addComment={addComment}
-              addLike={addLike}
             />
           )}
         </section>

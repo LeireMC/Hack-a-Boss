@@ -9,6 +9,7 @@ const usePosts = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { token } = useTokenContext();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const addComment = (idPost, comment) => {
     console.log({ idPost, posts });
     const postIndex = posts.findIndex((post) => {
@@ -20,16 +21,16 @@ const usePosts = () => {
     setPosts([...posts]);
   };
 
-  const addLike = (idPost, like) => {
+  /*   const addLike = (idPost, like) => {
     console.log({ idPost, posts });
     const postIndex = posts.findIndex((post) => {
       return post.idPost === idPost;
     });
 
-    console.log({ postIndex, post: posts[postIndex].likes.numLikes });
+    console.log({ postIndex, numLikes: posts[postIndex].likes.numLikes });
     posts[postIndex].likes.numLikes.push(like);
     setPosts([...posts]);
-  };
+  }; */
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -58,7 +59,6 @@ const usePosts = () => {
     loading,
     errorMessage,
     addComment,
-    addLike,
   };
 };
 
