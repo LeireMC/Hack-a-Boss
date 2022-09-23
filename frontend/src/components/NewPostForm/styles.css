@@ -1,0 +1,25 @@
+.newPostContainer {
+  border: 1px solid #335c67;
+  background-color: #335c67;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  background-color: #9e2a2b;
+  border: 5px black;
+  color: white;
+  border-radius: 5px;
+}
+
+.section {
+  border: 1px solid #335c67;
+  background-color: #335c67;
+  color: white;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 5px;
+}

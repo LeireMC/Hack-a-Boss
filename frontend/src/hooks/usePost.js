@@ -1,22 +1,37 @@
 import { useState, useEffect } from "react";
+import { getAllPostsService } from "../services";
+import { useSearchParams } from "react-router-dom";
+import { useTokenContext } from "../context/TokenContext";
 
-const usePost = () => {
-  const [post, setPost] = useState([]);
-  const [loading, setLoading] = useState(true);
+const usePosts = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { token } = useTokenContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const addComment = (idPost, comment) => {
+    console.log({ idPost, posts });
+    const postIndex = posts.findIndex((post) => {
+      return post.idPost === idPost;
+    });
+
+    console.log({ postIndex, post: posts[postIndex] });
+    posts[postIndex].comments.unshift(comment);
+    setPosts([...posts]);
+  };
+
+  const addNewPost = (newPost) => {
+    setPosts([newPost, ...posts]);
+  };
 
   useEffect(() => {
-    const fetchEntries = async () => {
+    const loadPosts = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/new`);
+        setLoading(true);
 
-        const body = await res.json();
+        const data = await getAllPostsService(searchParams, token);
 
-        if (!res.ok) {
-          throw new Error("Unexpected error fetching API. Please try again");
-        }
-
-        setPost(body.data);
+        setPosts(data);
       } catch (error) {
         console.error(error.message);
         setErrorMessage(error.message);
@@ -25,14 +40,19 @@ const usePost = () => {
       }
     };
 
-    fetchEntries();
-  }, []);
+    loadPosts();
+  }, [searchParams, token]);
 
-  const addNewPost = (newPost) => {
-    setPost([newPost, ...post]);
+  return {
+    searchParams,
+    setSearchParams,
+    posts,
+    setPosts,
+    loading,
+    errorMessage,
+    addComment,
+    addNewPost,
   };
-
-  return { post, addNewPost, loading, errorMessage };
 };
 
-export default usePost;
+export default usePosts;

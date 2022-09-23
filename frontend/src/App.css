@@ -2,5 +2,41 @@
   margin: 0, 5rem;
   padding: 0, 5rem;
   box-sizing: border-box;
-  text-align: center;
+}
+/* #root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, sans-serif;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  flex-grow: 1;
+  width: 70vw;
+}
+button {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: transparent;
+  color: inherit;
+  display: block;
+  border-style: none;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+} */
+
+svg {
+  width: 100%;
+  display: block;
 }

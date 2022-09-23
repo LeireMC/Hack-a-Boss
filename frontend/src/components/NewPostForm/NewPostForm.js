@@ -1,7 +1,8 @@
+import "./styles.css";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useTokenContext } from "../context/TokenContext";
+import { useTokenContext } from "../../context/TokenContext";
 
 const NewPostForm = ({ addNewPost }) => {
   const [authorComment, setAuthorComment] = useState("");
@@ -57,31 +58,38 @@ const NewPostForm = ({ addNewPost }) => {
           }
         }}
       >
-        <label htmlFor="authorComment">authorComment:</label>
-        <input
-          id="authorComment"
-          value={authorComment}
-          onChange={(event) => {
-            setAuthorComment(event.target.value);
-          }}
-          required
-        />
+        <section className="newPostContainer">
+          <ul>
+            <li>
+              <label htmlFor="image">Image:</label>
+              <input id="image" type="file" ref={imageRef} accept="image/*" />
+            </li>
+            <li>
+              <label htmlFor="authorComment">authorComment:</label>
+              <textarea
+                id="authorComment"
+                value={authorComment}
+                onChange={(event) => {
+                  setAuthorComment(event.target.value);
+                }}
+                required
+              />
+            </li>
+            <li>
+              <label htmlFor="hashtag">hashtag:</label>
+              <input
+                id="hashtag"
+                placeholder="Introduce los hashtag separados por una coma"
+                value={hashtag}
+                onChange={(event) => {
+                  setHashtag(event.target.value);
+                }}
+              />
+            </li>
 
-        <label htmlFor="hashtag">hashtag:</label>
-        <input
-          id="hashtag"
-          placeholder="Introduce los hashtag separados por una coma"
-          value={hashtag}
-          onChange={(event) => {
-            setHashtag(event.target.value);
-          }}
-          required
-        />
-
-        <label htmlFor="image">Image:</label>
-        <input id="image" type="file" ref={imageRef} accept="image/*" />
-
-        <button>Create Post</button>
+            <button className="button">Create Post</button>
+          </ul>
+        </section>
       </form>
     </>
   );
