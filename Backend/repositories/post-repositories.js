@@ -32,7 +32,6 @@ async function insertPhoto(postPhotos, postId) {
 
         //Ponemos un name a cada photo y guardamos cada foto en la carpeta static
         for (let i = 0; i < postPhotos.length; i++) {
-            console.log(postPhotos[i].data);
             const photoName = await savePhoto(postPhotos[i], 1);
 
             await connection.query(
@@ -91,8 +90,6 @@ async function getPostsByOrderDirection(orderDirection) {
     let connection;
     try {
         connection = await getDB();
-
-        console.log(orderDirection);
 
         const [posts] = await connection.query(
             `

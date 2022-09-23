@@ -30,7 +30,7 @@ const Header = ({ setSearchParams, searchParams }) => {
         setSearchParams={setSearchParams}
         searchParams={searchParams}
       />
-      <button className="header-button">
+      <button type="button" className="header-button">
         <HomeIcon />
       </button>
       <button onClick={toggleMenu} className="header-button">

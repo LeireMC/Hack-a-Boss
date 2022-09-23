@@ -13,7 +13,7 @@ const {
 const getPosts = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
-        console.log(token);
+
         //Recibir los query params para filtrar los post que se quieren monstrar
         const { search, direction } = req.query;
 

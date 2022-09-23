@@ -7,8 +7,12 @@ import UserDefaultAvatar from "../UserDefaultAvatar";
 import { useTokenContext } from "../../Contexts/TokenContext";
 import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
 import { LikedIcon, UnlikedIcon } from "../LikeIcons";
-import { getPostnumLikes } from "../../services";
-/* import { getLikeStatus } from "../../services"; */
+import {
+  getLikeStatus,
+  getPostnumLikes,
+  getUserFavorites,
+} from "../../services";
+import { Link } from "react-router-dom";
 
 const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
   const {
@@ -20,7 +24,6 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
     photos,
     idPost,
     username,
-    likes,
   } = post;
   const { token } = useTokenContext();
 
@@ -33,22 +36,37 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
   const [hashtagArray, setHashtagArray] = useState([]);
 
   useEffect(() => {
-    const loadPostLikes = async () => {
+    const loadPostLikesandFavorited = async () => {
       try {
-        const data = await getPostnumLikes(idPost);
-        console.log(data);
-        setNumLikes(data);
+        const postNumLikes = await getPostnumLikes(idPost);
+
+        const postIsLikedByUser = await getLikeStatus(idPost, token);
+
+        const postIsFavoritedByUser = await getUserFavorites(token);
+
+        const postIsFavorited = postIsFavoritedByUser.find((post) => {
+          return post.idPost === idPost;
+        });
+
+        if (!postIsFavorited) {
+          setIsFavorite(false);
+        } else {
+          setIsFavorite(true);
+        }
+
+        setNumLikes(postNumLikes);
+        setIsLiked(postIsLikedByUser);
       } catch (error) {
         console.error(error.message);
       }
     };
 
-    loadPostLikes();
+    loadPostLikesandFavorited();
 
     if (hashtag) {
       setHashtagArray(hashtag.replace(/\s+/g, "").split(","));
     }
-  }, []);
+  }, [hashtag, idPost, token]);
 
   console.log(numLikes);
 
@@ -135,7 +153,8 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
 
             <section className="infoLikesFavorited">
               <p>
-                Le han dado like <span className="numLikes">{numLikes} </span>
+                Le han dado like
+                <span className="numLikes"> {numLikes ? numLikes : 0} </span>
                 personas.
               </p>
             </section>
@@ -155,7 +174,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
               </section>
               <section className="AuthorComment">
                 <p className="authorName">
-                  {name}
+                  <Link to="/profile/:username">{name}</Link>
                   <span className="authorUsername">{` @${username}`}</span>
                 </p>
 
@@ -177,7 +196,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                     <section key={index} className="userComment">
                       <section className="commentsAvatar">
                         {!comment.avatar && <UserDefaultAvatar />}
-                        {avatar && (
+                        {comment.avatar && (
                           <img
                             className="commentAvatar"
                             alt={`Avatar de ${comment.name}`}

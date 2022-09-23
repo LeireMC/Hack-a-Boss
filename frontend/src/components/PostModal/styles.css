@@ -51,6 +51,9 @@
 .userAvatar,
 .commentsAvatar {
   margin-right: 0.6rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50px;
 }
 
 .authorName {

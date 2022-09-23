@@ -21,17 +21,6 @@ const usePosts = () => {
     setPosts([...posts]);
   };
 
-  /*   const addLike = (idPost, like) => {
-    console.log({ idPost, posts });
-    const postIndex = posts.findIndex((post) => {
-      return post.idPost === idPost;
-    });
-
-    console.log({ postIndex, numLikes: posts[postIndex].likes.numLikes });
-    posts[postIndex].likes.numLikes.push(like);
-    setPosts([...posts]);
-  }; */
-
   useEffect(() => {
     const loadPosts = async () => {
       try {

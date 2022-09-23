@@ -7,7 +7,6 @@ const SearchBar = ({ searchParams, setSearchParams }) => {
 
   const [search, setSearch] = useState(initialSearch);
 
-  console.log(search);
   return (
     <form
       className="header-searcher"
@@ -20,19 +19,6 @@ const SearchBar = ({ searchParams, setSearchParams }) => {
           queryParams.search = search;
         }
         setSearchParams(new URLSearchParams(queryParams));
-        /* const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/posts?search=${search}`
-          );
-
-          const body = await res.json();
-
-          if (!res.ok) {
-            console.log(body);
-            throw new Error(body.message);
-          }
-          console.log(body.data);
-
-          setPosts(body.data); */
       }}
     >
       <input

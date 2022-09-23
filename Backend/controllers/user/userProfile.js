@@ -39,7 +39,6 @@ const userProfile = async (req, res, next) => {
             const photos = await postPhotos(userPosts[i].id);
 
             const comments = await postComments(userPosts[i].id);
-            console.log({ photos, comments });
 
             //añadimos los datos recuperados al array que devolverá la respuesta
             postsInfo.push({ ...userPosts[i], photos, comments });

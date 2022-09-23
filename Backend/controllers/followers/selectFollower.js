@@ -12,8 +12,6 @@ const selectFollowerUSer = async (req, res, next) => {
         //Recuperamos el id del usuario que será marcado como follower  ;
         const { followerId } = req.params;
 
-        console.log(followerId);
-
         //Miramos en la base de datos si este usuario ya figura en los seguidos
         const checkFollow = await checkFollower(followerId, userId);
 

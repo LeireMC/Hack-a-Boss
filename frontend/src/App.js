@@ -22,7 +22,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/post/:idPost" element={<PostPage />} />
           <Route path="/post/new" element={<NewPostPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
           <Route path="/editUserProfile" element={<EditUserProfilePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/following" element={<FollowingPage />} />

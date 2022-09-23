@@ -17,13 +17,14 @@ const HomePage = () => {
     selectPost,
     setSelectPost,
     addComment,
+    setPosts,
   } = usePosts();
 
   return (
     <>
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
       <main className="homePage">
-        <MenuTrendingToppics />
+        <MenuTrendingToppics setPosts={setPosts} />
         {loading && <Spinner />}
 
         <section className="postListContainer">
