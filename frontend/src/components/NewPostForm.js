@@ -1,99 +1,89 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTokenContext } from "../context/TokenContext";
 
-const NewPostForm = ({ token }) => {
+const NewPostForm = ({ addNewPost }) => {
   const [authorComment, setAuthorComment] = useState("");
   const [hashtag, setHashtag] = useState("");
 
+  const { token } = useTokenContext();
+
   const navigate = useNavigate();
-  const photoRef = useRef();
+  const imageRef = useRef(null);
 
   return (
-    <form
-      onSubmit={async (event) => {
-        try {
-          event.preventDefault();
+    <>
+      <form
+        onSubmit={async (event) => {
+          try {
+            event.preventDefault();
 
-          const newPost = { authorComment, hashtag };
+            const file = imageRef.current.files[0];
 
-          const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/posts/new`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-              },
-              body: JSON.stringify(newPost),
-            }
-          );
-
-          const body = await res.json();
-
-          if (!res.ok) {
-            throw new Error(body.message);
-          }
-
-          const postPhotos = photoRef.current.files[0];
-
-          if (postPhotos) {
             const formData = new FormData();
 
-            formData.append("postPhotos", postPhotos);
+            formData.append("authorComment", authorComment);
+            formData.append("hashtag", hashtag);
+            formData.append("post_photo", file);
 
-            const photoRes = await fetch(
-              `${process.env.REACT_APP_API_URL}/posts/${body.data.id}/photo`,
+            const res = await fetch(
+              `${process.env.REACT_APP_API_URL}/posts/new`,
               {
-                method: "PUT",
+                method: "POST",
                 headers: {
                   Authorization: token,
                 },
+
                 body: formData,
               }
             );
 
-            const photoBody = await photoRes.json();
+            const body = await res.json();
 
-            if (!photoRes.ok) {
-              throw new Error(photoBody.message);
+            if (!res.ok) {
+              throw new Error(body.message);
             }
+
+            addNewPost(body.data);
+            toast.success(body.message);
+            navigate("/");
+            setAuthorComment("");
+            setHashtag("");
+            imageRef.current.value = "";
+          } catch (error) {
+            console.error(error.message);
+            toast.error(error.message);
           }
-
-          toast.success(body.message);
-          navigate("/");
-          setAuthorComment("");
-          setHashtag("");
-        } catch (error) {
-          console.error(error.message);
-          toast.error(error.message);
-        }
-      }}
-    >
-      <label htmlFor="authorComment">AuthorComment:</label>
-      <input
-        id="authorComment"
-        type="text"
-        value={authorComment}
-        onChange={(event) => {
-          setAuthorComment(event.target.value);
         }}
-      />
+      >
+        <label htmlFor="authorComment">authorComment:</label>
+        <input
+          id="authorComment"
+          value={authorComment}
+          onChange={(event) => {
+            setAuthorComment(event.target.value);
+          }}
+          required
+        />
 
-      <label htmlFor="hashtag">Hashtag:</label>
-      <input
-        id="hashtag"
-        value={hashtag}
-        onChange={(event) => {
-          setHashtag(event.target.value);
-        }}
-      />
+        <label htmlFor="hashtag">hashtag:</label>
+        <input
+          id="hashtag"
+          placeholder="Introduce los hashtag separados por una coma"
+          value={hashtag}
+          onChange={(event) => {
+            setHashtag(event.target.value);
+          }}
+          required
+        />
 
-      <label htmlFor="photo">Photo :</label>
-      <input id="photo" type="file" accept="image/*" ref={photoRef} />
+        <label htmlFor="image">Image:</label>
+        <input id="image" type="file" ref={imageRef} accept="image/*" />
 
-      <button>Create post</button>
-    </form>
+        <button>Create Post</button>
+      </form>
+    </>
   );
 };
 
