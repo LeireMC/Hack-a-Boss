@@ -1,12 +1,12 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const NewPostForm = ({ token }) => {
   const [authorComment, setAuthorComment] = useState("");
   const [hashtag, setHashtag] = useState("");
 
   const navigate = useNavigate();
-
   const photoRef = useRef();
 
   return (
@@ -60,16 +60,20 @@ const NewPostForm = ({ token }) => {
             }
           }
 
-          console.log(body.message);
+          toast.success(body.message);
           navigate("/");
+          setAuthorComment("");
+          setHashtag("");
         } catch (error) {
           console.error(error.message);
+          toast.error(error.message);
         }
       }}
     >
-      <label htmlFor="authorComment">Comment:</label>
+      <label htmlFor="authorComment">AuthorComment:</label>
       <input
         id="authorComment"
+        type="text"
         value={authorComment}
         onChange={(event) => {
           setAuthorComment(event.target.value);

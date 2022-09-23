@@ -3,8 +3,9 @@ import NewPostForm from "../../components/NewPostForm";
 import { useTokenContext } from "../../context/TokenContext";
 
 const NewPostPage = () => {
+  //llamamos a useTokenContext para recibir el token
   const { token } = useTokenContext();
-
+  console.log(token);
   if (!token) {
     return <Navigate to="/login" />;
   }
