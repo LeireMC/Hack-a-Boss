@@ -21,9 +21,11 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
     comments,
     hashtag,
     name,
+    lastname,
     photos,
     idPost,
     username,
+    idUser,
   } = post;
   const { token } = useTokenContext();
 
@@ -162,7 +164,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
 
           <section className="postData">
             <section className="userInfo">
-              <section className="userAvatar">
+              <figure className="userAvatar">
                 {!avatar && <UserDefaultAvatar />}
                 {avatar && (
                   <img
@@ -171,10 +173,12 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                     src={`${process.env.REACT_APP_API_URL}/avatar/${avatar}`}
                   />
                 )}
-              </section>
+              </figure>
               <section className="AuthorComment">
                 <p className="authorName">
-                  <Link to="/profile/:username">{name}</Link>
+                  <Link to={`/profile/${idUser}`}>
+                    {name} {lastname}
+                  </Link>
                   <span className="authorUsername">{` @${username}`}</span>
                 </p>
 
@@ -194,7 +198,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                 comments.map((comment, index) => {
                   return (
                     <section key={index} className="userComment">
-                      <section className="commentsAvatar">
+                      <figure className="commentsAvatar">
                         {!comment.avatar && <UserDefaultAvatar />}
                         {comment.avatar && (
                           <img
@@ -203,7 +207,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                             src={`${process.env.REACT_APP_API_URL}/avatar/${avatar}`}
                           />
                         )}
-                      </section>
+                      </figure>
                       <section className="commentInfo">
                         <p className="commentUsername">{`@${comment.username}`}</p>
                         <p className="commentText">{comment.body}</p>

@@ -72,7 +72,7 @@ async function getPostsBySearch(orderDirection, search) {
 
         const [posts] = await connection.query(
             `
-        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
         FROM post INNER JOIN user ON post.idUser = user.id
         WHERE authorComment LIKE ? OR hashtag LIKE ?
         ORDER BY post.createdAt ${orderDirection} `,
@@ -93,7 +93,7 @@ async function getPostsByOrderDirection(orderDirection) {
 
         const [posts] = await connection.query(
             `
-            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
             FROM post INNER JOIN user ON post.idUser = user.id
             ORDER BY post.createdAt ${orderDirection}`
         );
@@ -112,7 +112,7 @@ async function getPublicPostsBySearch(orderDirection, search) {
 
         const [posts] = await connection.query(
             `
-        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+        SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
         FROM post INNER JOIN user ON post.idUser = user.id
         WHERE user.privacy = ? AND authorComment LIKE ? OR hashtag LIKE ?
         ORDER BY post.createdAt ${orderDirection}`,
@@ -133,7 +133,7 @@ async function getPublicPostsByOrderDirection(orderDirection) {
 
         const [posts] = await connection.query(
             `
-            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar, user.privacy
+            SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
             FROM post INNER JOIN user ON post.idUser = user.id WHERE user.privacy = ?
             ORDER BY post.createdAt ${orderDirection}`,
             ['public']
@@ -152,7 +152,7 @@ async function getPostById(idPost) {
         connection = await getDB();
 
         const [post] = await connection.query(
-            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar,user.privacy
+            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar,user.privacy
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ?`,
             [idPost]
@@ -171,7 +171,7 @@ async function getPostByIdandUser(idPost, idUser) {
         connection = await getDB();
 
         const [post] = await connection.query(
-            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.avatar
+            `SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar
             FROM post INNER JOIN user ON (post.idUser = user.id)
             WHERE post.id = ? AND post.idUser = ?`,
             [idPost, idUser]
@@ -208,7 +208,7 @@ async function postComments(idPost) {
         connection = await getDB();
 
         const [comments] = await connection.query(
-            `SELECT comment.body, comment.idUser, user.name, user.username, user.avatar FROM comment INNER JOIN user ON (comment.idUser=user.id)
+            `SELECT comment.body, comment.idUser, user.name, user.username, user.lastname, user.avatar FROM comment INNER JOIN user ON (comment.idUser=user.id)
             WHERE idPost = ? 
             ORDER BY comment.createdAt DESC`,
             [idPost]

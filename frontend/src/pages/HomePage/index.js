@@ -14,8 +14,6 @@ const HomePage = () => {
     posts,
     loading,
     errorMessage,
-    selectPost,
-    setSelectPost,
     addComment,
     setPosts,
   } = usePosts();
@@ -26,17 +24,11 @@ const HomePage = () => {
       <main className="homePage">
         <MenuTrendingToppics setPosts={setPosts} />
         {loading && <Spinner />}
-
-        <section className="postListContainer">
-          {posts.length > 0 && (
-            <PostsList
-              posts={posts}
-              selectPost={selectPost}
-              setSelectPost={setSelectPost}
-              addComment={addComment}
-            />
-          )}
-        </section>
+        {posts.length > 0 && (
+          <section className="postListContainer">
+            <PostsList posts={posts} addComment={addComment} />
+          </section>
+        )}
 
         {errorMessage && <ErrorMessage msg={errorMessage} />}
       </main>

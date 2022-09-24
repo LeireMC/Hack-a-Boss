@@ -11,6 +11,7 @@ import EditUserProfilePage from "./pages/EditUserProfilePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import FollowingPage from "./pages/FollowingPage";
 import { CustomTokenContextProvider } from "./Contexts/TokenContext";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -22,10 +23,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/post/:idPost" element={<PostPage />} />
           <Route path="/post/new" element={<NewPostPage />} />
-          <Route path="/profile/:username" element={<ProfilePage />} />
+          <Route path="/profile/:idUser" element={<ProfilePage />} />
           <Route path="/editUserProfile" element={<EditUserProfilePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/following" element={<FollowingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <ToastContainer position="bottom-center" newestOnTop={true} />
       </CustomTokenContextProvider>

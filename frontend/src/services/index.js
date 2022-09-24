@@ -65,3 +65,19 @@ export const getUserFavorites = async (token) => {
 
   return body.data;
 };
+
+export const getUserByIdService = async (navigate, idUser) => {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/user/${idUser}`);
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    if (res.status === 404) {
+      navigate("/notfound");
+    }
+
+    throw new Error(body.message);
+  }
+  console.log(body.data);
+  return body.data;
+};

@@ -16,7 +16,6 @@ const Post = ({ post, setOpenModal, setSelectPost }) => {
           setSelectPost={setSelectPost}
         />
       )}
-      {/*       <Modal /> */}
     </>
   );
 };

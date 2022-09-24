@@ -1,6 +1,7 @@
 const { token } = require('morgan');
 const getDB = require('../../db/getDB');
 const { generateError } = require('../../helpers');
+const { likesCounter } = require('../../repositories/likes-repositories');
 const {
     postPhotos,
     postComments,
@@ -13,7 +14,7 @@ const userProfile = async (req, res, next) => {
 
         const { idUser } = req.params;
 
-        const [[user]] = await connection.query(
+        const [user] = await connection.query(
             `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ?`,
             [idUser]
         );
@@ -32,7 +33,7 @@ const userProfile = async (req, res, next) => {
         );
 
         //Array que devolverá la respuesta
-        const postsInfo = [user, userPosts];
+        const postsInfo = [];
 
         //Cada post tiene sus imagenes y comentarios-> recorrer con un bucle los post recibidos y buscar sus fotos y comentarios
         for (let i = 0; i < userPosts.length; i++) {
@@ -40,15 +41,19 @@ const userProfile = async (req, res, next) => {
 
             const comments = await postComments(userPosts[i].id);
 
+            const likes = await likesCounter(userPosts[i].id);
+
             //añadimos los datos recuperados al array que devolverá la respuesta
-            postsInfo.push({ ...userPosts[i], photos, comments });
+            postsInfo.push({ ...userPosts[i], photos, comments, likes });
         }
+
+        user.push(postsInfo);
 
         //Respuesta con la lista de post y sus respectivos comentarios y fotos
 
         res.send({
             status: 'ok',
-            data: postsInfo,
+            data: user,
         });
     } catch (error) {
         next(error);
