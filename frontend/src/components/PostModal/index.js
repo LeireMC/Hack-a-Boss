@@ -3,16 +3,17 @@ import { useState, useEffect } from "react";
 import PhotoSlider from "../PhotoSlider";
 import { toast } from "react-toastify";
 import CloseButton from "../CloseButton";
-import UserDefaultAvatar from "../UserDefaultAvatar";
 import { useTokenContext } from "../../Contexts/TokenContext";
-import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
-import { LikedIcon, UnlikedIcon } from "../LikeIcons";
 import {
   getLikeStatus,
   getPostnumLikes,
   getUserFavorites,
 } from "../../services";
 import { Link } from "react-router-dom";
+import LikeButton from "../LikeButton";
+import FavoriteButton from "../FavoriteButton";
+import Avatar from "../Avatar";
+import PostComments from "../PostComments";
 
 const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
   const {
@@ -38,39 +39,39 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
   const [hashtagArray, setHashtagArray] = useState([]);
 
   useEffect(() => {
-    const loadPostLikesandFavorited = async () => {
-      try {
-        const postNumLikes = await getPostnumLikes(idPost);
+    if (token) {
+      const loadPostLikesandFavorited = async () => {
+        try {
+          const postNumLikes = await getPostnumLikes(idPost);
 
-        const postIsLikedByUser = await getLikeStatus(idPost, token);
+          const postIsLikedByUser = await getLikeStatus(idPost, token);
 
-        const postIsFavoritedByUser = await getUserFavorites(token);
+          const postIsFavoritedByUser = await getUserFavorites(token);
 
-        const postIsFavorited = postIsFavoritedByUser.find((post) => {
-          return post.idPost === idPost;
-        });
+          const postIsFavorited = postIsFavoritedByUser.find((post) => {
+            return post.idPost === idPost;
+          });
 
-        if (!postIsFavorited) {
-          setIsFavorite(false);
-        } else {
-          setIsFavorite(true);
+          if (!postIsFavorited) {
+            setIsFavorite(false);
+          } else {
+            setIsFavorite(true);
+          }
+
+          setNumLikes(postNumLikes);
+          setIsLiked(postIsLikedByUser);
+        } catch (error) {
+          console.error(error.message);
         }
+      };
 
-        setNumLikes(postNumLikes);
-        setIsLiked(postIsLikedByUser);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    loadPostLikesandFavorited();
+      loadPostLikesandFavorited();
+    }
 
     if (hashtag) {
       setHashtagArray(hashtag.replace(/\s+/g, "").split(","));
     }
   }, [hashtag, idPost, token]);
-
-  console.log(numLikes);
 
   return (
     <>
@@ -88,68 +89,19 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
             />
             {token && (
               <section className="icons">
-                <button
-                  onClick={async (event) => {
-                    try {
-                      const res = await fetch(
-                        `${process.env.REACT_APP_API_URL}/post/${idPost}/favorite`,
-                        {
-                          method: "POST",
-                          headers: {
-                            Authorization: token,
-                          },
-                        }
-                      );
-                      const body = await res.json();
-
-                      console.log(body.data.favorite);
-
-                      setIsFavorite(body.data.favorite);
-                      console.log(isFavorite);
-
-                      if (!res.ok) {
-                        throw new Error(body.message);
-                      }
-                    } catch (error) {
-                      console.log(error.message);
-                      toast.error(error.message);
-                    }
-                  }}
-                  className="bookmark"
-                >
-                  {isFavorite && <FavoritedIcon />}
-                  {!isFavorite && <UnfavoritedIcon />}
-                </button>
-                <button
-                  onClick={async (event) => {
-                    try {
-                      const res = await fetch(
-                        `${process.env.REACT_APP_API_URL}/post/${idPost}/like`,
-                        {
-                          method: "POST",
-                          headers: {
-                            Authorization: token,
-                          },
-                        }
-                      );
-                      const body = await res.json();
-
-                      setNumLikes(body.data.numLikes.numLikes);
-                      setIsLiked(body.data.liked);
-
-                      if (!res.ok) {
-                        throw new Error(body.message);
-                      }
-                    } catch (error) {
-                      console.log(error.message);
-                      toast.error(error.message);
-                    }
-                  }}
-                  className="heart"
-                >
-                  {isLiked && <LikedIcon />}
-                  {!isLiked && <UnlikedIcon />}
-                </button>
+                <FavoriteButton
+                  idPost={idPost}
+                  token={token}
+                  setIsFavorite={setIsFavorite}
+                  isFavorite={isFavorite}
+                />
+                <LikeButton
+                  idPost={idPost}
+                  token={token}
+                  setNumLikes={setNumLikes}
+                  setIsLiked={setIsLiked}
+                  isLiked={isLiked}
+                />
               </section>
             )}
 
@@ -165,14 +117,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
           <section className="postData">
             <section className="userInfo">
               <figure className="userAvatar">
-                {!avatar && <UserDefaultAvatar />}
-                {avatar && (
-                  <img
-                    className="userAvatar"
-                    alt={`Avatar de ${name}`}
-                    src={`${process.env.REACT_APP_API_URL}/avatar/${avatar}`}
-                  />
-                )}
+                <Avatar avatar={avatar} name={name} />
               </figure>
               <section className="AuthorComment">
                 <p className="authorName">
@@ -198,66 +143,52 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                 comments.map((comment, index) => {
                   return (
                     <section key={index} className="userComment">
-                      <figure className="commentsAvatar">
-                        {!comment.avatar && <UserDefaultAvatar />}
-                        {comment.avatar && (
-                          <img
-                            className="commentAvatar"
-                            alt={`Avatar de ${comment.name}`}
-                            src={`${process.env.REACT_APP_API_URL}/avatar/${avatar}`}
-                          />
-                        )}
-                      </figure>
-                      <section className="commentInfo">
-                        <p className="commentUsername">{`@${comment.username}`}</p>
-                        <p className="commentText">{comment.body}</p>
-                      </section>
+                      <PostComments comment={comment} />
                     </section>
                   );
                 })}
             </section>
-            <form
-              onSubmit={async (event) => {
-                try {
-                  event.preventDefault();
-                  const res = await fetch(
-                    `${process.env.REACT_APP_API_URL}/comments/new/${idPost}`,
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: token,
-                      },
-                      body: JSON.stringify({ body: newComment }),
+            {token && (
+              <form
+                onSubmit={async (event) => {
+                  try {
+                    event.preventDefault();
+                    const res = await fetch(
+                      `${process.env.REACT_APP_API_URL}/comments/new/${idPost}`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: token,
+                        },
+                        body: JSON.stringify({ body: newComment }),
+                      }
+                    );
+                    const body = await res.json();
+
+                    if (!res.ok) {
+                      throw new Error(body.message);
                     }
-                  );
-                  const body = await res.json();
 
-                  if (!res.ok) {
-                    throw new Error(body.message);
+                    addComment(idPost, body.data);
+                    setNewComment("");
+                  } catch (error) {
+                    console.log(error.message);
                   }
-
-                  addComment(idPost, body.data);
-                  setNewComment("");
-
-                  toast.success("Comentario añadido!");
-                } catch (error) {
-                  console.log(error.message);
-                  toast.error(error.message);
-                }
-              }}
-            >
-              <textarea
-                className="commentForm"
-                value={newComment}
-                placeholder="Escribe un comentario"
-                onChange={(event) => {
-                  setNewComment(event.target.value);
                 }}
-                required
-              ></textarea>
-              <button className="commentButton">Comentar</button>
-            </form>
+              >
+                <textarea
+                  className="commentForm"
+                  value={newComment}
+                  placeholder="Escribe un comentario"
+                  onChange={(event) => {
+                    setNewComment(event.target.value);
+                  }}
+                  required
+                ></textarea>
+                <button className="commentButton">Comentar</button>
+              </form>
+            )}
           </section>
         </article>
       </section>

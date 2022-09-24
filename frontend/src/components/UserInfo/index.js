@@ -1,3 +1,4 @@
+import "./styles.css";
 import { Link } from "react-router-dom";
 
 const UserInfo = ({ userInfo }) => {
@@ -7,7 +8,7 @@ const UserInfo = ({ userInfo }) => {
     <>
       <section className="userAvatar">
         <img
-          className="userAvatar"
+          className="userProfileAvatar"
           alt={`Avatar de ${name}`}
           src={`${process.env.REACT_APP_API_URL}/avatar/${avatar}`}
         />

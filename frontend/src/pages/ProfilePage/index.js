@@ -19,7 +19,7 @@ const ProfilePage = () => {
       <main className="profilePage">
         {user.length > 0 && (
           <>
-            <section>
+            <section className="userInfoSection">
               <UserInfo userInfo={user[0]} />
             </section>
             <section>

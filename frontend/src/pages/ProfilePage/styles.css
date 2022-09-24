@@ -1,0 +1,23 @@
+.userInfoSection {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 1rem;
+}
+
+/* .profilePage {
+  display: flex;
+  flex-direction: column;
+}
+
+.userInfoSection {
+  display: flex;
+  min-height: 10rem;
+  flex-grow: 1;
+}
+
+img .userProfileAvatar {
+  height: 5rem;
+}
+ */
