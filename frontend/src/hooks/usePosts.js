@@ -2,21 +2,20 @@ import { useState, useEffect } from "react";
 import { getAllPostsService } from "../services";
 import { useSearchParams } from "react-router-dom";
 import { useTokenContext } from "../Contexts/TokenContext";
+import { toast } from "react-toastify";
 
 const usePosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+
   const { token } = useTokenContext();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const addComment = (idPost, comment) => {
-    console.log({ idPost, posts });
     const postIndex = posts.findIndex((post) => {
       return post.idPost === idPost;
     });
 
-    console.log({ postIndex, post: posts[postIndex] });
     posts[postIndex].comments.unshift(comment);
     setPosts([...posts]);
   };
@@ -31,7 +30,8 @@ const usePosts = () => {
         setPosts(data);
       } catch (error) {
         console.error(error.message);
-        setErrorMessage(error.message);
+        toast.error(error.message);
+        setPosts([]);
       } finally {
         setLoading(false);
       }
@@ -46,7 +46,7 @@ const usePosts = () => {
     posts,
     setPosts,
     loading,
-    errorMessage,
+
     addComment,
   };
 };

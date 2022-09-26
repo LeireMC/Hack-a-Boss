@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useState, useEffect } from "react";
-import PhotoSlider from "../PhotoSlider";
 import { toast } from "react-toastify";
+import PhotoSlider from "../PhotoSlider";
 import CloseButton from "../CloseButton";
 import { useTokenContext } from "../../Contexts/TokenContext";
 import {
@@ -15,7 +15,13 @@ import FavoriteButton from "../FavoriteButton";
 import Avatar from "../Avatar";
 import PostComments from "../PostComments";
 
-const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
+const PostModal = ({
+  post,
+  setOpenModal,
+  openModal,
+  setSelectPost,
+  addComment,
+}) => {
   const {
     authorComment,
     avatar,
@@ -29,8 +35,6 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
     idUser,
   } = post;
   const { token } = useTokenContext();
-
-  console.log(post);
 
   const [newComment, setNewComment] = useState("");
   const [numLikes, setNumLikes] = useState();
@@ -62,6 +66,7 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
           setIsLiked(postIsLikedByUser);
         } catch (error) {
           console.error(error.message);
+          toast.error(error.message);
         }
       };
 
@@ -86,32 +91,37 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
               username={username}
               setOpenModal={setOpenModal}
               setSelectPost={setSelectPost}
+              openModal={openModal}
             />
             {token && (
-              <section className="icons">
-                <FavoriteButton
-                  idPost={idPost}
-                  token={token}
-                  setIsFavorite={setIsFavorite}
-                  isFavorite={isFavorite}
-                />
-                <LikeButton
-                  idPost={idPost}
-                  token={token}
-                  setNumLikes={setNumLikes}
-                  setIsLiked={setIsLiked}
-                  isLiked={isLiked}
-                />
-              </section>
+              <>
+                <section className="icons">
+                  <FavoriteButton
+                    idPost={idPost}
+                    token={token}
+                    setIsFavorite={setIsFavorite}
+                    isFavorite={isFavorite}
+                  />
+                  <LikeButton
+                    idPost={idPost}
+                    token={token}
+                    setNumLikes={setNumLikes}
+                    setIsLiked={setIsLiked}
+                    isLiked={isLiked}
+                  />
+                </section>
+                <section className="infoLikesFavorited">
+                  <p>
+                    Le han dado like
+                    <span className="numLikes">
+                      {" "}
+                      {numLikes ? numLikes : 0}{" "}
+                    </span>
+                    personas.
+                  </p>
+                </section>
+              </>
             )}
-
-            <section className="infoLikesFavorited">
-              <p>
-                Le han dado like
-                <span className="numLikes"> {numLikes ? numLikes : 0} </span>
-                personas.
-              </p>
-            </section>
           </section>
 
           <section className="postData">
@@ -122,9 +132,11 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
               <section className="AuthorComment">
                 <p className="authorName">
                   <Link to={`/profile/${idUser}`}>
-                    {name} {lastname}
+                    {`${name} ${lastname !== null ? lastname : ""}`}
                   </Link>
-                  <span className="authorUsername">{` @${username}`}</span>
+                </p>
+                <p className="authorUsername">
+                  <Link to={`/profile/${idUser}`}>{`@${username}`}</Link>
                 </p>
 
                 <p className="authorComment">{authorComment}</p>
@@ -137,17 +149,19 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                 )}
               </section>
             </section>
-            <p className="commentsTitle">Comentarios</p>
-            <section className="usersComments">
-              {comments &&
-                comments.map((comment, index) => {
+            {comments.length > 0 && (
+              <section className="usersComments">
+                <p className="commentsTitle">Comentarios</p>
+                {comments.map((comment, index) => {
                   return (
                     <section key={index} className="userComment">
                       <PostComments comment={comment} />
                     </section>
                   );
                 })}
-            </section>
+              </section>
+            )}
+
             {token && (
               <form
                 onSubmit={async (event) => {
@@ -171,9 +185,12 @@ const PostModal = ({ post, setOpenModal, setSelectPost, addComment }) => {
                     }
 
                     addComment(idPost, body.data);
+
                     setNewComment("");
+                    toast.success("¡Comentario añadido con éxito!");
                   } catch (error) {
-                    console.log(error.message);
+                    console.error(error.message);
+                    toast.error(error.message);
                   }
                 }}
               >

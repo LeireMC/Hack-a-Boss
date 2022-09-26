@@ -38,6 +38,7 @@ const PostsList = ({ posts, addComment }) => {
             post={selectPost}
             setSelectPost={setSelectPost}
             addComment={addComment}
+            openModal={openModal}
           />
         )}
       </section>

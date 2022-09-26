@@ -28,7 +28,7 @@ const userProfile = async (req, res, next) => {
 
         const [userPosts] = await connection.query(
             `SELECT id, authorComment, hashtag FROM post
-            WHERE idUser = ?`,
+            WHERE idUser = ? ORDER BY createdAt DESC`,
             [idUser]
         );
 

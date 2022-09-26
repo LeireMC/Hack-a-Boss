@@ -39,12 +39,12 @@ const getPosts = async (req, res, next) => {
             } else {
                 posts = await getPostsByOrderDirection(orderDirection);
             }
+        }
 
-            if (posts.length === 0) {
-                throw generateError(
-                    'No hay ningun post relacionado con ese término que estás buscando'
-                );
-            }
+        if (posts.length === 0) {
+            throw generateError(
+                'No hay ningun post relacionado con ese término que estás buscando'
+            );
         }
 
         //Array que devolverá la respuesta

@@ -1,11 +1,16 @@
 import "./styles.css";
 import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const FavoriteButton = ({ idPost, token, setIsFavorite, isFavorite }) => {
+  const [className, setClassName] = useState("");
+
   return (
     <button
       onClick={async (event) => {
         try {
+          setClassName("");
           const res = await fetch(
             `${process.env.REACT_APP_API_URL}/post/${idPost}/favorite`,
             {
@@ -17,19 +22,19 @@ const FavoriteButton = ({ idPost, token, setIsFavorite, isFavorite }) => {
           );
           const body = await res.json();
 
-          console.log(body.data.favorite);
-
-          setIsFavorite(body.data.favorite);
-          console.log(isFavorite);
-
           if (!res.ok) {
             throw new Error(body.message);
           }
+
+          setIsFavorite(body.data.favorite);
+          setClassName("animate");
+          toast.success(body.message);
         } catch (error) {
-          console.log(error.message);
+          console.error(error.message);
+          toast.error(error.message);
         }
       }}
-      className="bookmark"
+      className={`bookmark ${className}`}
     >
       {isFavorite && <FavoritedIcon />}
       {!isFavorite && <UnfavoritedIcon />}

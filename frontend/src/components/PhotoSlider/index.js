@@ -1,6 +1,5 @@
 import "./styles.css";
 import { useState, Fragment } from "react";
-/* import { useNavigate } from "react-router-dom"; */
 import { RightArrow, LeftArrow } from "../ArrowIcons";
 
 const PhotoSlider = ({
@@ -10,8 +9,6 @@ const PhotoSlider = ({
   setSelectPost,
   post,
 }) => {
-  /*   const navigate = useNavigate(); */
-
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -39,8 +36,10 @@ const PhotoSlider = ({
     <section
       className="photo-slider"
       onClick={() => {
-        setOpenModal(true);
-        setSelectPost(post);
+        if (!setOpenModal) {
+          setOpenModal(true);
+          setSelectPost(post);
+        }
       }}
     >
       {photos.map((photo, index) => {

@@ -4,7 +4,7 @@ const {
     selectFollower,
 } = require('../../repositories/followers-repositories');
 
-const selectFollowerUSer = async (req, res, next) => {
+const selectFollowerUser = async (req, res, next) => {
     try {
         //recuperamos el id del usuario que quiere marcar un follower
         const userId = req.userAuth.id;
@@ -38,4 +38,4 @@ const selectFollowerUSer = async (req, res, next) => {
     }
 };
 
-module.exports = selectFollowerUSer;
+module.exports = selectFollowerUser;

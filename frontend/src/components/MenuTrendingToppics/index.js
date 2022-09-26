@@ -1,23 +1,15 @@
 import "./styles.css";
 
-const MenuTrendingToppics = ({ setPosts }) => {
+const MenuTrendingToppics = ({ setPosts, searchParams, setSearchParams }) => {
   const handleClickInMenuOptions = async (e) => {
-    try {
-      e.preventDefault();
-      console.log(e.target.value);
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts?search=${e.target.value}`
-      );
+    e.preventDefault();
 
-      const body = await res.json();
+    const queryParams = {};
 
-      if (!res.ok) {
-        throw new Error(body.message);
-      }
-      setPosts(body.data);
-    } catch (error) {
-      console.error(error.message);
+    if (e.target.value) {
+      queryParams.search = e.target.value;
     }
+    setSearchParams(new URLSearchParams(queryParams));
   };
   return (
     <section className="menuTrendingToppic">
