@@ -16,7 +16,7 @@ const getFavorites = async (req, res, next) => {
         [favorites] = await connection.query(
             `
         SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=?
-        `,
+            `,
             [idUser]
         );
 
