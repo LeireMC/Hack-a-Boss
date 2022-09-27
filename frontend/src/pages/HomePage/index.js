@@ -5,24 +5,34 @@ import usePosts from "../../hooks/usePosts";
 import PostsList from "../../components/PostsList";
 import MenuTrendingToppics from "../../components/MenuTrendingToppics";
 import Spinner from "../../components/Spinner";
-import ErrorMessage from "../../components/ErrorMessage";
 
 const HomePage = () => {
-  const { posts, loading, errorMessage } = usePosts();
+  const {
+    searchParams,
+    setSearchParams,
+    posts,
+    loading,
+    addComment,
+    setPosts,
+  } = usePosts();
 
   return (
     <>
-      <Header />
-      <main>
-        <MenuTrendingToppics />
+      <Header searchParams={searchParams} setSearchParams={setSearchParams} />
+      <main className="homePage">
+        <MenuTrendingToppics
+          setPosts={setPosts}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
         {loading && <Spinner />}
-
-        <section className="postListContainer">
-          {posts.length > 0 && <PostsList posts={posts} />}
-        </section>
-
-        {errorMessage && <ErrorMessage msg={errorMessage} />}
+        {posts.length > 0 && (
+          <section className="postListContainer">
+            <PostsList posts={posts} addComment={addComment} />
+          </section>
+        )}
       </main>
+
       <Footer />
     </>
   );

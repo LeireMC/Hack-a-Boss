@@ -35,32 +35,55 @@ async function userLikesFirst(postId, userId) {
 }
 
 //Función que pone la propiedad liked de la tabla likes en true(1)
-async function userLikes(postId) {
+async function userLikes(postId, userId) {
     let connection;
     try {
         connection = await getDB();
 
-        await connection.query(`UPDATE likes SET liked = 1 WHERE idPost=?`, [
-            postId,
-        ]);
+        await connection.query(
+            `UPDATE likes SET liked = 1 WHERE idPost=? AND idUser=?`,
+            [postId, userId]
+        );
     } finally {
         if (connection) connection.release();
     }
 }
 
 //Función que pone la propiedad liked de la tabla likes en false(0)
-async function userUnlikes(postId) {
+async function userUnlikes(postId, userId) {
     let connection;
     try {
         connection = await getDB();
 
-        await connection.query(`UPDATE likes SET liked = 0 WHERE idPost=?`, [
-            postId,
-        ]);
+        await connection.query(
+            `UPDATE likes SET liked = 0 WHERE idPost=? AND idUser= ?`,
+            [postId, userId]
+        );
     } finally {
         if (connection) connection.release();
     }
 }
 
-module.exports = { checkLikes, userLikes, userUnlikes, userLikesFirst };
+async function likesCounter(postId) {
+    let connection;
+    try {
+        connection = await getDB();
 
+        const [[numLikes]] = await connection.query(
+            `SELECT COUNT(*) AS numLikes FROM likes WHERE idPost=? AND liked=?;`,
+            [postId, 1]
+        );
+
+        return numLikes;
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
+module.exports = {
+    checkLikes,
+    userLikes,
+    userUnlikes,
+    userLikesFirst,
+    likesCounter,
+};

@@ -1,14 +1,19 @@
 import "./styles.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, Fragment } from "react";
 import { RightArrow, LeftArrow } from "../ArrowIcons";
 
-const PhotoSlider = ({ idPost, photos, username }) => {
-  const navigate = useNavigate();
-
+const PhotoSlider = ({
+  photos,
+  username,
+  setOpenModal,
+  setSelectPost,
+  post,
+}) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  const previousPhoto = () => {
+  const previousPhoto = (e) => {
+    e.stopPropagation();
     if (currentPhoto === photos.length - 1) {
       setCurrentPhoto(0);
       return;
@@ -17,7 +22,8 @@ const PhotoSlider = ({ idPost, photos, username }) => {
     setCurrentPhoto(currentPhoto + 1);
   };
 
-  const nextPhoto = () => {
+  const nextPhoto = (e) => {
+    e.stopPropagation();
     if (currentPhoto === 0) {
       setCurrentPhoto(photos.length - 1);
       return;
@@ -27,26 +33,33 @@ const PhotoSlider = ({ idPost, photos, username }) => {
   };
 
   return (
-    <section className="photo-slider">
+    <section
+      className="photo-slider"
+      onClick={() => {
+        if (!setOpenModal) {
+          setOpenModal(true);
+          setSelectPost(post);
+        }
+      }}
+    >
       {photos.map((photo, index) => {
         return (
-          <>
+          <Fragment key={index}>
             {index === currentPhoto && (
               <img
                 className="PostPhoto"
                 src={`${process.env.REACT_APP_API_URL}/post/${photo.name}`}
                 alt={`Created by ${username}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/post/${idPost}`);
+                onLoad={() => {
+                  setImageLoaded(true);
                 }}
               />
             )}
-          </>
+          </Fragment>
         );
       })}
 
-      {photos.length > 1 && (
+      {photos.length > 1 && imageLoaded && (
         <>
           <button className="previous_photo" onClick={previousPhoto}>
             <LeftArrow />

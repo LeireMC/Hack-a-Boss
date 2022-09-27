@@ -1,4 +1,5 @@
 const { generateError } = require('../../helpers');
+const { likesCounter } = require('../../repositories/likes-repositories');
 const {
     getPostById,
     postPhotos,
@@ -26,11 +27,13 @@ const getPost = async (req, res, next) => {
         //Seleccionamos los comentarios asociados a ese post
         const comments = await postComments(idPost);
 
+        //Seleccionamos el numero de likes correspondientes a ese post
+        const likes = await likesCounter(idPost);
         //Creamos el array en el que devolveremos la respuesta
         const postInfo = [];
 
         //Pusheamos los datos del post junto a los de las fotos y los comentarios
-        postInfo.push(...post, photos, comments);
+        postInfo.push(...post, photos, comments, likes);
 
         //mandamos la respuesta
         res.send({ status: 'ok', data: postInfo });

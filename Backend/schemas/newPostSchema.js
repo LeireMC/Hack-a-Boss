@@ -18,11 +18,12 @@ const newPostSchema = Joi.object().keys({
             );
         }),
     hashtag: Joi.string()
+        .min(0)
         .max(255)
         .lowercase()
         .error((errors) => {
             return new Error(
-                'Los hastags no pueden superar los 255 caracteres'
+                'Los hashtags no pueden superar los 255 caracteres'
             );
         }),
 });

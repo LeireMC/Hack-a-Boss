@@ -2,9 +2,9 @@ export const FavoritedIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="#ffffff8c"
+      width="25"
+      height="25"
+      fill="#ffffff"
       className="bi bi-bookmark-fill"
       viewBox="0 0 16 16"
     >
@@ -17,9 +17,9 @@ export const UnfavoritedIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="#ffffff8c"
+      width="25"
+      height="25"
+      fill="#ffffff"
       className="bi bi-bookmark"
       viewBox="0 0 16 16"
     >

@@ -4,15 +4,13 @@ const {
     selectFollower,
 } = require('../../repositories/followers-repositories');
 
-const selectFollowerUSer = async (req, res, next) => {
+const selectFollowerUser = async (req, res, next) => {
     try {
         //recuperamos el id del usuario que quiere marcar un follower
         const userId = req.userAuth.id;
 
         //Recuperamos el id del usuario que será marcado como follower  ;
         const { followerId } = req.params;
-
-        console.log(followerId);
 
         //Miramos en la base de datos si este usuario ya figura en los seguidos
         const checkFollow = await checkFollower(followerId, userId);
@@ -40,4 +38,4 @@ const selectFollowerUSer = async (req, res, next) => {
     }
 };
 
-module.exports = selectFollowerUSer;
+module.exports = selectFollowerUser;
