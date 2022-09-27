@@ -5,6 +5,7 @@ import logoHackAGram from "../../assets/images/logo.png";
 import MenuIcon from "../MenuIcon";
 import HomeIcon from "../HomeIcon";
 import SearchBar from "../SearchBar";
+
 import { useTokenContext } from "../../Contexts/TokenContext";
 import NotLoggedUserMenu from "../NotLoggedUserMenu";
 import LoggedUserMenu from "../LoggedUserMenu";
@@ -13,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ setSearchParams, searchParams }) => {
   const { token } = useTokenContext();
   const [menu, setMenu] = useState(false);
+
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -32,6 +34,7 @@ const Header = ({ setSearchParams, searchParams }) => {
         setSearchParams={setSearchParams}
         searchParams={searchParams}
       />
+
       <button
         type="button"
         className="header-button"

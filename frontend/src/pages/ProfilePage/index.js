@@ -21,6 +21,7 @@ const ProfilePage = () => {
   return (
     <>
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
+
       {userPosts.length > 0 && (
         <main className="profilePage">
           {userPosts.length > 0 && userPosts[0].privacy === "public" && (

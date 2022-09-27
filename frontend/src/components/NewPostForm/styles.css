@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 10px black;
+}
+
+.newPostContainer {
+  width: 45rem;
+  height: 47rem;
+  background: #829ca3;
+  border-radius: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3rem auto;
+}
+
+.li {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+} */
+
+label {
+  vertical-align: top;
+  margin: 0.5rem;
+  display: flex;
+  text-align: center;
+}
+
+.button {
+  background-color: #9e2a2b;
+  color: white;
+  border-radius: 1.5rem;
+  margin: 2rem;
+  padding: 0.7rem;
+  width: 15rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+#hashtag {
+  border-radius: 0.6rem;
+  width: 35rem;
+  height: 2rem;
+  margin: 2rem;
+}
+
+#authorComment {
+  border-radius: 0.6rem;
+  margin: 1rem;
+  width: 35rem;
+  height: 7rem;
+}
+
+::placeholder {
+  width: 30em;
+  height: 30em;
+  padding: 1rem;
+}

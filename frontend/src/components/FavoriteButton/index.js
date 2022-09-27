@@ -2,7 +2,6 @@ import "./styles.css";
 import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
 const FavoriteButton = ({
   idPost,
   token,
@@ -11,7 +10,6 @@ const FavoriteButton = ({
   removeFavorite,
 }) => {
   const [className, setClassName] = useState("");
-
   return (
     <button
       onClick={async (event) => {
@@ -27,7 +25,6 @@ const FavoriteButton = ({
             }
           );
           const body = await res.json();
-
           if (!res.ok) {
             throw new Error(body.message);
           }
@@ -48,5 +45,4 @@ const FavoriteButton = ({
     </button>
   );
 };
-
 export default FavoriteButton;

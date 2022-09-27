@@ -14,7 +14,6 @@ import LikeButton from "../LikeButton";
 import FavoriteButton from "../FavoriteButton";
 import Avatar from "../Avatar";
 import PostComments from "../PostComments";
-
 const PostModal = ({
   post,
   setOpenModal,
@@ -36,38 +35,30 @@ const PostModal = ({
     username,
     idUser,
   } = post;
-
   const { token } = useTokenContext();
-
   const [newComment, setNewComment] = useState("");
   const [numLikes, setNumLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [isFavorite, setIsFavorite] = useState();
   const [hashtagArray, setHashtagArray] = useState([]);
-
   useEffect(() => {
     if (token) {
       const loadPostLikesandFavorited = async () => {
         try {
           const postNumLikes = await getPostnumLikes(idPost);
-
           const postIsLikedByUser = await getLikeStatus(idPost, token);
-
           const postIsFavoritedByUser = await getUserFavorites(
             token,
             searchParams
           );
-
           const postIsFavorited = postIsFavoritedByUser.find((post) => {
             return post.idPost === idPost;
           });
-
           if (!postIsFavorited) {
             setIsFavorite(false);
           } else {
             setIsFavorite(true);
           }
-
           setNumLikes(postNumLikes);
           setIsLiked(postIsLikedByUser);
         } catch (error) {
@@ -75,16 +66,13 @@ const PostModal = ({
           toast.error(error.message);
         }
       };
-
       loadPostLikesandFavorited();
     }
-
     if (hashtag) {
       setHashtagArray(hashtag.replace(/\s+/g, "").split(","));
     }
     // eslint-disable-next-line
   }, [hashtag, idPost, token]);
-
   return (
     <>
       <button className="closeButton" onClick={() => setOpenModal(false)}>
@@ -131,7 +119,6 @@ const PostModal = ({
               </>
             )}
           </section>
-
           <section className="postData">
             <section className="userInfo">
               <figure className="userAvatar">
@@ -146,7 +133,6 @@ const PostModal = ({
                 <p className="authorUsername">
                   <Link to={`/profile/${idUser}`}>{`@${username}`}</Link>
                 </p>
-
                 <p className="authorComment">{authorComment}</p>
                 {hashtag && (
                   <p className="hashtag">
@@ -169,7 +155,6 @@ const PostModal = ({
                 })}
               </section>
             )}
-
             {token && (
               <form
                 onSubmit={async (event) => {
@@ -186,15 +171,11 @@ const PostModal = ({
                         body: JSON.stringify({ body: newComment }),
                       }
                     );
-
                     const body = await res.json();
-
                     if (!res.ok) {
                       throw new Error(body.message);
                     }
-
                     addComment(idPost, body.data);
-
                     setNewComment("");
                     toast.success("¡Comentario añadido con éxito!");
                   } catch (error) {
@@ -221,5 +202,4 @@ const PostModal = ({
     </>
   );
 };
-
 export default PostModal;
