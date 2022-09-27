@@ -22,6 +22,7 @@ const PostModal = ({
   setSelectPost,
   addComment,
   removeFavorite,
+  searchParams,
 }) => {
   const {
     authorComment,
@@ -35,6 +36,7 @@ const PostModal = ({
     username,
     idUser,
   } = post;
+
   const { token } = useTokenContext();
 
   const [newComment, setNewComment] = useState("");
@@ -51,7 +53,10 @@ const PostModal = ({
 
           const postIsLikedByUser = await getLikeStatus(idPost, token);
 
-          const postIsFavoritedByUser = await getUserFavorites(token);
+          const postIsFavoritedByUser = await getUserFavorites(
+            token,
+            searchParams
+          );
 
           const postIsFavorited = postIsFavoritedByUser.find((post) => {
             return post.idPost === idPost;
@@ -77,6 +82,7 @@ const PostModal = ({
     if (hashtag) {
       setHashtagArray(hashtag.replace(/\s+/g, "").split(","));
     }
+    // eslint-disable-next-line
   }, [hashtag, idPost, token]);
 
   return (
@@ -180,6 +186,7 @@ const PostModal = ({
                         body: JSON.stringify({ body: newComment }),
                       }
                     );
+
                     const body = await res.json();
 
                     if (!res.ok) {

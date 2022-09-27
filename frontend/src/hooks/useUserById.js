@@ -1,26 +1,59 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getUserByIdService } from "../services";
+import { useSearchParams } from "react-router-dom";
+import { useTokenContext } from "../Contexts/TokenContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useUserById = (idUser) => {
-  const [user, setUser] = useState({});
+  const [userPosts, setUserPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const { token } = useTokenContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await getUserByIdService(navigate, idUser);
+  const addComment = (idPost, comment) => {
+    const postIndex = userPosts[1].findIndex((post) => {
+      return post.id === idPost;
+    });
 
-        setUser(data);
+    userPosts[1][postIndex].comments.unshift(comment);
+
+    setUserPosts([...userPosts]);
+  };
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        setLoading(true);
+
+        const data = await getUserByIdService(navigate, idUser, searchParams);
+
+        setUserPosts(data);
       } catch (error) {
         console.error(error.message);
+        toast.error(error.message);
+        setUserPosts([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadUser();
-  }, [idUser, navigate]);
+    loadPosts();
+    // eslint-disable-next-line
+  }, [searchParams, token, idUser]);
 
-  return { user };
+  return {
+    searchParams,
+    setSearchParams,
+    userPosts,
+    setUserPosts,
+    loading,
+
+    addComment,
+  };
 };
 
 export default useUserById;

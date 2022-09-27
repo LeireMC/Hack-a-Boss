@@ -15,15 +15,34 @@ const getFavorites = async (req, res, next) => {
         //Recuperamos usuario
         const idUser = req.userAuth.id;
 
+        //Recibir los query params para filtrar los post que se quieren monstrar
+        const { search, direction } = req.query;
+
+        //Array de opciones válidas para la dirección en la que se ordenan los campos
+        const validDirectionOptions = ['DESC', 'ASC'];
+
+        const orderDirection = validDirectionOptions.includes(direction)
+            ? direction
+            : 'DESC';
+
         //Recuperamos idFavorito, todo de post e id.user
         let favorites;
 
-        [favorites] = await connection.query(
-            `
+        if (search) {
+            [favorites] = await connection.query(
+                `
+        SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=? AND p.authorComment LIKE ? OR p.hashtag LIKE ?
+        ORDER BY p.createdAt ${orderDirection} `,
+                [idUser, `%${search}%`, `%${search}%`]
+            );
+        } else {
+            [favorites] = await connection.query(
+                `
         SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=?
-            `,
-            [idUser]
-        );
+        ORDER BY p.createdAt ${orderDirection} `,
+                [idUser]
+            );
+        }
 
         //Comprobamos que el usuario tiene post favoritos, sino lanzamos un error
         if (favorites.length < 1) {

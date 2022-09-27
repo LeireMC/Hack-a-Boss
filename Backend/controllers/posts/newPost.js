@@ -8,6 +8,7 @@ const {
 
 const newPost = async (req, res, next) => {
     try {
+        console.log(req.body);
         //Validar los datos recibidos por el body
         await validate(newPostSchema, req.body);
 

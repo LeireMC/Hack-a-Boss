@@ -48,10 +48,20 @@ export const getLikeStatus = async (idPost, token) => {
   return body.data;
 };
 
-export const getUserFavorites = async (token) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/favorites`, {
-    headers: { Authorization: token },
-  });
+export const getUserFavorites = async (token, searchParams) => {
+  let res;
+  if (searchParams) {
+    res = await fetch(
+      `${process.env.REACT_APP_API_URL}/favorites?${searchParams.toString()}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+  } else {
+    res = await fetch(`${process.env.REACT_APP_API_URL}/favorites`, {
+      headers: { Authorization: token },
+    });
+  }
 
   const body = await res.json();
 
@@ -62,8 +72,10 @@ export const getUserFavorites = async (token) => {
   return body.data;
 };
 
-export const getUserByIdService = async (navigate, idUser) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/user/${idUser}`);
+export const getUserByIdService = async (navigate, idUser, searchParams) => {
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URL}/user/${idUser}?${searchParams.toString()}`
+  );
 
   const body = await res.json();
 

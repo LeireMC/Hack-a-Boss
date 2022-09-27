@@ -12,25 +12,65 @@ const userProfile = async (req, res, next) => {
     try {
         connection = await getDB();
 
+        const token = req.headers.authorization;
+
         const { idUser } = req.params;
 
-        const [user] = await connection.query(
-            `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ?`,
-            [idUser]
-        );
+        //Recibir los query params para filtrar los post que se quieren monstrar
+        const { search, direction } = req.query;
 
-        if (!user) {
+        //Array de opciones válidas para la dirección en la que se ordenan los campos
+        const validDirectionOptions = ['DESC', 'ASC'];
+
+        const orderDirection = validDirectionOptions.includes(direction)
+            ? direction
+            : 'DESC';
+
+        let user;
+        if (!token) {
+            [user] = await connection.query(
+                `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ? AND privacy = 'public'`,
+                [idUser]
+            );
+
+            if (user.length === 0) {
+                throw generateError(
+                    'No existe el usuario que estás buscando o no tienes permisos para ver su perfil.',
+                    404
+                );
+            }
+        } else {
+            [user] = await connection.query(
+                `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ?`,
+                [idUser]
+            );
+        }
+        console.log(user);
+        if (user.length === 0) {
             throw generateError(
                 'No existe el usuario que estás buscando.',
                 404
             );
         }
 
-        const [userPosts] = await connection.query(
-            `SELECT id, authorComment, hashtag FROM post
-            WHERE idUser = ? ORDER BY createdAt DESC`,
-            [idUser]
-        );
+        //Realizar consulta a la Base de Datos para recuperar los post
+        let userPosts;
+
+        //si existe 'search', la consulta se hará añadiendo la bíusqueda
+        if (search) {
+            [userPosts] = await connection.query(
+                `SELECT id, authorComment, hashtag FROM post
+                    WHERE idUser = ? AND authorComment LIKE ? OR hashtag LIKE ?
+                    ORDER BY createdAt DESC`,
+                [idUser, `%${search}%`, `%${search}%`]
+            );
+        } else {
+            [userPosts] = await connection.query(
+                `SELECT id, authorComment, hashtag FROM post
+                    WHERE idUser = ? ORDER BY createdAt DESC`,
+                [idUser]
+            );
+        }
 
         //Array que devolverá la respuesta
         const postsInfo = [];

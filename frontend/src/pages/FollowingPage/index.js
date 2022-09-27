@@ -39,7 +39,7 @@ const FollowingPage = () => {
         ) : (
           <section className="container">
             <AlertIcon />
-            <p>Aun no sigues a ningún usuario</p>
+            <p>Aún no sigues a ningún usuario</p>
           </section>
         )}
       </main>

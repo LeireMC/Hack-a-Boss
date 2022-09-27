@@ -3,7 +3,7 @@ import PostModal from "../PostModal";
 import Post from "../Post";
 import { Fragment, useState } from "react";
 
-const PostsList = ({ posts, addComment, removeFavorite }) => {
+const PostsList = ({ posts, addComment, removeFavorite, searchParams }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const [selectPost, setSelectPost] = useState([]);
@@ -40,6 +40,7 @@ const PostsList = ({ posts, addComment, removeFavorite }) => {
             addComment={addComment}
             openModal={openModal}
             removeFavorite={removeFavorite}
+            searchParams={searchParams}
           />
         )}
       </section>

@@ -9,7 +9,7 @@
 
 section.infoContainer {
   background-color: #829ca3;
-  height: 20rem;
+  min-height: 20rem;
   width: 25rem;
   border-radius: 10px;
   margin: 7.5rem auto;
