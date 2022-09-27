@@ -3,7 +3,13 @@ import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const FavoriteButton = ({ idPost, token, setIsFavorite, isFavorite }) => {
+const FavoriteButton = ({
+  idPost,
+  token,
+  setIsFavorite,
+  isFavorite,
+  removeFavorite,
+}) => {
   const [className, setClassName] = useState("");
 
   return (
@@ -25,8 +31,10 @@ const FavoriteButton = ({ idPost, token, setIsFavorite, isFavorite }) => {
           if (!res.ok) {
             throw new Error(body.message);
           }
-
           setIsFavorite(body.data.favorite);
+          if (!body.data.favorite) {
+            removeFavorite(idPost);
+          }
           setClassName("animate");
           toast.success(body.message);
         } catch (error) {

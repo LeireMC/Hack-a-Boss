@@ -19,6 +19,7 @@ const SearchBar = ({ searchParams, setSearchParams }) => {
           queryParams.search = search;
         }
         setSearchParams(new URLSearchParams(queryParams));
+        setSearch("");
       }}
     >
       <input

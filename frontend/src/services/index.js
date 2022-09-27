@@ -56,9 +56,7 @@ export const getUserFavorites = async (token) => {
   const body = await res.json();
 
   if (!res.ok) {
-    throw new Error(
-      "Unexpected error fetching API. Please, try again or contact support"
-    );
+    throw new Error(body.message);
   }
 
   return body.data;

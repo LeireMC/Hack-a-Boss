@@ -1,5 +1,10 @@
 const getDB = require('../../db/getDB');
 const { generateError } = require('../../helpers');
+const { likesCounter } = require('../../repositories/likes-repositories');
+const {
+    postComments,
+    postPhotos,
+} = require('../../repositories/post-repositories');
 
 const getFavorites = async (req, res, next) => {
     let connection;
@@ -34,20 +39,30 @@ const getFavorites = async (req, res, next) => {
         //Recuperamos fotos y comentarios de cada post
 
         for (let i = 0; i < favorites.length; i++) {
-            const [photos] = await connection.query(
-                `SELECT name FROM photo
-            WHERE idPost = ?`,
-                [favorites[i].idPost]
+            const [postOwnerInfo] = await connection.query(
+                `SELECT name, username, lastname, privacy, avatar FROM user
+            WHERE id = ?`,
+                [favorites[i].idPostOwner]
             );
+            console.log(postOwnerInfo);
+            const photos = await postPhotos(favorites[i].idPost);
 
-            const [comments] = await connection.query(
-                `SELECT comment.body FROM comment
-                WHERE idPost = ?`,
-                [favorites[i].idPost]
-            );
+            const comments = await postComments(favorites[i].idPost);
+
+            const likes = await likesCounter(favorites[i].idPost);
 
             //añadimos los datos recuperados al array favoritesList
-            favoritesList.push({ ...favorites[i], comments, photos });
+            favoritesList.push({
+                ...favorites[i],
+                name: postOwnerInfo[0].name,
+                lastname: postOwnerInfo[0].lastname,
+                username: postOwnerInfo[0].username,
+                avatar: postOwnerInfo[0].avatar,
+                privacy: postOwnerInfo[0].privacy,
+                comments: comments,
+                photos: photos,
+                likes: likes,
+            });
         }
 
         //Respuesta con lista de favoritos, con los post, comentarios y fotos

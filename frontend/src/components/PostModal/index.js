@@ -21,6 +21,7 @@ const PostModal = ({
   openModal,
   setSelectPost,
   addComment,
+  removeFavorite,
 }) => {
   const {
     authorComment,
@@ -101,6 +102,7 @@ const PostModal = ({
                     token={token}
                     setIsFavorite={setIsFavorite}
                     isFavorite={isFavorite}
+                    removeFavorite={removeFavorite}
                   />
                   <LikeButton
                     idPost={idPost}
