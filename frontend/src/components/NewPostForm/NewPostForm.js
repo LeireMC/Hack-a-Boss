@@ -8,12 +8,12 @@ import DefaultPhotoNewPost from "../DefaultPhotoNewPost/DefaultoPhotoPost";
 const NewPostForm = ({ addNewPost }) => {
   const [authorComment, setAuthorComment] = useState("");
   const [hashtag, setHashtag] = useState("");
-  const [newPhotoPostPreview, setNewPhotoPostPreview] = useState("");
+  /*   const [newPhotoPostPreview, setNewPhotoPostPreview] = useState(""); */
   const { token } = useTokenContext();
 
   const navigate = useNavigate();
   const imageRef = useRef(null);
-  const newPhotoPost = useRef(null);
+  /*  const newPhotoPost = useRef(null); */
 
   return (
     <>

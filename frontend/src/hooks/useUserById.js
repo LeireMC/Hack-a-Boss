@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { getUserByIdService } from "../services";
 import { useSearchParams } from "react-router-dom";
 import { useTokenContext } from "../Contexts/TokenContext";
@@ -55,30 +54,6 @@ const useUserById = (idUser) => {
 
     addComment,
   };
-=======
-import { useNavigate } from "react-router-dom";
-import { getUserByIdService } from "../services";
-
-const useUserById = (idUser) => {
-  const [user, setUser] = useState({});
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await getUserByIdService(navigate, idUser);
-
-        setUser(data);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    loadUser();
-  }, [idUser, navigate]);
-
-  return { user };
->>>>>>> favoritesPage
 };
 
 export default useUserById;
