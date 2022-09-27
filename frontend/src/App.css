@@ -3,7 +3,7 @@
   padding: 0, 5rem;
   box-sizing: border-box;
 }
-/* #root {
+#root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ a {
   text-decoration: none;
   color: inherit;
   font-size: inherit;
-} */
+}
 
 svg {
   width: 100%;

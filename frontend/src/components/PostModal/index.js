@@ -3,7 +3,7 @@ import { useState } from "react";
 import PhotoSlider from "../PhotoSlider";
 import { toast } from "react-toastify";
 import CloseButton from "../CloseButton";
-import UserDefaultAvatar from "../UserDefaultAvatar";
+/* import UserDefaultAvatar from "../UserDefaultAvatar"; */
 import { useTokenContext } from "../../context/TokenContext";
 import { FavoritedIcon, UnfavoritedIcon } from "../FavoritesIcons";
 import { LikedIcon, UnlikedIcon } from "../LikeIcons";
@@ -136,7 +136,7 @@ const PostModal = ({
           <section className="postData">
             <section className="userInfo">
               <section className="userAvatar">
-                {!avatar && <UserDefaultAvatar />}
+                {/*     {!avatar && <UserDefaultAvatar />} */}
                 {avatar && (
                   <img
                     className="userAvatar"
@@ -168,7 +168,7 @@ const PostModal = ({
                   return (
                     <section key={index} className="userComment">
                       <section className="commentsAvatar">
-                        {!comment.avatar && <UserDefaultAvatar />}
+                        {/*         {!comment.avatar && <UserDefaultAvatar />} */}
                         {avatar && (
                           <img
                             className="commentAvatar"

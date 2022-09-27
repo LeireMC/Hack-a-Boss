@@ -3,15 +3,17 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTokenContext } from "../../context/TokenContext";
+import DefaultPhotoNewPost from "../DefaultPhotoNewPost/DefaultoPhotoPost";
 
 const NewPostForm = ({ addNewPost }) => {
   const [authorComment, setAuthorComment] = useState("");
   const [hashtag, setHashtag] = useState("");
-
+  const [newPhotoPostPreview, setNewPhotoPostPreview] = useState("");
   const { token } = useTokenContext();
 
   const navigate = useNavigate();
   const imageRef = useRef(null);
+  const newPhotoPost = useRef(null);
 
   return (
     <>
@@ -21,6 +23,8 @@ const NewPostForm = ({ addNewPost }) => {
             event.preventDefault();
 
             const file = imageRef.current.files[0];
+
+            console.log(file);
 
             const formData = new FormData();
 
@@ -58,15 +62,31 @@ const NewPostForm = ({ addNewPost }) => {
           }
         }}
       >
-        <section className="newPostContainer">
-          <ul>
+        <section>
+          <ul className="newPostContainer">
+            {/* previsualizacion */}
+
+            {/* previsualizacion */}
+
             <li>
-              <label htmlFor="image">Image:</label>
-              <input id="image" type="file" ref={imageRef} accept="image/*" />
+              <DefaultPhotoNewPost />
+              <input
+                id="image"
+                type="file"
+                ref={imageRef}
+                multiple
+                hidden
+                accept="image/*"
+              ></input>
+              <label className="button" htmlFor="image">
+                Seleccionar imagenes
+              </label>
             </li>
+
             <li>
-              <label htmlFor="authorComment">authorComment:</label>
+              <label htmlFor="authorComment">Comentario</label>
               <textarea
+                className="textarea"
                 id="authorComment"
                 value={authorComment}
                 onChange={(event) => {
@@ -76,7 +96,7 @@ const NewPostForm = ({ addNewPost }) => {
               />
             </li>
             <li>
-              <label htmlFor="hashtag">hashtag:</label>
+              <label htmlFor="hashtag">Hashtag</label>
               <input
                 id="hashtag"
                 placeholder="Introduce los hashtag separados por una coma"
@@ -87,7 +107,7 @@ const NewPostForm = ({ addNewPost }) => {
               />
             </li>
 
-            <button className="button">Create Post</button>
+            <button className="button">Publicar Post</button>
           </ul>
         </section>
       </form>

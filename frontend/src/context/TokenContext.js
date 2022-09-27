@@ -27,7 +27,6 @@ export const CustomTokenContextProvider = ({ children }) => {
         const body = await res.json();
         console.log(body);
         if (!res.ok) {
-          console.log("4");
           throw new Error(body.message);
         }
 
