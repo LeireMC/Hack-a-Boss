@@ -8,6 +8,7 @@ const {
 
 const newPost = async (req, res, next) => {
     try {
+        console.log(req.body);
         //Validar los datos recibidos por el body
         await validate(newPostSchema, req.body);
 
@@ -31,7 +32,6 @@ const newPost = async (req, res, next) => {
 
         //Si nos indica el comentario, insertamos los datos en la base de datos y recuperamos el id del post
         const postId = await createPost(authorComment, hashtag, idUser);
-
 
         //Añadimos en una variable los datos de las fotos obtenidos de la request
         let postPhotos;

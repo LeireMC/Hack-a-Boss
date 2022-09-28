@@ -8,10 +8,12 @@ import SearchBar from "../SearchBar";
 import { useTokenContext } from "../../Contexts/TokenContext";
 import NotLoggedUserMenu from "../NotLoggedUserMenu";
 import LoggedUserMenu from "../LoggedUserMenu";
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ setSearchParams, searchParams }) => {
   const { token } = useTokenContext();
   const [menu, setMenu] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenu(!menu);
@@ -26,8 +28,17 @@ const Header = () => {
           alt="Logo Hack a Gram"
         />
       </Link>
-      <SearchBar />
-      <button className="header-button">
+      <SearchBar
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+      />
+      <button
+        type="button"
+        className="header-button"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <HomeIcon />
       </button>
       <button onClick={toggleMenu} className="header-button">

@@ -1,6 +1,9 @@
 const { generateError } = require('../../helpers');
+const { likesCounter } = require('../../repositories/likes-repositories');
 
 const {
+    getPublicPostsBySearch,
+    getPublicPostsByOrderDirection,
     getPostsBySearch,
     getPostsByOrderDirection,
     postPhotos,
@@ -9,6 +12,8 @@ const {
 
 const getPosts = async (req, res, next) => {
     try {
+        const token = req.headers.authorization;
+
         //Recibir los query params para filtrar los post que se quieren monstrar
         const { search, direction } = req.query;
 
@@ -21,13 +26,19 @@ const getPosts = async (req, res, next) => {
 
         //Realizar consulta a la Base de Datos para recuperar los post
         let posts;
-
-        //si existe 'search', la consulta se hará añadiendo la bíusqueda
-        if (search) {
-            posts = await getPostsBySearch(orderDirection, search);
+        if (!token) {
+            if (search) {
+                posts = await getPublicPostsBySearch(orderDirection, search);
+            } else {
+                posts = await getPublicPostsByOrderDirection(orderDirection);
+            }
         } else {
-            posts = await getPostsByOrderDirection(orderDirection);
-
+            //si existe 'search', la consulta se hará añadiendo la bíusqueda
+            if (search) {
+                posts = await getPostsBySearch(orderDirection, search);
+            } else {
+                posts = await getPostsByOrderDirection(orderDirection);
+            }
         }
 
         if (posts.length === 0) {
@@ -45,8 +56,10 @@ const getPosts = async (req, res, next) => {
 
             const comments = await postComments(posts[i].idPost);
 
+            const likes = await likesCounter(posts[i].idPost);
+
             //añadimos los datos recuperados al array que devolverá la respuesta
-            postsInfo.push({ ...posts[i], photos, comments });
+            postsInfo.push({ ...posts[i], photos, comments, likes });
         }
 
         //Respuesta con la lista de post y sus respectivos comentarios y fotos

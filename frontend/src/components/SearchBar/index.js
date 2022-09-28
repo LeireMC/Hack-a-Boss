@@ -2,31 +2,25 @@ import "./styles.css";
 import SearchIcon from "../SearchIcon";
 import { useState } from "react";
 
-const SearchBar = () => {
-  const [search, setSearch] = useState("");
+const SearchBar = ({ searchParams, setSearchParams }) => {
+  const initialSearch = searchParams.get("search") || "";
 
-  console.log(search);
+  const [search, setSearch] = useState(initialSearch);
+
   return (
     <form
       className="header-searcher"
-      /* onSubmit={async (event) => {
-        try {
-          event.preventDefault();
+      onSubmit={(event) => {
+        event.preventDefault();
 
-          const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/posts?search=rojo`
-          );
+        const queryParams = {};
 
-          console.log(res);
-
-          if (!res.ok) {
-            console.log(res);
-            throw new Error(res.message);
-          }
-        } catch (error) {
-          console.log(error);
+        if (search) {
+          queryParams.search = search;
         }
-      }} */
+        setSearchParams(new URLSearchParams(queryParams));
+        setSearch("");
+      }}
     >
       <input
         type="search"

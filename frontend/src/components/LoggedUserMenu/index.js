@@ -1,14 +1,18 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { useTokenContext } from "../../Contexts/TokenContext";
+import decodedTokenInfo from "../../utils/decodedTokenInfo";
 
 const LoggedUserMenu = ({ menu }) => {
-  const { setToken } = useTokenContext();
+  const { setToken, token } = useTokenContext();
+
+  const idUser = decodedTokenInfo(token);
+
   return (
     <nav className={`header-nav ${menu ? "isActive" : ""}`}>
       <ul className="header-ul">
         <li className="header-li">
-          <Link to="profile">Mi perfil</Link>
+          <Link to={`/profile/${idUser}`}>Mi perfil</Link>
         </li>
         <li className="header-li">
           <Link to="/post/new">Publicar Foto</Link>

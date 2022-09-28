@@ -1,6 +1,9 @@
 const { validate, generateError } = require('../../helpers');
 const getDB = require('../../db/getDB');
-const { createComent } = require('../../repositories/comment-repositories');
+const {
+    createComent,
+    selectCommentById,
+} = require('../../repositories/comment-repositories');
 
 const newComent = async (req, res, next) => {
     let connection;
@@ -9,6 +12,9 @@ const newComent = async (req, res, next) => {
 
         //Recuperamos los datos del body de la request
         const { body } = req.body;
+        if (!body) {
+            throw generateError('No has introducido ningún comentario', 400);
+        }
 
         //Recuperamos el id del post
         const { idPost } = req.params;
@@ -17,12 +23,14 @@ const newComent = async (req, res, next) => {
         const userId = req.userAuth.id;
 
         //Si nos indica el comentario, insertamos los datos en la base de datos y recuperamos el id del post
-        const comment = await createComent(body, idPost, userId);
+        const commentId = await createComent(body, idPost, userId);
+
+        const comment = await selectCommentById(commentId);
 
         res.send({
             status: 'Ok',
             message: 'Comment creado con éxito!',
-            data: { body },
+            data: comment,
         });
     } catch (error) {
         next(error);

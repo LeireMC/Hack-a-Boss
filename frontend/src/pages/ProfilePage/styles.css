@@ -1,0 +1,45 @@
+.userInfoContainer {
+  /*   width: 100%; */
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 15rem;
+  column-gap: 1rem;
+}
+
+section.infoContainer {
+  background-color: #829ca3;
+  min-height: 20rem;
+  width: 25rem;
+  border-radius: 10px;
+  margin: 7.5rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+section.infoContainer p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+section.infoContainer svg {
+  margin-bottom: 1rem;
+}
+
+button.goLogin,
+button.goRegister {
+  background-color: #9e2a2b;
+  width: 10rem;
+  padding: 0.8rem;
+  border-radius: 50px;
+  margin: 0.5rem;
+  color: white;
+}
+
+button.goLogin:hover,
+button.goRegister:hover {
+  background-color: #cd5d5f;
+}
