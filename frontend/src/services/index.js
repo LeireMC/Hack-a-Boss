@@ -72,9 +72,19 @@ export const getUserFavorites = async (token, searchParams) => {
   return body.data;
 };
 
-export const getUserByIdService = async (navigate, idUser, searchParams) => {
+export const getUserByIdService = async (
+  navigate,
+  idUser,
+  searchParams,
+  token
+) => {
   const res = await fetch(
-    `${process.env.REACT_APP_API_URL}/user/${idUser}?${searchParams.toString()}`
+    `${
+      process.env.REACT_APP_API_URL
+    }/user/${idUser}?${searchParams.toString()}`,
+    {
+      headers: { Authorization: token },
+    }
   );
 
   const body = await res.json();

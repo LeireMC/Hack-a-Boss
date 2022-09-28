@@ -50,7 +50,8 @@ section.userProfileInfo h4.userName {
   color: black;
 }
 
-section.userProfileInfo h4.userBioTitle {
+section.userProfileInfo h4.userBioTitle,
+section.userProfileInfo h4.userWebTittle {
   font-weight: bold;
 }
 section.userProfileInfo p {

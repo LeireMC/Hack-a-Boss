@@ -28,17 +28,17 @@ const getFollowUsers = async (req, res, next) => {
         //Si el usuario no tiene usuarios seguidos lanzamos error
 
         if (followUsers.length === 0) {
-            throw generateError(
-                `El usuario con id ${idUser} no sigue a ningún usuario`
-            );
+            res.send({
+                status: 'ok',
+                message: `El usuario con id ${idUser} no sigue a ningún usuario`,
+            });
+        } else {
+            //Respuesta con lista de followers
+            res.send({
+                status: 'ok',
+                data: followUsers,
+            });
         }
-
-        //Respuesta con lista de followers
-
-        res.send({
-            status: 'ok',
-            data: followUsers,
-        });
     } catch (error) {
         next(error);
     } finally {

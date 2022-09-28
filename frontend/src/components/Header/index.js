@@ -12,7 +12,7 @@ import LoggedUserMenu from "../LoggedUserMenu";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ setSearchParams, searchParams }) => {
-  const { token } = useTokenContext();
+  const { token, loggedUser, setToken } = useTokenContext();
   const [menu, setMenu] = useState(false);
 
   const navigate = useNavigate();
@@ -48,7 +48,13 @@ const Header = ({ setSearchParams, searchParams }) => {
         <MenuIcon />
       </button>
       {!token && <NotLoggedUserMenu menu={menu} />}
-      {token && <LoggedUserMenu menu={menu} />}
+      {token && loggedUser.length > 0 && (
+        <LoggedUserMenu
+          menu={menu}
+          loggedUser={loggedUser}
+          setToken={setToken}
+        />
+      )}
     </header>
   );
 };

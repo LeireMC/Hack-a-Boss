@@ -29,13 +29,14 @@ const FavoriteButton = ({
             throw new Error(body.message);
           }
           setIsFavorite(body.data.favorite);
-          if (!body.data.favorite) {
+          if (removeFavorite && !body.data.favorite) {
             removeFavorite(idPost);
           }
           setClassName("animate");
           toast.success(body.message);
         } catch (error) {
           console.error(error.message);
+          toast.error(error.message);
         }
       }}
       className={`bookmark ${className}`}

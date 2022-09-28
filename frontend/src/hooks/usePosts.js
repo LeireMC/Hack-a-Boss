@@ -30,7 +30,7 @@ const usePosts = () => {
         setPosts(data);
       } catch (error) {
         console.error(error.message);
-        toast.error(error.message);
+
         setPosts([]);
       } finally {
         setLoading(false);
