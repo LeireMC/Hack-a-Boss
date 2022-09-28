@@ -1,13 +1,14 @@
 import "./styles.css";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import logoHackaGram from "../../assets/images/logo.png";
+import EditProfileForm from "../../components/EditProfileForm";
 
 const EditUserProfilePage = () => {
   return (
     <>
-      <Header />
-      <main></main>
-      <Footer />
+      <main>
+        <img src={logoHackaGram} alt="Logo de Hack a Gram" />
+        <EditProfileForm />
+      </main>
     </>
   );
 };
