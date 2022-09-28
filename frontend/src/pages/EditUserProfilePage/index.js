@@ -1,18 +1,34 @@
 import "./styles.css";
-import logoHackaGram from "../../assets/images/logo.png";
+import logoHackAGram from "../../assets/images/logo.png";
 import EditProfileForm from "../../components/EditProfileForm";
 import { useTokenContext } from "../../Contexts/TokenContext";
+import Footer from "../../components/Footer";
+import { Link } from "react-router-dom";
 
 const EditUserProfilePage = () => {
   const { token, loggedUser } = useTokenContext();
+
+  const loggedUserInfo = loggedUser[0];
+
   return (
     <>
+      <header className="header">
+        {loggedUser && loggedUser.length > 0 && (
+          <Link to={`/profile/${loggedUserInfo.id}`}>
+            <img
+              className="header-logo "
+              src={logoHackAGram}
+              alt="Logo Hack a Gram"
+            />
+          </Link>
+        )}
+      </header>
       <main>
-        <img src={logoHackaGram} alt="Logo de Hack a Gram" />
-        {loggedUser.length > 0 && (
+        {loggedUser && loggedUser.length > 0 && (
           <EditProfileForm token={token} loggedUser={loggedUser} />
         )}
       </main>
+      <Footer />
     </>
   );
 };

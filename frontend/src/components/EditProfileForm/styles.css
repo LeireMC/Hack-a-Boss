@@ -1,0 +1,38 @@
+.editUserFormContainer {
+  width: 45rem;
+  height: 47rem;
+  background: #829ca3;
+  border-radius: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 3rem auto;
+}
+
+.editUserForm {
+  padding: 2rem;
+  height: 100%;
+}
+
+.editUserForm input {
+  border-radius: 0.6rem;
+  padding: 0.5rem;
+  width: 35rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+#bio {
+  height: 5rem;
+  align-content: flex-start;
+}
+
+input::placeholder {
+  font-size: 1.2em;
+  font-style: italic;
+  text-align: left;
+}

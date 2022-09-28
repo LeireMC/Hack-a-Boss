@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -34,19 +34,23 @@ main > form {
   align-content: center;
   padding: 3rem;
 }
-
-main button {
+ */
+button.loginButton {
   background-color: #9e2a2b;
   border-radius: 12px;
   transition-duration: 0.5s;
   cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width: 12rem;
-  height: 2rem;
+
+  width: fit-content;
+  padding: 0 1rem;
+  height: 2.5rem;
   margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-main button:hover {
-  background-color: #9e2a2b;
+button.loginButton:hover {
   color: white;
 }

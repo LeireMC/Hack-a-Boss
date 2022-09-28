@@ -1,15 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import NewPostForm from "../../components/NewPostForm/NewPostForm";
-import Spinner from "../../components/Spinner";
-import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import ErrorMessage from "../../components/ErrorMessage";
 import { useTokenContext } from "../../Contexts/TokenContext";
-import usePost from "../../hooks/usePost";
+
+import logoHackAGram from "../../assets/images/logo.png";
 
 const NewPostPage = () => {
-  const { setSearchParams, searchParams, loading, errorMessage } = usePost();
-
   //llamamos a useTokenContext para recibir el token
   const { token, loggedUser } = useTokenContext();
 
@@ -19,17 +15,22 @@ const NewPostPage = () => {
 
   return (
     <>
-      <Header searchParams={searchParams} setSearchParams={setSearchParams} />
+      <header className="header">
+        <Link to={`/profile/${loggedUser[0].id}`}>
+          <img
+            className="header-logo "
+            src={logoHackAGram}
+            alt="Logo Hack a Gram"
+          />
+        </Link>
+      </header>
 
       <main className="homePage">
-        {loading && <Spinner />}
         {loggedUser.length > 0 && (
           <section>
             <NewPostForm loggedUser={loggedUser} token={token} />
           </section>
         )}
-
-        {errorMessage && <ErrorMessage msg={errorMessage} />}
       </main>
 
       <Footer />

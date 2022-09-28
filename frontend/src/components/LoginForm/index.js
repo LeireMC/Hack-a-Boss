@@ -61,7 +61,7 @@ const LoginForm = () => {
         }}
       />
 
-      <button>Entrar a Hack a Gram</button>
+      <button className="loginButton">Entrar a Hack a Gram</button>
     </form>
   );
 };
