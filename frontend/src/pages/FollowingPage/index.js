@@ -7,12 +7,13 @@ import { getFollowUsers } from "../../services";
 import { useTokenContext } from "../../Contexts/TokenContext";
 import FollowingUserList from "../../components/FollowingUserList";
 import AlertIcon from "../../components/AlertIcon";
+import Spinner from "../../components/Spinner";
 
 const FollowingPage = () => {
-  const { searchParams, setSearchParams } = usePosts();
+  const { searchParams, setSearchParams, loading } = usePosts();
   const [followingUsers, setFollowingUsers] = useState([]);
 
-  const { token } = useTokenContext();
+  const { token, loggedUser } = useTokenContext();
 
   useEffect(() => {
     const loadFollowingUser = async () => {
@@ -32,9 +33,14 @@ const FollowingPage = () => {
     <>
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
       <main>
-        {followingUsers.length > 0 ? (
+        {loading && <Spinner />}
+        {loggedUser && followingUsers.length > 0 ? (
           <section className="followingUserListContainer">
-            <FollowingUserList followingUsers={followingUsers} token={token} />
+            <FollowingUserList
+              followingUsers={followingUsers}
+              token={token}
+              loggedUserInfo={loggedUser[0]}
+            />
           </section>
         ) : (
           <section className="container">

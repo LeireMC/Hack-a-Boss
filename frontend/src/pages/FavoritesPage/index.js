@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import useFavoritedPosts from "../../hooks/useFavoritePosts";
 import Spinner from "../../components/Spinner";
 import FavoritedPost from "../../components/FavoritedPost";
+import AlertIcon from "../../components/AlertIcon";
 
 const FavoritesPage = () => {
   const {
@@ -20,9 +21,9 @@ const FavoritesPage = () => {
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
       <main>
         {loading && <Spinner />}
-        {favoritedPosts.length > 0 && (
+        {favoritedPosts && favoritedPosts.length > 0 && (
           <section className="favoritedPostListContainer">
-            <h3>Mis Favoritos</h3>
+            <h3 className="favoritos">Mis Favoritos</h3>
             <FavoritedPost
               favoritedPosts={favoritedPosts}
               addComment={addComment}
@@ -31,7 +32,12 @@ const FavoritesPage = () => {
             />
           </section>
         )}
-        {favoritedPosts.length === 0 && <p>Aun no tienes favoritos</p>}
+        {!favoritedPosts && (
+          <section className="container">
+            <AlertIcon />
+            <p>Aun no tienes favoritos</p>
+          </section>
+        )}
       </main>
       <Footer />
     </>

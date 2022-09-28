@@ -29,7 +29,12 @@ const useUserById = (idUser) => {
       try {
         setLoading(true);
 
-        const data = await getUserByIdService(navigate, idUser, searchParams);
+        const data = await getUserByIdService(
+          navigate,
+          idUser,
+          searchParams,
+          token
+        );
 
         setUserPosts(data);
       } catch (error) {
@@ -51,7 +56,6 @@ const useUserById = (idUser) => {
     userPosts,
     setUserPosts,
     loading,
-
     addComment,
   };
 };

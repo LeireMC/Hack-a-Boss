@@ -16,7 +16,7 @@ const NotFoundPage = () => {
         </Link>
       </header>
       <main>
-        <section>
+        <section className="container">
           <h2>Not found!!!! 404!!!</h2>
         </section>
       </main>

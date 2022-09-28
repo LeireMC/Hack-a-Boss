@@ -46,50 +46,50 @@ const getFavorites = async (req, res, next) => {
 
         //Comprobamos que el usuario tiene post favoritos, sino lanzamos un error
         if (favorites.length < 1) {
-            throw generateError(
-                `No hay ningun post favorito asociado al usuario con id ${idUser}`,
-                404
-            );
-        }
+            res.send({
+                status: 'ok',
+                message: `No hay ningun post favorito asociado al usuario con id ${idUser}`,
+            });
+        } else {
+            //Array que devuelve la respuesta
+            const favoritesList = [];
 
-        //Array que devuelve la respuesta
-        const favoritesList = [];
+            //Recuperamos fotos y comentarios de cada post
 
-        //Recuperamos fotos y comentarios de cada post
+            for (let i = 0; i < favorites.length; i++) {
+                const [postOwnerInfo] = await connection.query(
+                    `SELECT name, username, lastname, privacy, avatar FROM user
+                WHERE id = ?`,
+                    [favorites[i].idPostOwner]
+                );
+                console.log(postOwnerInfo);
+                const photos = await postPhotos(favorites[i].idPost);
 
-        for (let i = 0; i < favorites.length; i++) {
-            const [postOwnerInfo] = await connection.query(
-                `SELECT name, username, lastname, privacy, avatar FROM user
-            WHERE id = ?`,
-                [favorites[i].idPostOwner]
-            );
-            console.log(postOwnerInfo);
-            const photos = await postPhotos(favorites[i].idPost);
+                const comments = await postComments(favorites[i].idPost);
 
-            const comments = await postComments(favorites[i].idPost);
+                const likes = await likesCounter(favorites[i].idPost);
 
-            const likes = await likesCounter(favorites[i].idPost);
+                //añadimos los datos recuperados al array favoritesList
+                favoritesList.push({
+                    ...favorites[i],
+                    name: postOwnerInfo[0].name,
+                    lastname: postOwnerInfo[0].lastname,
+                    username: postOwnerInfo[0].username,
+                    avatar: postOwnerInfo[0].avatar,
+                    privacy: postOwnerInfo[0].privacy,
+                    comments: comments,
+                    photos: photos,
+                    likes: likes,
+                });
+            }
 
-            //añadimos los datos recuperados al array favoritesList
-            favoritesList.push({
-                ...favorites[i],
-                name: postOwnerInfo[0].name,
-                lastname: postOwnerInfo[0].lastname,
-                username: postOwnerInfo[0].username,
-                avatar: postOwnerInfo[0].avatar,
-                privacy: postOwnerInfo[0].privacy,
-                comments: comments,
-                photos: photos,
-                likes: likes,
+            //Respuesta con lista de favoritos, con los post, comentarios y fotos
+
+            res.send({
+                status: 'ok',
+                data: favoritesList,
             });
         }
-
-        //Respuesta con lista de favoritos, con los post, comentarios y fotos
-
-        res.send({
-            status: 'ok',
-            data: favoritesList,
-        });
     } catch (error) {
         next(error);
     } finally {

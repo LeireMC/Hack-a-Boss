@@ -8,12 +8,15 @@ import UserInfo from "../../components/UserInfo";
 import UserPosts from "../../components/UserPosts";
 import useUserById from "../../hooks/useUserById";
 import AlertIcon from "../../components/AlertIcon";
+import Spinner from "../../components/Spinner";
 
 const ProfilePage = () => {
   const { idUser } = useParams();
-  const { token } = useTokenContext();
+  const { token, loggedUser } = useTokenContext();
 
-  const { searchParams, setSearchParams, userPosts, addComment } =
+  const loggedUserInfo = loggedUser[0];
+
+  const { searchParams, setSearchParams, userPosts, addComment, loading } =
     useUserById(idUser);
 
   const navigate = useNavigate();
@@ -21,12 +24,17 @@ const ProfilePage = () => {
   return (
     <>
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
+      {loading && <Spinner />}
       {userPosts.length > 0 && (
         <main className="profilePage">
           {userPosts.length > 0 && userPosts[0].privacy === "public" && (
             <>
               <section className="userInfoContainer">
-                <UserInfo userInfo={userPosts[0]} token={token} />
+                <UserInfo
+                  userInfo={userPosts[0]}
+                  token={token}
+                  loggedUserInfo={loggedUserInfo}
+                />
               </section>
               <section>
                 <UserPosts userPosts={userPosts} addComment={addComment} />
@@ -36,7 +44,11 @@ const ProfilePage = () => {
           {token && userPosts.length > 0 && userPosts[0].privacy === "private" && (
             <>
               <section className="userInfoContainer">
-                <UserInfo userInfo={userPosts[0]} token={token} />
+                <UserInfo
+                  userInfo={userPosts[0]}
+                  token={token}
+                  loggedUserInfo={loggedUserInfo}
+                />
               </section>
               <section>
                 <UserPosts userPosts={userPosts} addComment={addComment} />

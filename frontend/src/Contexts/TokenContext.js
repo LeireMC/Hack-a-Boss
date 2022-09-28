@@ -5,7 +5,7 @@ export const TokenContext = createContext();
 
 export const CustomTokenContextProvider = ({ children }) => {
   const [token, setToken] = useLocalStorage("token");
-  const [loggedUser, setLoggedUser] = useState({});
+  const [loggedUser, setLoggedUser] = useState([]);
 
   useEffect(() => {
     if (!token) {
@@ -18,7 +18,8 @@ export const CustomTokenContextProvider = ({ children }) => {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
 
         const res = await fetch(
-          `${process.env.REACT_APP_API_URL}/user/${decodedToken.id}`
+          `${process.env.REACT_APP_API_URL}/user/${decodedToken.id}`,
+          { headers: { Authorization: token } }
         );
 
         const body = await res.json();

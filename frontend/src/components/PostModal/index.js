@@ -57,15 +57,19 @@ const PostModal = ({
             token,
             searchParams
           );
-
-          const postIsFavorited = postIsFavoritedByUser.find((post) => {
-            return post.idPost === idPost;
-          });
-
-          if (!postIsFavorited) {
+          if (!postIsFavoritedByUser) {
             setIsFavorite(false);
-          } else {
-            setIsFavorite(true);
+          }
+
+          if (postIsFavoritedByUser) {
+            const postIsFavorited = postIsFavoritedByUser.find((post) => {
+              return post.idPost === idPost;
+            });
+            if (!postIsFavorited) {
+              setIsFavorite(false);
+            } else {
+              setIsFavorite(true);
+            }
           }
 
           setNumLikes(postNumLikes);

@@ -1,14 +1,14 @@
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import decodedTokenInfo from "../../utils/decodedTokenInfo";
+
 import { getFollowUsers } from "../../services";
 import Avatar from "../Avatar";
 
-const UserInfo = ({ userInfo, token }) => {
+const UserInfo = ({ userInfo, token, loggedUserInfo }) => {
   const [follow, setFollow] = useState("");
   const { name, username, avatar, bio, url, id, lastname } = userInfo;
-  const idLoggedUser = decodedTokenInfo(token);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const UserInfo = ({ userInfo, token }) => {
           <Avatar avatar={avatar} name={name} />
         </figure>
 
-        {token && idLoggedUser !== id && (
+        {token && loggedUserInfo.id !== id && (
           <button
             className="profileButton"
             onClick={async (e) => {
@@ -77,7 +77,7 @@ const UserInfo = ({ userInfo, token }) => {
             {!follow && "Seguir"}
           </button>
         )}
-        {token && idLoggedUser === id && (
+        {token && loggedUserInfo.id === id && (
           <button
             className="profileButton"
             type="button"
@@ -96,11 +96,20 @@ const UserInfo = ({ userInfo, token }) => {
         }`}</h3>
 
         <h4 className="userName">{`@${username}`}</h4>
-        <h4 className="userBioTitle">Biografia</h4>
-        <p className="userBio">{`${bio}`}</p>
-        <a className="userUrl" href={`http://${url}`}>
-          {`${url}`}
-        </a>
+        {bio !== null && (
+          <>
+            <h4 className="userBioTitle">Biografía</h4>
+            <p className="userBio">{`${bio}`}</p>
+          </>
+        )}
+        {url !== null && (
+          <>
+            <h4 className="userWebTittle">Web</h4>
+            <a className="userUrl" href={`http://${url}`}>
+              {`${url}`}
+            </a>
+          </>
+        )}
       </section>
     </>
   );
