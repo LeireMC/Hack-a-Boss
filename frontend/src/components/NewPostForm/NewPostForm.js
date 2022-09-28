@@ -11,9 +11,7 @@ const NewPostForm = ({ loggedUser, token }) => {
   const [images, setImages] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const loggedUserInfo = loggedUser[0];
-
   const { name, id } = loggedUserInfo;
-
   const navigate = useNavigate();
   const maxImages = 5 - images.length;
 
