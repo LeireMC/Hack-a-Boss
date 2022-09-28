@@ -1,5 +1,6 @@
 import "./styles.css";
 import { useState, Fragment } from "react";
+
 import { RightArrow, LeftArrow } from "../ArrowIcons";
 
 const PhotoSlider = ({

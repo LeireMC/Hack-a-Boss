@@ -24,6 +24,7 @@ const ProfilePage = () => {
   return (
     <>
       <Header searchParams={searchParams} setSearchParams={setSearchParams} />
+
       {loading && <Spinner />}
       {userPosts.length > 0 && (
         <main className="profilePage">

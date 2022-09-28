@@ -1,13 +1,18 @@
 import "./styles.css";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import logoHackaGram from "../../assets/images/logo.png";
+import EditProfileForm from "../../components/EditProfileForm";
+import { useTokenContext } from "../../Contexts/TokenContext";
 
 const EditUserProfilePage = () => {
+  const { token, loggedUser } = useTokenContext();
   return (
     <>
-      <Header />
-      <main></main>
-      <Footer />
+      <main>
+        <img src={logoHackaGram} alt="Logo de Hack a Gram" />
+        {loggedUser.length > 0 && (
+          <EditProfileForm token={token} loggedUser={loggedUser} />
+        )}
+      </main>
     </>
   );
 };

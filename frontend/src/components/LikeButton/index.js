@@ -1,5 +1,6 @@
 import "./styles.css";
 import { LikedIcon, UnlikedIcon } from "../LikeIcons";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,6 +12,7 @@ const LikeButton = ({ idPost, token, setNumLikes, setIsLiked, isLiked }) => {
       onClick={async (event) => {
         try {
           setClassName("");
+
           const res = await fetch(
             `${process.env.REACT_APP_API_URL}/post/${idPost}/like`,
             {
