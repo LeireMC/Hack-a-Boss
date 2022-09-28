@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import "./styles.css";
 import defaultAvatar from "../../assets/images/defaultavatar.png";
 

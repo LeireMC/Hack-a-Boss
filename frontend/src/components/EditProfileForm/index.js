@@ -1,24 +1,27 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
-import { useTokenContext } from "../../Contexts/TokenContext";
 import Avatar from "../Avatar";
+import { useNavigate } from "react-router-dom";
 
-const EditProfileForm = (user, setUser, setShowEditForm) => {
+const EditProfileForm = ({ token, loggedUser }) => {
+  const navigate = useNavigate();
+
   const {
+    id,
     name: currentName,
     lastname: currentLastname,
     bio: currentBio,
     url: currentUrl,
     privacy: currentPrivacy,
-    password: currentPassword,
     avatar: currentAvatar,
     username: currentUsername,
     email: currentEmail,
-  } = user;
+  } = loggedUser[0];
 
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [oldPass, setOldPass] = useState("");
   const [newPrivacy, setNewPrivacy] = useState("");
   const [newUrl, setNewUrl] = useState("");
   const [newBio, setNewBio] = useState("");
@@ -26,9 +29,8 @@ const EditProfileForm = (user, setUser, setShowEditForm) => {
   const [newLastname, setNewLastname] = useState("");
   const [newAvatarPreview, setNewAvatarPreview] = useState("");
 
+  console.log(newPrivacy);
   const newAvatarRef = useRef();
-
-  const { token } = useTokenContext();
 
   return (
     <form
@@ -43,7 +45,7 @@ const EditProfileForm = (user, setUser, setShowEditForm) => {
               newUsername ||
               newEmail ||
               file ||
-              newPassword ||
+              newPass ||
               newName ||
               newLastname ||
               newBio ||
@@ -54,85 +56,53 @@ const EditProfileForm = (user, setUser, setShowEditForm) => {
             toast.warn("No has introducido ningún dato nuevo");
             return;
           }
-
-          if (
-            newUsername ||
-            newEmail ||
-            file ||
-            newPassword ||
-            newName ||
-            newLastname ||
-            newBio ||
-            newUrl ||
-            newPrivacy
-          ) {
-            const res = await fetch(
-              `${process.env.REACT_APP_API_URL}/user/data`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: token,
-                },
-                body: JSON.stringify({
-                  username: newUsername,
-                  email: newEmail,
-                  bio: newBio,
-                  url: newUrl,
-                  name: newName,
-                  lastname: newLastname,
-                  privacy: newPrivacy,
-                  password: newPassword,
-                }),
-              }
-            );
-            const body = await res.json();
-
-            if (!res.ok) {
-              throw new Error(body.message);
-            }
-            setUser({
-              ...user,
-              username: newUsername || user.username,
-              email: newEmail || user.email,
-              name: newName || user.name,
-              lastname: newLastname || user.lastname,
-              bio: newBio || user.bio,
-              url: newUrl || user.url,
-              privacy: newPrivacy || user.privacy,
-              password: newPassword || user.password,
-            });
+          const formData = new FormData();
+          if (newUsername) {
+            formData.append("username", newUsername);
           }
-
+          if (newEmail) {
+            formData.append("email", newEmail);
+          }
           if (file) {
-            const formData = new FormData();
-
             formData.append("avatar", file);
-
-            const res = await fetch(
-              `${process.env.REACT_APP_API_URL}/user/avatar`,
-              {
-                method: "PUT",
-                headers: {
-                  Authorization: token,
-                },
-                body: formData,
-              }
-            );
-
-            const body = await res.json();
-
-            if (!res.ok) {
-              throw new Error(body.message);
-            }
-
-            const avatar = body.data.avatarName;
-
-            setUser({ ...user, avatar });
           }
-
+          if (newPass) {
+            formData.append("newPass", newPass);
+          }
+          if (oldPass) {
+            formData.append("oldPass", oldPass);
+          }
+          if (newName) {
+            formData.append("name", newName);
+          }
+          if (newLastname) {
+            formData.append("lastname", newLastname);
+          }
+          if (newBio) {
+            formData.append("bio", newBio);
+          }
+          if (newUrl) {
+            formData.append("url", newUrl);
+          }
+          if (newPrivacy) {
+            formData.append("privacy", newPrivacy);
+          }
+          const res = await fetch(
+            `${process.env.REACT_APP_API_URL}/user/data`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: token,
+              },
+              body: formData,
+            }
+          );
+          if (!res.ok) {
+            const body = await res.json();
+            throw new Error(body.message);
+          }
           toast.success("Perfil de Hack a Gram actualizado con éxito");
-          setShowEditForm(false);
+          navigate(`/profile/${id}`);
         } catch (error) {
           console.error(error.message);
           toast.error(error.message);
@@ -220,21 +190,47 @@ const EditProfileForm = (user, setUser, setShowEditForm) => {
         placeholder={currentUrl}
       />
 
-      <label htmlFor="password">Password:</label>
+      <label htmlFor="oldPass">Password anterior:</label>
       <input
-        id="password"
-        value={newPassword}
+        id="oldPass"
+        value={newPass}
         onChange={(event) => {
-          setNewPassword(event.target.value);
+          setOldPass(event.target.value);
         }}
-        placeholder={currentPassword}
       />
 
-      <label htmlFor="privacy">Privacidad:</label>
-      <input type="radio" id="privacy" value="public" />
-      <label htmlFor="privacy">Público</label>
-      <input type="radio" id="privacy" value="private" />
-      <label htmlFor="privacy">Privado</label>
+      <label htmlFor="newPass">Password nuevo:</label>
+      <input
+        id="newPass"
+        value={newPass}
+        onChange={(event) => {
+          setNewPass(event.target.value);
+        }}
+      />
+
+      <p>Privacidad:</p>
+      <input
+        type="radio"
+        id="public"
+        value="public"
+        name="privacy"
+        checked={"public" === currentPrivacy}
+        onChange={(event) => {
+          setNewPrivacy(event.target.value);
+        }}
+      />
+      <label htmlFor="public">Público</label>
+      <input
+        type="radio"
+        id="private"
+        value="private"
+        name="privacy"
+        checked={"private" === currentPrivacy}
+        onChange={(event) => {
+          setNewPrivacy(event.target.value);
+        }}
+      />
+      <label htmlFor="private">Privado</label>
 
       <button>Actualizar perfil</button>
     </form>

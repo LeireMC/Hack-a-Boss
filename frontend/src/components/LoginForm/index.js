@@ -31,8 +31,10 @@ const LoginForm = () => {
           }
 
           setToken(body.authToken);
-          toast.success("Logged succesfully");
-          navigate("/profile");
+          toast.success(
+            "Has iniciado sesión con éxito. ¡Bienvenido a Hack a Gram!"
+          );
+          navigate("/");
         } catch (error) {
           console.error(error.message);
           toast.error(error.message);
