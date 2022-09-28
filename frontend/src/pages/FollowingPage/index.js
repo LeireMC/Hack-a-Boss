@@ -43,6 +43,7 @@ const FollowingPage = () => {
           </section>
         )}
       </main>
+
       <Footer />
     </>
   );

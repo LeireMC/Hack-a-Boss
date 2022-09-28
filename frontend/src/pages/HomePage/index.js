@@ -12,6 +12,7 @@ const HomePage = () => {
     setSearchParams,
     posts,
     loading,
+
     addComment,
     setPosts,
   } = usePosts();
