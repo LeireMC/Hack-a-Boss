@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllPostsService } from "../services";
 import { useSearchParams } from "react-router-dom";
-import { useTokenContext } from "../context/TokenContext";
+import { useTokenContext } from "../Contexts/TokenContext";
 
 const usePosts = () => {
   const [posts, setPosts] = useState([]);

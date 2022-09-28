@@ -4,15 +4,15 @@ import Spinner from "../../components/Spinner";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ErrorMessage from "../../components/ErrorMessage";
-import { useTokenContext } from "../../context/TokenContext";
+import { useTokenContext } from "../../Contexts/TokenContext";
 import usePost from "../../hooks/usePost";
 
 const NewPostPage = () => {
-  const { addNewPost, setSearchParams, searchParams, loading, errorMessage } =
-    usePost();
+  const { setSearchParams, searchParams, loading, errorMessage } = usePost();
+
   //llamamos a useTokenContext para recibir el token
-  const { token } = useTokenContext();
-  console.log(token);
+  const { token, loggedUser } = useTokenContext();
+
   if (!token) {
     return <Navigate to="/login" />;
   }
@@ -23,9 +23,12 @@ const NewPostPage = () => {
 
       <main className="homePage">
         {loading && <Spinner />}
-        <section>
-          <NewPostForm token={token} addNewPost={addNewPost} />
-        </section>
+        {loggedUser.length > 0 && (
+          <section>
+            <NewPostForm loggedUser={loggedUser} token={token} />
+          </section>
+        )}
+
         {errorMessage && <ErrorMessage msg={errorMessage} />}
       </main>
 

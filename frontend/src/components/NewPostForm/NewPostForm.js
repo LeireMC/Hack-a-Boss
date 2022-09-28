@@ -1,86 +1,154 @@
 import "./styles.css";
-import { useState, useRef } from "react";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useTokenContext } from "../../context/TokenContext";
+import { RightArrow, LeftArrow } from "../ArrowIcons";
 import DefaultPhotoNewPost from "../DefaultPhotoNewPost/DefaultoPhotoPost";
 
-const NewPostForm = ({ addNewPost }) => {
+const NewPostForm = ({ loggedUser, token }) => {
   const [authorComment, setAuthorComment] = useState("");
   const [hashtag, setHashtag] = useState("");
-  /*   const [newPhotoPostPreview, setNewPhotoPostPreview] = useState(""); */
-  const { token } = useTokenContext();
+  const [images, setImages] = useState([]);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const loggedUserInfo = loggedUser[0];
+
+  const { name, id } = loggedUserInfo;
 
   const navigate = useNavigate();
-  const imageRef = useRef(null);
-  /*  const newPhotoPost = useRef(null); */
+  const maxImages = 5 - images.length;
 
+  const handleAddImages = (e) => {
+    const fileList = e.target.files;
+
+    if (fileList.length > maxImages) {
+      toast.error(`Solo puedes añadir ${maxImages} como máximo`);
+      return;
+    }
+
+    console.log(fileList);
+    setImages([...images, ...fileList]);
+  };
+
+  const handleSubmnit = async (event) => {
+    try {
+      event.preventDefault();
+
+      if (images.length === 0) {
+        throw new Error("Necesitas seleccionar por lo menos una imagen");
+      }
+
+      const formData = new FormData();
+
+      formData.append("authorComment", authorComment);
+      formData.append("hashtag", hashtag);
+
+      for (const image of images) {
+        formData.append("post_photo", image);
+      }
+
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/new`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+
+        body: formData,
+      });
+
+      const body = await res.json();
+
+      if (!res.ok) {
+        throw new Error(body.message);
+      }
+
+      toast.success(body.message);
+      navigate(`/profile/${id}`);
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error.message);
+    }
+  };
+  const previousPhoto = (e) => {
+    e.stopPropagation();
+    if (currentPhoto === images.length - 1) {
+      setCurrentPhoto(0);
+      return;
+    }
+    setCurrentPhoto(currentPhoto + 1);
+  };
+  const nextPhoto = (e) => {
+    e.stopPropagation();
+    if (currentPhoto === 0) {
+      setCurrentPhoto(images.length - 1);
+      return;
+    }
+    setCurrentPhoto(currentPhoto - 1);
+  };
   return (
     <>
-      <form
-        onSubmit={async (event) => {
-          try {
-            event.preventDefault();
-
-            const file = imageRef.current.files[0];
-
-            console.log(file);
-
-            const formData = new FormData();
-
-            formData.append("authorComment", authorComment);
-            formData.append("hashtag", hashtag);
-            formData.append("post_photo", file);
-
-            const res = await fetch(
-              `${process.env.REACT_APP_API_URL}/posts/new`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: token,
-                },
-
-                body: formData,
-              }
-            );
-
-            const body = await res.json();
-
-            if (!res.ok) {
-              throw new Error(body.message);
-            }
-
-            addNewPost(body.data);
-            toast.success(body.message);
-            navigate("/");
-            setAuthorComment("");
-            setHashtag("");
-            imageRef.current.value = "";
-          } catch (error) {
-            console.error(error.message);
-            toast.error(error.message);
-          }
-        }}
-      >
+      <form onSubmit={handleSubmnit}>
         <section>
           <ul className="newPostContainer">
-            {/* previsualizacion */}
-
-            {/* previsualizacion */}
-
             <li>
-              <DefaultPhotoNewPost />
-              <input
-                id="image"
-                type="file"
-                ref={imageRef}
-                multiple
-                hidden
-                accept="image/*"
-              ></input>
-              <label className="button" htmlFor="image">
-                Seleccionar imagenes
-              </label>
+              {images.length === 0 ? (
+                <DefaultPhotoNewPost />
+              ) : (
+                <section className="photo-slider">
+                  {images.map((image, index) => {
+                    return (
+                      <Fragment key={index}>
+                        {index === currentPhoto && (
+                          <>
+                            {" "}
+                            <img
+                              src={URL.createObjectURL(image)}
+                              alt={`Imagen subida por ${name}`}
+                            />
+                            <button
+                              className="close"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setImages(images.filter((_, i) => i !== index));
+                              }}
+                            >
+                              X
+                            </button>
+                          </>
+                        )}
+                      </Fragment>
+                    );
+                  })}
+
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        className="previous_photo"
+                        onClick={previousPhoto}
+                      >
+                        <LeftArrow />
+                      </button>
+                      <button className="next_photo" onClick={nextPhoto}>
+                        <RightArrow />
+                      </button>
+                    </>
+                  )}
+                </section>
+              )}
+              {maxImages > 0 ? (
+                <>
+                  <input
+                    id="image"
+                    type="file"
+                    multiple
+                    hidden
+                    accept="image/*"
+                    onChange={handleAddImages}
+                  />
+                  <label className="button" htmlFor="image">
+                    Selecciona hasta {maxImages} imagenes más
+                  </label>
+                </>
+              ) : null}
             </li>
 
             <li>

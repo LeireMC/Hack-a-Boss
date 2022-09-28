@@ -1,10 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border: 10px black;
-}
-
 .newPostContainer {
   width: 45rem;
   height: 47rem;
@@ -23,12 +16,6 @@
   align-items: center;
   text-align: center;
 }
-
-/* input[type="file"] {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-} */
 
 label {
   vertical-align: top;
@@ -67,4 +54,40 @@ label {
   width: 30em;
   height: 30em;
   padding: 1rem;
+}
+.photo-slider {
+  position: relative;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15rem;
+  width: 15rem;
+}
+.photo-slider img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.photo-slider button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.photo-slider button svg {
+  display: block;
+}
+.previous_photo {
+  left: 1rem;
+}
+.next_photo {
+  right: 1rem;
+}
+
+.photo-slider button.close {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
 }
