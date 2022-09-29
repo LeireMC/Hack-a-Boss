@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useTokenContext } from "../../Contexts/TokenContext";
@@ -12,6 +13,7 @@ const LoginForm = () => {
 
   return (
     <form
+      className="loginForm"
       onSubmit={async (event) => {
         try {
           event.preventDefault();
@@ -61,7 +63,7 @@ const LoginForm = () => {
         }}
       />
 
-      <button>Entrar a Hack a Gram</button>
+      <button className="loginButton">Entrar a Hack a Gram</button>
     </form>
   );
 };

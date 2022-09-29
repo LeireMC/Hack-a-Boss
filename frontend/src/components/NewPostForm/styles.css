@@ -11,10 +11,16 @@
   margin: 3rem auto;
 }
 
-.li {
+li {
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+li.imageContainer {
+  height: 18rem;
 }
 
 label {
@@ -26,28 +32,36 @@ label {
 
 .button {
   background-color: #9e2a2b;
-  color: white;
-  border-radius: 1.5rem;
-  margin: 2rem;
-  padding: 0.7rem;
-  width: 15rem;
+  border-radius: 12px;
+  transition-duration: 0.5s;
+  cursor: pointer;
+
+  width: fit-content;
+  padding: 0 1rem;
+  height: 2.5rem;
   text-align: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
 }
 
+.button:hover {
+  color: white;
+}
 #hashtag {
   border-radius: 0.6rem;
   width: 35rem;
   height: 2rem;
-  margin: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 #authorComment {
   border-radius: 0.6rem;
-  margin: 1rem;
+
   width: 35rem;
   height: 7rem;
+  margin-bottom: 1.5rem;
 }
 
 ::placeholder {
@@ -55,28 +69,29 @@ label {
   height: 30em;
   padding: 1rem;
 }
-.photo-slider {
+.photo-slider-form {
   position: relative;
   background-color: white;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15rem;
-  width: 15rem;
+  height: 200px;
+  width: 200px;
 }
-.photo-slider img {
+
+img.slider-image {
   max-height: 100%;
   max-width: 100%;
   object-fit: cover;
 }
 
-.photo-slider button {
+.photo-slider-form button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
-.photo-slider button svg {
+.photo-slider-form button svg {
   display: block;
 }
 .previous_photo {
@@ -86,8 +101,13 @@ label {
   right: 1rem;
 }
 
-.photo-slider button.close {
+.photo-slider-form button.close {
+  background-color: #829ca3;
+  height: 1.3rem;
+  width: 1.3rem;
+  font-size: 0.7rem;
+  border-radius: 50px;
   position: absolute;
-  top: 2rem;
-  right: 1rem;
+  top: 1.2rem;
+  right: 0.9rem;
 }

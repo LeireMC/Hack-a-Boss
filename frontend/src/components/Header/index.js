@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ setSearchParams, searchParams }) => {
   const { token, loggedUser, setToken } = useTokenContext();
   const [menu, setMenu] = useState(false);
-
+  console.log(searchParams);
   const navigate = useNavigate();
 
   const toggleMenu = () => {

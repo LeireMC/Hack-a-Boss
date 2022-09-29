@@ -89,11 +89,11 @@ const NewPostForm = ({ loggedUser, token }) => {
       <form onSubmit={handleSubmnit}>
         <section>
           <ul className="newPostContainer">
-            <li>
+            <li className="imageContainer">
               {images.length === 0 ? (
                 <DefaultPhotoNewPost />
               ) : (
-                <section className="photo-slider">
+                <section className="photo-slider-form">
                   {images.map((image, index) => {
                     return (
                       <Fragment key={index}>
@@ -101,10 +101,12 @@ const NewPostForm = ({ loggedUser, token }) => {
                           <>
                             {" "}
                             <img
+                              className="slider-image"
                               src={URL.createObjectURL(image)}
                               alt={`Imagen subida por ${name}`}
                             />
                             <button
+                              type="button"
                               className="close"
                               onClick={(e) => {
                                 e.preventDefault();
@@ -122,12 +124,17 @@ const NewPostForm = ({ loggedUser, token }) => {
                   {images.length > 1 && (
                     <>
                       <button
+                        type="button"
                         className="previous_photo"
                         onClick={previousPhoto}
                       >
                         <LeftArrow />
                       </button>
-                      <button className="next_photo" onClick={nextPhoto}>
+                      <button
+                        type="button"
+                        className="next_photo"
+                        onClick={nextPhoto}
+                      >
                         <RightArrow />
                       </button>
                     </>

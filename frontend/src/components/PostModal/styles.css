@@ -109,14 +109,22 @@ form > textarea.commentForm {
 
 form > button.commentButton {
   background-color: #9e2a2b;
-  width: 10rem;
-  padding: 0.8rem;
-  border-radius: 50px;
-  margin-top: 0.5rem;
+  border-radius: 12px;
+  transition-duration: 0.5s;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0 1rem;
+  height: 2.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  color: black;
 }
 
 form > button.commentButton:hover {
-  background-color: #cd5d5f;
+  color: white;
 }
 
 .icons {

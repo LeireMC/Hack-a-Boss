@@ -1,5 +1,5 @@
 import "./styles.css";
-import defaultPhotoNewPost from "../../assets/images/defaultPostPhoto.avif";
+import defaultPhotoNewPost from "../../assets/images/logo.png";
 
 const DefaultPhotoNewPost = ({ post_photo }) => {
   return (

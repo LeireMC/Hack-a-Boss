@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const NewUserForm = () => {
   return (
     <>
       <form
+        className="registerUserForm"
         onSubmit={async (event) => {
           try {
             event.preventDefault();
@@ -80,7 +82,7 @@ const NewUserForm = () => {
           }}
         />
 
-        <button>Crear cuenta</button>
+        <button className="formButton">Crear cuenta</button>
       </form>
     </>
   );
