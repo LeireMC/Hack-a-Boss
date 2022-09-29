@@ -1,21 +1,18 @@
 .editUserFormContainer {
   width: 45rem;
-  height: 47rem;
   background: #829ca3;
   border-radius: 0.6rem;
-  justify-content: center;
-  align-items: center;
   display: flex;
-
   flex-direction: column;
   justify-content: center;
-
+  align-items: center;
   margin: 3rem auto;
 }
 
 .editUserForm {
   padding: 2rem;
   height: 100%;
+  flex-grow: 1;
 }
 
 .editUserForm input {
@@ -35,4 +32,66 @@ input::placeholder {
   font-size: 1.2em;
   font-style: italic;
   text-align: left;
+}
+
+.privacyContainer {
+  display: flex;
+}
+
+form > p {
+  padding: 0.5rem;
+}
+.public,
+.private {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 1rem;
+}
+
+#public,
+#private {
+  width: 1rem;
+}
+
+.formButton {
+  background-color: #9e2a2b;
+  border-radius: 12px;
+  transition-duration: 0.5s;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0 1rem;
+  height: 2.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+.formButton:hover {
+  color: white;
+}
+
+.avatarInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarInput > p {
+  color: white;
+  font-weight: lighter;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.avatarProfile {
+  height: 65%;
+}
+
+.avatarPreview {
+  max-height: 9rem;
+  border-radius: 50%;
 }

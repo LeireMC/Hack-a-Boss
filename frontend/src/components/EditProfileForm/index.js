@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Avatar from "../Avatar";
 import { useNavigate } from "react-router-dom";
 
-const EditProfileForm = ({ token, loggedUser }) => {
+const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
   const navigate = useNavigate();
 
   const {
@@ -23,7 +23,7 @@ const EditProfileForm = ({ token, loggedUser }) => {
   const [newEmail, setNewEmail] = useState("");
   const [newPass, setNewPass] = useState("");
   const [oldPass, setOldPass] = useState("");
-  const [newPrivacy, setNewPrivacy] = useState(currentPrivacy);
+  const [newPrivacy, setNewPrivacy] = useState("");
   const [newUrl, setNewUrl] = useState("");
   const [newBio, setNewBio] = useState("");
   const [newName, setNewName] = useState("");
@@ -104,6 +104,11 @@ const EditProfileForm = ({ token, loggedUser }) => {
               const body = await res.json();
               throw new Error(body.message);
             }
+            const updatedFields = Object.fromEntries(formData);
+            setLoggedUser([
+              { ...loggedUser[0], ...updatedFields },
+              { ...loggedUser[1] },
+            ]);
             toast.success("Perfil de Hack a Gram actualizado con éxito");
             navigate(`/profile/${id}`);
           } catch (error) {
@@ -112,14 +117,22 @@ const EditProfileForm = ({ token, loggedUser }) => {
           }
         }}
       >
-        <label htmlFor="avatar">
-          {!newAvatarPreview && (
-            <Avatar avatar={currentAvatar} username={currentUsername} />
-          )}
+        <label htmlFor="avatar" className="avatarInput">
+          <figure className="avatarProfile">
+            {!newAvatarPreview && (
+              <Avatar avatar={currentAvatar} username={currentUsername} />
+            )}
 
-          {newAvatarPreview && (
-            <img src={newAvatarPreview} alt={currentUsername} />
-          )}
+            {newAvatarPreview && (
+              <img
+                className="avatarPreview"
+                src={newAvatarPreview}
+                alt={currentUsername}
+              />
+            )}
+          </figure>
+
+          <p>Clicka en la imagen para cambiar tu avatar</p>
         </label>
         <input
           id="avatar"
@@ -211,32 +224,38 @@ const EditProfileForm = ({ token, loggedUser }) => {
             setNewPass(event.target.value);
           }}
         />
-
         <p>Privacidad:</p>
-        <input
-          type="radio"
-          id="public"
-          value="public"
-          name="privacy"
-          checked="defaultChecked"
-          onChange={(event) => {
-            setNewPrivacy(event.target.value);
-          }}
-        />
-        <label htmlFor="public">Público</label>
-        <input
-          type="radio"
-          id="private"
-          value="private"
-          name="privacy"
-          checked="defaultChecked"
-          onChange={(event) => {
-            setNewPrivacy(event.target.value);
-          }}
-        />
-        <label htmlFor="private">Privado</label>
+        <section className="privacyContainer">
+          <section className="public">
+            <input
+              type="radio"
+              id="public"
+              value="public"
+              name="privacy"
+              defaultChecked={currentPrivacy === "public"}
+              onChange={(event) => {
+                setNewPrivacy(event.target.value);
+              }}
+            />
+            <label htmlFor="public">Público</label>
+          </section>
 
-        <button>Actualizar perfil</button>
+          <section className="private">
+            <input
+              type="radio"
+              id="private"
+              value="private"
+              name="privacy"
+              defaultChecked={currentPrivacy === "private"}
+              onChange={(event) => {
+                setNewPrivacy(event.target.value);
+              }}
+            />
+            <label htmlFor="private">Privado</label>
+          </section>
+        </section>
+
+        <button className="formButton">Actualizar perfil</button>
       </form>
     </section>
   );

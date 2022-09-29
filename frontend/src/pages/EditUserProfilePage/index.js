@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 
 const EditUserProfilePage = () => {
-  const { token, loggedUser } = useTokenContext();
+  const { token, loggedUser, setLoggedUser } = useTokenContext();
 
   const loggedUserInfo = loggedUser[0];
 
@@ -25,7 +25,11 @@ const EditUserProfilePage = () => {
       </header>
       <main>
         {loggedUser && loggedUser.length > 0 && (
-          <EditProfileForm token={token} loggedUser={loggedUser} />
+          <EditProfileForm
+            token={token}
+            loggedUser={loggedUser}
+            setLoggedUser={setLoggedUser}
+          />
         )}
       </main>
       <Footer />
