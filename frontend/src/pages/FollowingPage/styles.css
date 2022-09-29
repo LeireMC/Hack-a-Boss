@@ -19,3 +19,7 @@ section.container p {
 section.container svg {
   margin-bottom: 1rem;
 }
+
+section.followingUserListContainer {
+  margin-bottom: 1rem;
+}
