@@ -16,14 +16,7 @@ const getFavorites = async (req, res, next) => {
         const idUser = req.userAuth.id;
 
         //Recibir los query params para filtrar los post que se quieren monstrar
-        const { search, direction } = req.query;
-
-        //Array de opciones válidas para la dirección en la que se ordenan los campos
-        const validDirectionOptions = ['DESC', 'ASC'];
-
-        const orderDirection = validDirectionOptions.includes(direction)
-            ? direction
-            : 'DESC';
+        const { search } = req.query;
 
         //Recuperamos idFavorito, todo de post e id.user
         let favorites;
@@ -31,15 +24,15 @@ const getFavorites = async (req, res, next) => {
         if (search) {
             [favorites] = await connection.query(
                 `
-        SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=? AND p.authorComment LIKE ? OR p.hashtag LIKE ?
-        ORDER BY p.createdAt ${orderDirection} `,
+        SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE (f.idUser= ?) AND (p.authorComment LIKE ? OR p.hashtag LIKE ?)
+        ORDER BY p.createdAt DESC `,
                 [idUser, `%${search}%`, `%${search}%`]
             );
         } else {
             [favorites] = await connection.query(
                 `
         SELECT p.authorComment, p.hashtag, p.idUser as idPostOwner, f.idPost, f.idUser FROM post p INNER JOIN favorite f ON p.id = f.idPost WHERE f.idUser=?
-        ORDER BY p.createdAt ${orderDirection} `,
+        ORDER BY p.createdAt DESC `,
                 [idUser]
             );
         }
