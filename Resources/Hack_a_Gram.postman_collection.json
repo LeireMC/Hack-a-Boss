@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "f18da6b5-c5cc-4e6b-b0e6-ba35dafaca91",
+		"_postman_id": "4aca6f2c-c81f-42cd-abe0-e09bf4749745",
 		"name": "Hack_a_Gram",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23328755"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -16,7 +15,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenIgor}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -41,38 +40,19 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenLeire}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{server}}/post/12/isLiked",
+							"raw": "{{server}}/post/3/isLiked",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"post",
-								"12",
+								"3",
 								"isLiked"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "numLikes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/post/12/numLikes",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"post",
-								"12",
-								"numLikes"
 							]
 						}
 					},
@@ -101,13 +81,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}/posts/13",
+							"raw": "{{server}}/posts/9",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"posts",
-								"13"
+								"9"
 							]
 						}
 					},
@@ -120,12 +100,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenIgor}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{server}}/posts",
+							"raw": "{{server}}/posts?search=rojo",
 							"host": [
 								"{{server}}"
 							],
@@ -135,12 +115,11 @@
 							"query": [
 								{
 									"key": "search",
-									"value": "rojo",
-									"disabled": true
+									"value": "rojo"
 								},
 								{
-									"key": "direction",
-									"value": "ASC",
+									"key": "",
+									"value": "",
 									"disabled": true
 								}
 							]
@@ -155,7 +134,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenIgor}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -165,7 +144,8 @@
 								{
 									"key": "post_photo",
 									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/bb82cfd25cac433cb8a25cadba9054fd (2).png"
+									"src": [],
+									"disabled": true
 								},
 								{
 									"key": "authorComment",
@@ -175,43 +155,30 @@
 								{
 									"key": "hashtag",
 									"value": "",
-									"type": "text",
+									"type": "text"
+								},
+								{
+									"key": "post_photo",
+									"type": "file",
+									"src": [],
 									"disabled": true
 								},
 								{
 									"key": "post_photo",
 									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-ricardo-esquivel-1683492.jpg",
+									"src": [],
 									"disabled": true
 								},
 								{
 									"key": "post_photo",
 									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-paul-van-york-11682105.jpg",
+									"src": [],
 									"disabled": true
 								},
 								{
 									"key": "post_photo",
 									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-maksim-goncharenok-4823732.jpg",
-									"disabled": true
-								},
-								{
-									"key": "post_photo",
-									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-tirachard-kumtanom-601174.jpg",
-									"disabled": true
-								},
-								{
-									"key": "post_photo",
-									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-vinh-lâm-13370190.jpg",
-									"disabled": true
-								},
-								{
-									"key": "post_photo",
-									"type": "file",
-									"src": "/C:/Users/myk19/Downloads/pexels-tirachard-kumtanom-601174.jpg",
+									"src": [],
 									"disabled": true
 								}
 							]
@@ -242,7 +209,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"password\":\"123456\"\r\n}",
+							"raw": "{\r\n        \"password\":\"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -331,13 +298,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{server}}/user/2",
+							"raw": "{{server}}/user/10",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"2"
+								"10"
 							]
 						}
 					},
@@ -350,7 +317,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenLeire}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -358,7 +325,22 @@
 							"mode": "formdata",
 							"formdata": [
 								{
+									"key": "avatar",
+									"type": "file",
+									"src": []
+								},
+								{
 									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
 									"value": "",
 									"type": "text"
 								},
@@ -373,7 +355,7 @@
 									"type": "text"
 								},
 								{
-									"key": "privacy",
+									"key": "email",
 									"value": "",
 									"type": "text"
 								},
@@ -388,29 +370,15 @@
 									"type": "text"
 								},
 								{
-									"key": "email",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "avatar",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "lastname",
-									"value": "",
-									"type": "text"
-								},
-								{
 									"key": "privacy",
-									"value": "public",
+									"value": "",
 									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "public",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -473,7 +441,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenIgor}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -512,7 +480,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenIgor}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -537,12 +505,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenLeire}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{server}}/favorites?search=comida",
+							"raw": "{{server}}/favorites?search=playa",
 							"host": [
 								"{{server}}"
 							],
@@ -552,7 +520,7 @@
 							"query": [
 								{
 									"key": "search",
-									"value": "comida"
+									"value": "playa"
 								}
 							]
 						}
@@ -571,7 +539,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenLeire}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -594,7 +562,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{tokenLeire}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -638,28 +606,23 @@
 	"variable": [
 		{
 			"key": "server",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"key": "tokenIgor",
-			"value": "",
-			"type": "string"
+			"key": "token",
+			"value": ""
 		},
 		{
-			"key": "tokenLeire",
 			"value": "",
-			"type": "string"
+			"disabled": true
 		},
 		{
-			"key": "tokenManuel",
 			"value": "",
-			"type": "string"
+			"disabled": true
 		},
 		{
-			"key": "tokenPepito",
 			"value": "",
-			"type": "string"
+			"disabled": true
 		}
 	]
 }
