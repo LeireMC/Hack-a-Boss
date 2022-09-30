@@ -25,7 +25,6 @@ const NewPostForm = ({ loggedUser, token }) => {
       return;
     }
 
-    console.log(fileList);
     setImages([...images, ...fileList]);
   };
 

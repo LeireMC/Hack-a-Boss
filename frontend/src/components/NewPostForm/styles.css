@@ -35,7 +35,6 @@ label {
   border-radius: 12px;
   transition-duration: 0.5s;
   cursor: pointer;
-
   width: fit-content;
   padding: 0 1rem;
   height: 2.5rem;
@@ -51,6 +50,7 @@ label {
 }
 #hashtag {
   border-radius: 0.6rem;
+  padding: 1rem;
   width: 35rem;
   height: 2rem;
   margin-bottom: 1.5rem;
@@ -58,7 +58,7 @@ label {
 
 #authorComment {
   border-radius: 0.6rem;
-
+  padding: 1rem;
   width: 35rem;
   height: 7rem;
   margin-bottom: 1.5rem;

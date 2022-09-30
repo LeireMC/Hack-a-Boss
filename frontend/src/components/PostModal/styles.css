@@ -105,6 +105,11 @@ form > textarea.commentForm {
   width: 100%;
   height: 4rem;
   padding: 0.5rem;
+  overflow-y: auto;
+}
+
+form > textarea.commentForm::-webkit-scrollbar {
+  display: none;
 }
 
 form > button.commentButton {

@@ -30,7 +30,6 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
   const [newLastname, setNewLastname] = useState("");
   const [newAvatarPreview, setNewAvatarPreview] = useState("");
 
-  console.log(newPrivacy);
   const newAvatarRef = useRef();
 
   return (

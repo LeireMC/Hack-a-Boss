@@ -45,7 +45,7 @@ const userProfile = async (req, res, next) => {
                 [idUser]
             );
         }
-        console.log(user);
+
         if (user.length === 0) {
             throw generateError(
                 'No existe el usuario que estás buscando.',

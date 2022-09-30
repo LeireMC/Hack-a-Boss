@@ -41,8 +41,7 @@ const userLogin = async (req, res, next) => {
         const tokenInfo = {
             id: user.id,
         };
-        console.log(tokenInfo);
-        console.log(user);
+
         const token = jwt.sign(tokenInfo, process.env.SECRET, {
             expiresIn: '10d',
         });

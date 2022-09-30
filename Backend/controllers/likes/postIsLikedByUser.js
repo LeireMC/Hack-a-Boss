@@ -17,7 +17,7 @@ const postIsLikedByUser = async (req, res, next) => {
             `,
             [idUser, postId]
         );
-        console.log(postIsLiked);
+
         if (postIsLiked.length === 0 || postIsLiked[0].liked === 0) {
             res.send({
                 status: 'ok',

@@ -62,7 +62,7 @@ const getFavorites = async (req, res, next) => {
                 WHERE id = ?`,
                     [favorites[i].idPostOwner]
                 );
-                console.log(postOwnerInfo);
+
                 const photos = await postPhotos(favorites[i].idPost);
 
                 const comments = await postComments(favorites[i].idPost);

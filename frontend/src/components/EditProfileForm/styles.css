@@ -88,10 +88,15 @@ form > p {
 }
 
 .avatarProfile {
-  height: 65%;
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
 }
 
 .avatarPreview {
-  max-height: 9rem;
-  border-radius: 50%;
+  width: auto;
+  height: 100%;
 }

@@ -116,7 +116,6 @@ async function main() {
 
         const passUser = await bcrypt.hash('12345', 10);
 
-        console.log(new Date());
         await connection.query(
             `INSERT INTO user (name, username, email, password, lastname, avatar, bio, url, privacy, createdAt)
       VALUES ("Pablo", "Pablito", "pablo@gmail.com", ?, "López", null, "Me encanta dibujar", "www.domestika.com", "public", "2022-08-10" ),
@@ -196,8 +195,8 @@ async function main() {
 
         await connection.query(
             `INSERT INTO photo (name, idPost)
-                VALUES ("post1.jpg", 1), ("post1-2.jpg", 1), ("post2.jpg", 2), ("post3.jpg", 3), ("post4.jpg", 4), ("post5.jpeg", 5), ("post6", 6), ("post6-2.jpg", 6), ("post7.jpg", 7), ("post8.jpg", 8), ("post9.jpg", 9), ("post10.jpg", 10), ("post11.jpg", 11), ("post12.jpg", 12), ("post13.jpg", 13), ("post14.jpg", 14), ("post15.jpg", 15), ("post16-1.jpg", 16), ("post16-2.jpg", 16), ("post16-3.jpg", 16), ("post17.jpg", 17), ("post18.jpg", 18), ("post19.jpg", 19), ("post20.jpg", 20),
-                ("post21.jpg", 21), ("post22.jpg", 22), ("post23.jpg", 23), ("post24.jpg", 24), ("post25-1.jpeg", 25), ("post25-2.jpeg", 25), ("post26.jpg", 26), ("post27-1.jpeg", 27), ("post27-2.jpeg", 27), ("post27-3.jpeg", 27), ("post27-4.jpeg", 27), ("post27-5.jpeg", 27), ("post28.jpeg", 28), ("post29.jpg", 29), ("post30.jpeg", 30), ("post31.jpg", 31), ("post32.jpg", 32), ("post33.jpg", 33), ("post34.jpg", 34), ("post35.jpg", 35), ("post36.jpg", 36), ("post37.jpg", 37)
+                VALUES ("post1.jpg", 1), ("post1-2.jpg", 1), ("post2.jpg", 2), ("post3.jpg", 3), ("post4.jpg", 4), ("post5.jpeg", 5), ("post6.png", 6), ("post6-2.jpg", 6), ("post7.jpg", 7), ("post8.jpg", 8), ("post9.jpg", 9), ("post10.jpg", 10), ("post11.jpg", 11), ("post12.jpg", 12), ("post13.jpg", 13), ("post14.jpg", 14), ("post15.jpg", 15), ("post16-1.jpg", 16), ("post16-2.jpg", 16), ("post16-3.jpg", 16), ("post17.jpg", 17), ("post18.jpg", 18), ("post19.jpg", 19), ("post20.jpg", 20),
+                ("post21.jpeg", 21), ("post22.jpeg", 22), ("post23.jpeg", 23), ("post24.jpeg", 24), ("post25-1.jpeg", 25), ("post25-2.jpeg", 25), ("post26.jpg", 26), ("post27-1.jpeg", 27), ("post27-2.jpeg", 27), ("post27-3.jpeg", 27), ("post27-4.jpeg", 27), ("post27-5.jpeg", 27), ("post28.jpeg", 28), ("post29.jpg", 29), ("post30.jpeg", 30), ("post31.jpg", 31), ("post32.jpg", 32), ("post33.jpg", 33), ("post34.jpg", 34), ("post35.jpg", 35), ("post36.jpg", 36), ("post37.jpg", 37)
                 `
         );
 
@@ -213,11 +212,16 @@ async function main() {
         await connection.query(
             `INSERT INTO comment (body, createdAt, idPost, idUser)
                 VALUES ("Que bonitos colores", "2022-09-20", 1, 4),
-                ("¡Me encanta dibujar!", "2022-09-20", 1, 8),
+                ("¡Me encanta dibujar!", "2022-09-21", 1, 8),
                 ("Mi animal favorito es la jirafa", "2022-09-20", 2, 8),
-                ("¡Que lindo recuerdo!", "2022-09-20", 4, 7),
-                ("A mi también me gustaba colorear cuando era peque", "2022-09-20", 4, 9),
-                ("Que rizos más chulos", "2022-09-20", 1, 4)                
+                ("¡Que lindo recuerdo!", "2022-09-21", 4, 7),
+                ("A mi también me gustaba colorear cuando era peque", "2022-09-22", 4, 9),
+                ("Que rizos más chulos", "2022-09-23", 4, 2),
+                ("Que lindos calcetines!Y qué prácticos!", "2022-09-20", 5, 9),
+                ("Son igual que los mios!", "2022-09-21", 5, 3),
+                ("Yo también quiero estar ahí!", "2022-09-20", 8, 7),
+                ("Justo ayer hice yoga en la playa", "2022-09-21", 8, 1), ("Qué vistas más bonitas", "2022-09-20", 11, 2),("Qué delicia!", "2022-09-21", 14, 7),("Guárdame un plato para esta noche!", "2022-09-23", 14, 6),("Qué linda flor!", "2022-09-20", 19, 2), ("Quiero que me regalen una!", "2022-09-22", 19, 4),("Qué mala temporada lleva Ferrari este año!", "2022-09-20", 24, 2),
+                ("Paz en Ucrania", "2022-09-22", 26, 6), ("Paz en Ucrania", "2022-09-23", 26, 2),("Qué guay! En mi ciudad también lo hicieron", "2022-09-20", 27, 4),("Qué combinación de ropa más chula", "2022-09-20", 31, 1),("Qué bonito es el fondo del mar", "2022-09-20", 34, 6),("Invitame a aprender", "2022-09-20", 36, 4)
                 `
         );
 

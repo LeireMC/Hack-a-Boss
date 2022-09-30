@@ -16,12 +16,8 @@ const FavoritesList = ({ getUserFavorites }) => {
       try {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/favorites`);
 
-        console.log(res);
-
         if (res.ok) {
           const body = await res.json();
-
-          console.log(body);
 
           setFavorites(body.data);
         } else {

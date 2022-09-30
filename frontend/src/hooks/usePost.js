@@ -10,18 +10,12 @@ const usePosts = () => {
   const { token } = useTokenContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const addComment = (idPost, comment) => {
-    console.log({ idPost, posts });
     const postIndex = posts.findIndex((post) => {
       return post.idPost === idPost;
     });
 
-    console.log({ postIndex, post: posts[postIndex] });
     posts[postIndex].comments.unshift(comment);
     setPosts([...posts]);
-  };
-
-  const addNewPost = (newPost) => {
-    setPosts([newPost, ...posts]);
   };
 
   useEffect(() => {
@@ -51,7 +45,6 @@ const usePosts = () => {
     loading,
     errorMessage,
     addComment,
-    addNewPost,
   };
 };
 
