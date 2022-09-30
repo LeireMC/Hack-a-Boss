@@ -6,7 +6,6 @@ import PostsList from "../../components/PostsList";
 import MenuTrendingToppics from "../../components/MenuTrendingToppics";
 import Spinner from "../../components/Spinner";
 import AlertIcon from "../../components/AlertIcon";
-import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const {
@@ -36,8 +35,7 @@ const HomePage = () => {
         ) : (
           <section className="container">
             <AlertIcon />
-            <p>No hay post relacionados con este término</p>
-            <Link to="/">Volver al inicio</Link>
+            <p>No hay post publicados todavia</p>
           </section>
         )}
       </main>
