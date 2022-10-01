@@ -46,9 +46,9 @@ const UserInfo = ({ userInfo, token, loggedUserInfo }) => {
           <Avatar avatar={avatar} name={name} />
         </figure>
 
-        {token && loggedUserInfo.id !== id && (
+        {token && loggedUserInfo && loggedUserInfo.id !== id && (
           <button
-            className="profileButton"
+            className="principal"
             onClick={async (e) => {
               try {
                 e.preventDefault();
@@ -77,9 +77,9 @@ const UserInfo = ({ userInfo, token, loggedUserInfo }) => {
             {!follow && "Seguir"}
           </button>
         )}
-        {token && loggedUserInfo.id === id && (
+        {token && loggedUserInfo && loggedUserInfo.id === id && (
           <button
-            className="profileButton"
+            className="principal"
             type="button"
             onClick={() => {
               navigate("/editUserProfile");

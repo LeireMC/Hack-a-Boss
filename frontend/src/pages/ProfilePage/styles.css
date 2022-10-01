@@ -31,7 +31,7 @@ section.infoContainer svg {
 
 button.goLogin,
 button.goRegister {
-  background-color: #9e2a2b;
+  background-color: var(--red-color);
   width: 10rem;
   padding: 0.8rem;
   border-radius: 50px;

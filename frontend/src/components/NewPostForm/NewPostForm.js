@@ -181,7 +181,7 @@ const NewPostForm = ({ loggedUser, token }) => {
               />
             </li>
 
-            <button className="button">Publicar Post</button>
+            <button className="principal">Publicar Post</button>
           </ul>
         </section>
       </form>

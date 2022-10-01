@@ -112,24 +112,8 @@ form > textarea.commentForm::-webkit-scrollbar {
   display: none;
 }
 
-form > button.commentButton {
-  background-color: #9e2a2b;
-  border-radius: 12px;
-  transition-duration: 0.5s;
-  cursor: pointer;
-  width: fit-content;
-  padding: 0 1rem;
-  height: 2.5rem;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem auto;
+form > button.principal {
   color: black;
-}
-
-form > button.commentButton:hover {
-  color: white;
 }
 
 .icons {

@@ -16,18 +16,20 @@ const NewPostPage = () => {
   return (
     <>
       <header className="header">
-        <Link to={`/profile/${loggedUser[0].id}`}>
-          <img
-            className="header-logo "
-            src={logoHackAGram}
-            alt="Logo Hack a Gram"
-          />
-        </Link>
+        {loggedUser[0] && (
+          <Link to={`/profile/${loggedUser[0].id}`}>
+            <img
+              className="header-logo "
+              src={logoHackAGram}
+              alt="Logo Hack a Gram"
+            />
+          </Link>
+        )}
       </header>
 
       <main className="homePage">
         {loggedUser.length > 0 && (
-          <section>
+          <section className="newPostForm">
             <NewPostForm loggedUser={loggedUser} token={token} />
           </section>
         )}

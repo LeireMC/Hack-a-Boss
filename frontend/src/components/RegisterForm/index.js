@@ -82,7 +82,7 @@ const NewUserForm = () => {
           }}
         />
 
-        <button className="formButton">Crear cuenta</button>
+        <button className="principal">Crear cuenta</button>
       </form>
     </>
   );

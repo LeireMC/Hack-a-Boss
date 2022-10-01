@@ -254,7 +254,7 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
           </section>
         </section>
 
-        <button className="formButton">Actualizar perfil</button>
+        <button className="principal">Actualizar perfil</button>
       </form>
     </section>
   );
