@@ -7,12 +7,8 @@ const getFollowUsers = async (req, res, next) => {
     try {
         connection = await getDB();
 
-        //Recuperamos id del usuario logado
         const idUser = req.userAuth.id;
 
-        ////////////////////////
-
-        //Recuperamos idFollower, todo de post e id.user
         let followUsers;
 
         [followUsers] = await connection.query(
@@ -25,7 +21,6 @@ const getFollowUsers = async (req, res, next) => {
             `,
             [idUser]
         );
-        //Si el usuario no tiene usuarios seguidos lanzamos error
 
         if (followUsers.length === 0) {
             res.send({
@@ -33,7 +28,6 @@ const getFollowUsers = async (req, res, next) => {
                 message: `El usuario con id ${idUser} no sigue a ningún usuario`,
             });
         } else {
-            //Respuesta con lista de followers
             res.send({
                 status: 'ok',
                 data: followUsers,

@@ -6,7 +6,6 @@ import { useTokenContext } from "../../Contexts/TokenContext";
 import logoHackAGram from "../../assets/images/logo.png";
 
 const NewPostPage = () => {
-  //llamamos a useTokenContext para recibir el token
   const { token, loggedUser } = useTokenContext();
 
   if (!token) {

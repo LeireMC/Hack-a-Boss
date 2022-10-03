@@ -6,7 +6,6 @@ async function checkLikes(postId, userId) {
     try {
         connection = await getDB();
 
-        //Verificamos que en la Base de Datos no hay ningun like asociado a ese post y ese user
         const [checkLike] = await connection.query(
             `
         SELECT * FROM likes WHERE idPost = ? AND idUser=?`,

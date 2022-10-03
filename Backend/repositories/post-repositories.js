@@ -27,10 +27,8 @@ async function insertPhoto(postPhotos, postId) {
     try {
         connection = await getDB();
 
-        //Creamos el array que devolverá los nombres de las fotos
         let photosNames = [];
 
-        //Ponemos un name a cada photo y guardamos cada foto en la carpeta static
         for (let i = 0; i < postPhotos.length; i++) {
             const photoName = await savePhoto(postPhotos[i], 1);
 

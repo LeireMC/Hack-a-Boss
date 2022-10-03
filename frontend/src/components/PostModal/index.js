@@ -22,6 +22,7 @@ const PostModal = ({
   addComment,
   removeFavorite,
   searchParams,
+  removePost,
 }) => {
   const {
     authorComment,
@@ -35,7 +36,7 @@ const PostModal = ({
     username,
     idUser,
   } = post;
-  const { token } = useTokenContext();
+  const { token, loggedUser } = useTokenContext();
   const [newComment, setNewComment] = useState("");
   const [numLikes, setNumLikes] = useState();
   const [isLiked, setIsLiked] = useState();
@@ -80,6 +81,10 @@ const PostModal = ({
     }
     // eslint-disable-next-line
   }, [hashtag, idPost, token]);
+
+  const loggedUserInfo = loggedUser[0];
+
+  console.log(loggedUserInfo.id);
   return (
     <>
       <button className="closeButton" onClick={() => setOpenModal(false)}>
@@ -202,6 +207,35 @@ const PostModal = ({
                 ></textarea>
                 <button className="principal">Comentar</button>
               </form>
+            )}
+            {token && idUser === loggedUserInfo.id && removePost && (
+              <button
+                className="secundaryButton eliminar"
+                onClick={async (event) => {
+                  try {
+                    const res = await fetch(
+                      `${process.env.REACT_APP_API_URL}/posts/${idPost}`,
+                      {
+                        method: "DELETE",
+                        headers: {
+                          Authorization: token,
+                        },
+                      }
+                    );
+                    const body = await res.json();
+                    if (!res.ok) {
+                      throw new Error(body.message);
+                    }
+                    toast.success(body.message);
+                    removePost(idPost);
+                  } catch (error) {
+                    console.error(error.message);
+                    toast.error(error.message);
+                  }
+                }}
+              >
+                Eliminar post
+              </button>
             )}
           </section>
         </article>

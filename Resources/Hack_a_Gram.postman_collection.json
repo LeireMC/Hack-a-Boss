@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4aca6f2c-c81f-42cd-abe0-e09bf4749745",
+		"_postman_id": "9c2d63e0-2a40-4030-ac59-b37120d231ac",
 		"name": "Hack_a_Gram",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23328755"
 	},
 	"item": [
 		{
@@ -209,7 +210,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"password\":\"123456\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"

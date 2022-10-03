@@ -6,7 +6,6 @@ async function checkFavorites(postId, userId) {
     try {
         connection = await getDB();
 
-        //Verificamos que en la Base de Datos no hay ningun favorito asociado a ese post y ese user
         const [checkFavorite] = await connection.query(
             `
         SELECT * FROM favorite WHERE idPost = ? AND idUser=?`,

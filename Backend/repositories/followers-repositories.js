@@ -6,7 +6,6 @@ async function checkFollower(followerId, userId) {
     try {
         connection = await getDB();
 
-        //Verificamos que en la BBDD que el perfil no esta en mis seguidos
         const [checkFollower] = await connection.query(
             `
         SELECT * FROM follower WHERE idFollower = ? AND idUser=?`,

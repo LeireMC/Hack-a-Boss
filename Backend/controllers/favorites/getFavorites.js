@@ -1,5 +1,4 @@
 const getDB = require('../../db/getDB');
-const { generateError } = require('../../helpers');
 const { likesCounter } = require('../../repositories/likes-repositories');
 const {
     postComments,
@@ -12,13 +11,10 @@ const getFavorites = async (req, res, next) => {
     try {
         connection = await getDB();
 
-        //Recuperamos usuario
         const idUser = req.userAuth.id;
 
-        //Recibir los query params para filtrar los post que se quieren monstrar
         const { search } = req.query;
 
-        //Recuperamos idFavorito, todo de post e id.user
         let favorites;
 
         if (search) {
@@ -37,17 +33,13 @@ const getFavorites = async (req, res, next) => {
             );
         }
 
-        //Comprobamos que el usuario tiene post favoritos, sino lanzamos un error
         if (favorites.length < 1) {
             res.send({
                 status: 'ok',
                 message: `No hay ningun post favorito asociado al usuario con id ${idUser}`,
             });
         } else {
-            //Array que devuelve la respuesta
             const favoritesList = [];
-
-            //Recuperamos fotos y comentarios de cada post
 
             for (let i = 0; i < favorites.length; i++) {
                 const [postOwnerInfo] = await connection.query(
@@ -75,8 +67,6 @@ const getFavorites = async (req, res, next) => {
                     likes: likes,
                 });
             }
-
-            //Respuesta con lista de favoritos, con los post, comentarios y fotos
 
             res.send({
                 status: 'ok',

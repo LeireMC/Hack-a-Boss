@@ -35,7 +35,7 @@ const HomePage = () => {
         ) : (
           <section className="container">
             <AlertIcon />
-            <p>No hay post publicados todavia</p>
+            <p>No hay post publicados todavía</p>
           </section>
         )}
       </main>

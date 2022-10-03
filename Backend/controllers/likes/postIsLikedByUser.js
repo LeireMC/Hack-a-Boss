@@ -6,7 +6,6 @@ const postIsLikedByUser = async (req, res, next) => {
     try {
         connection = await getDB();
 
-        //Recuperamos usuario
         const idUser = req.userAuth.id;
 
         const { postId } = req.params;
