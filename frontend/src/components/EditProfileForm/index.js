@@ -131,7 +131,7 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
             )}
           </figure>
 
-          <p>Clicka en la imagen para cambiar tu avatar</p>
+          <p>Clica en la imagen para cambiar tu avatar</p>
         </label>
         <input
           id="avatar"

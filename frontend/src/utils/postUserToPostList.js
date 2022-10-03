@@ -1,4 +1,5 @@
 export const postUserToPostList = (user) => {
+  console.log(user);
   const userInfo = user[0];
   const postList = user[1].map((userPost) => {
     let post = { ...userPost };

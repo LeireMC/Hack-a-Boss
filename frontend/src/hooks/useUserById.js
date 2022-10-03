@@ -24,6 +24,17 @@ const useUserById = (idUser) => {
     setUserPosts([...userPosts]);
   };
 
+  const removePost = (idPost) => {
+    const postIndex = userPosts[1].findIndex((post) => {
+      return post.id === idPost;
+    });
+
+    console.log({ idPost, postIndex });
+
+    userPosts[1].splice(postIndex, 1);
+    setUserPosts([...userPosts]);
+  };
+
   useEffect(() => {
     const loadPosts = async () => {
       try {
@@ -57,6 +68,7 @@ const useUserById = (idUser) => {
     setUserPosts,
     loading,
     addComment,
+    removePost,
   };
 };
 

@@ -2,14 +2,11 @@ const getDB = require('./getDB');
 const bcrypt = require('bcrypt');
 
 async function main() {
-    // Crear la variable que albergará la conexion con la base de datos
     let connection;
 
     try {
-        // Abrir una conexion con la base de datos
         connection = await getDB();
 
-        // Eliminar las tablas de la base de datos si existen
         console.log('Eliminando tablas...');
 
         await connection.query('DROP TABLE IF EXISTS comment');
@@ -22,7 +19,6 @@ async function main() {
 
         console.log('Tablas eliminadas!');
 
-        // Crear las tablas de la base de datos
         console.log('Creando tablas...');
 
         await connection.query(`
@@ -236,15 +232,10 @@ async function main() {
     } catch (error) {
         console.error(error.message);
     } finally {
-        // Si o si al final del try catch, ejecuta el codigo dentro del finally
-
-        // Siempre al final cerraremos la conexion con la base de datos
         if (connection) connection.release();
 
-        // Finalizamos la ejecucion del script
         process.exit();
     }
 }
 
-// Ejecutamos la funcion
 main();

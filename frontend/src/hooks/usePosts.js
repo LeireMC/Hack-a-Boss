@@ -47,7 +47,6 @@ const usePosts = () => {
     posts,
     setPosts,
     loading,
-
     addComment,
   };
 };

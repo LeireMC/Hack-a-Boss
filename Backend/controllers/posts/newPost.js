@@ -8,10 +8,8 @@ const {
 
 const newPost = async (req, res, next) => {
     try {
-        //Validar los datos recibidos por el body
         await validate(newPostSchema, req.body);
 
-        //Recuperamos los datos del body de la request
         const { authorComment, hashtag } = req.body;
 
         if (hashtag && hashtag.split(',').length > 10) {
@@ -25,14 +23,11 @@ const newPost = async (req, res, next) => {
         if (req.files.post_photo.length > 5) {
             throw generateError('No puedes subir más de 5 fotografías', 400);
         }
-        //Recuperamos el id del usuario
 
         const idUser = req.userAuth.id;
 
-        //Si nos indica el comentario, insertamos los datos en la base de datos y recuperamos el id del post
         const postId = await createPost(authorComment, hashtag, idUser);
 
-        //Añadimos en una variable los datos de las fotos obtenidos de la request
         let postPhotos;
 
         if (Array.isArray(req.files.post_photo)) {
@@ -41,10 +36,7 @@ const newPost = async (req, res, next) => {
             postPhotos = [req.files.post_photo];
         }
 
-        //Renombramos y guardamos las fotos en el servidor y las añadimos a la BBDD
         const photosNames = await insertPhoto(postPhotos, postId);
-
-        //Añadimos el valor false a la tabla like
 
         await insertLike(postId, idUser);
 

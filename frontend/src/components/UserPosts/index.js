@@ -4,7 +4,7 @@ import { postUserToPostList } from "../../utils/postUserToPostList";
 import { useState, useEffect } from "react";
 import AlertIcon from "../AlertIcon";
 
-const UserPosts = ({ userPosts, addComment }) => {
+const UserPosts = ({ userPosts, addComment, removePost }) => {
   const [profilePosts, setProfilePosts] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,11 @@ const UserPosts = ({ userPosts, addComment }) => {
     <section>
       {profilePosts.length > 0 ? (
         <section className="postListContainer">
-          <PostsList posts={profilePosts} addComment={addComment} />
+          <PostsList
+            posts={profilePosts}
+            addComment={addComment}
+            removePost={removePost}
+          />
         </section>
       ) : (
         <section className="container, post">

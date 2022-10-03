@@ -1,4 +1,3 @@
-const { token } = require('morgan');
 const getDB = require('../../db/getDB');
 const { generateError } = require('../../helpers');
 const { likesCounter } = require('../../repositories/likes-repositories');
@@ -16,7 +15,6 @@ const userProfile = async (req, res, next) => {
 
         const { idUser } = req.params;
 
-        //Recibir los query params para filtrar los post que se quieren monstrar
         const { search } = req.query;
 
         let user;
@@ -46,10 +44,8 @@ const userProfile = async (req, res, next) => {
             );
         }
 
-        //Realizar consulta a la Base de Datos para recuperar los post
         let userPosts;
 
-        //si existe 'search', la consulta se hará añadiendo la búsqueda
         if (search) {
             [userPosts] = await connection.query(
                 `SELECT id, authorComment, hashtag FROM post
@@ -65,10 +61,8 @@ const userProfile = async (req, res, next) => {
             );
         }
 
-        //Array que devolverá la respuesta
         const postsInfo = [];
 
-        //Cada post tiene sus imagenes y comentarios-> recorrer con un bucle los post recibidos y buscar sus fotos y comentarios
         for (let i = 0; i < userPosts.length; i++) {
             const photos = await postPhotos(userPosts[i].id);
 
@@ -76,13 +70,10 @@ const userProfile = async (req, res, next) => {
 
             const likes = await likesCounter(userPosts[i].id);
 
-            //añadimos los datos recuperados al array que devolverá la respuesta
             postsInfo.push({ ...userPosts[i], photos, comments, likes });
         }
 
         user.push(postsInfo);
-
-        //Respuesta con la lista de post y sus respectivos comentarios y fotos
 
         res.send({
             status: 'ok',

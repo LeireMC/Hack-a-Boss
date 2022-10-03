@@ -1,5 +1,3 @@
-import "./styles.css";
-
 import { Link } from "react-router-dom";
 import NewUserForm from "../../components/RegisterForm";
 import logoHackaGram from "../../assets/images/logo.png";

@@ -16,8 +16,14 @@ const ProfilePage = () => {
 
   const loggedUserInfo = loggedUser[0];
 
-  const { searchParams, setSearchParams, userPosts, addComment, loading } =
-    useUserById(idUser);
+  const {
+    searchParams,
+    setSearchParams,
+    userPosts,
+    addComment,
+    removePost,
+    loading,
+  } = useUserById(idUser);
 
   const navigate = useNavigate();
 
@@ -38,7 +44,11 @@ const ProfilePage = () => {
                 />
               </section>
               <section>
-                <UserPosts userPosts={userPosts} addComment={addComment} />
+                <UserPosts
+                  userPosts={userPosts}
+                  addComment={addComment}
+                  removePost={removePost}
+                />
               </section>
             </>
           )}
@@ -52,7 +62,11 @@ const ProfilePage = () => {
                 />
               </section>
               <section>
-                <UserPosts userPosts={userPosts} addComment={addComment} />
+                <UserPosts
+                  userPosts={userPosts}
+                  addComment={addComment}
+                  removePost={removePost}
+                />
               </section>
             </>
           )}

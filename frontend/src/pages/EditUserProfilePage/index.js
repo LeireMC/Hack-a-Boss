@@ -1,4 +1,3 @@
-import "./styles.css";
 import logoHackAGram from "../../assets/images/logo.png";
 import EditProfileForm from "../../components/EditProfileForm";
 import { useTokenContext } from "../../Contexts/TokenContext";
