@@ -151,7 +151,7 @@ const NewPostForm = ({ loggedUser, token }) => {
                     onChange={handleAddImages}
                   />
                   <label className="button" htmlFor="image">
-                    Selecciona hasta {maxImages} imagenes más
+                    Selecciona hasta {maxImages} imágenes más
                   </label>
                 </>
               ) : null}

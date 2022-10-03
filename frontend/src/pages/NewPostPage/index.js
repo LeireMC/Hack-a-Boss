@@ -1,5 +1,5 @@
 import { Navigate, Link } from "react-router-dom";
-import NewPostForm from "../../components/NewPostForm/NewPostForm";
+import NewPostForm from "../../components/NewPostForm";
 import Footer from "../../components/Footer";
 import { useTokenContext } from "../../Contexts/TokenContext";
 
