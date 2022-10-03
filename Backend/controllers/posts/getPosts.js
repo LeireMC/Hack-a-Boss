@@ -15,29 +15,22 @@ const getPosts = async (req, res, next) => {
         const token = req.headers.authorization;
 
         //Recibir los query params para filtrar los post que se quieren monstrar
-        const { search, direction } = req.query;
-
-        //Array de opciones válidas para la dirección en la que se ordenan los campos
-        const validDirectionOptions = ['DESC', 'ASC'];
-
-        const orderDirection = validDirectionOptions.includes(direction)
-            ? direction
-            : 'DESC';
+        const { search } = req.query;
 
         //Realizar consulta a la Base de Datos para recuperar los post
         let posts;
         if (!token) {
             if (search) {
-                posts = await getPublicPostsBySearch(orderDirection, search);
+                posts = await getPublicPostsBySearch(search);
             } else {
-                posts = await getPublicPostsByOrderDirection(orderDirection);
+                posts = await getPublicPostsByOrderDirection();
             }
         } else {
             //si existe 'search', la consulta se hará añadiendo la bíusqueda
             if (search) {
-                posts = await getPostsBySearch(orderDirection, search);
+                posts = await getPostsBySearch(search);
             } else {
-                posts = await getPostsByOrderDirection(orderDirection);
+                posts = await getPostsByOrderDirection();
             }
         }
 

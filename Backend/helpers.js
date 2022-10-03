@@ -7,7 +7,6 @@ const uuid = require('uuid');
 // Creamos la ruta absoluta a la carpeta de avatares
 const avatarDir = path.join(__dirname, 'static/avatar');
 
-
 //Creamos la ruta absoluta a la carpeta de post
 const postDir = path.join(__dirname, 'static/post');
 
@@ -46,7 +45,6 @@ async function deletePhoto(photoName, type) {
         );
     }
 }
-
 
 //Función para guardar imágenes
 async function savePhoto(imagen, type) {

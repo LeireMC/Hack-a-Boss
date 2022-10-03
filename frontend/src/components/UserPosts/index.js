@@ -20,7 +20,7 @@ const UserPosts = ({ userPosts, addComment }) => {
       ) : (
         <section className="container, post">
           <AlertIcon />
-          <p>Este usuario aún no ha subido post</p>
+          <p>No hay post</p>
         </section>
       )}
     </section>

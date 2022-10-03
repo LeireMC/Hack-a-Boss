@@ -30,7 +30,6 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
   const [newLastname, setNewLastname] = useState("");
   const [newAvatarPreview, setNewAvatarPreview] = useState("");
 
-  console.log(newPrivacy);
   const newAvatarRef = useRef();
 
   return (
@@ -255,7 +254,7 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
           </section>
         </section>
 
-        <button className="formButton">Actualizar perfil</button>
+        <button className="principal">Actualizar perfil</button>
       </form>
     </section>
   );

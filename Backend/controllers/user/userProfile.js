@@ -17,14 +17,7 @@ const userProfile = async (req, res, next) => {
         const { idUser } = req.params;
 
         //Recibir los query params para filtrar los post que se quieren monstrar
-        const { search, direction } = req.query;
-
-        //Array de opciones válidas para la dirección en la que se ordenan los campos
-        const validDirectionOptions = ['DESC', 'ASC'];
-
-        const orderDirection = validDirectionOptions.includes(direction)
-            ? direction
-            : 'DESC';
+        const { search } = req.query;
 
         let user;
         if (!token) {
@@ -45,7 +38,7 @@ const userProfile = async (req, res, next) => {
                 [idUser]
             );
         }
-        console.log(user);
+
         if (user.length === 0) {
             throw generateError(
                 'No existe el usuario que estás buscando.',
@@ -56,11 +49,11 @@ const userProfile = async (req, res, next) => {
         //Realizar consulta a la Base de Datos para recuperar los post
         let userPosts;
 
-        //si existe 'search', la consulta se hará añadiendo la bíusqueda
+        //si existe 'search', la consulta se hará añadiendo la búsqueda
         if (search) {
             [userPosts] = await connection.query(
                 `SELECT id, authorComment, hashtag FROM post
-                    WHERE idUser = ? AND authorComment LIKE ? OR hashtag LIKE ?
+                    WHERE (idUser = ?) AND (authorComment LIKE ? OR hashtag LIKE ?)
                     ORDER BY createdAt DESC`,
                 [idUser, `%${search}%`, `%${search}%`]
             );

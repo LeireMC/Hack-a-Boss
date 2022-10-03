@@ -53,7 +53,6 @@ const PostModal = ({
           );
 
           if (!postIsFavoritedByUser) {
-
             setIsFavorite(false);
           }
 
@@ -201,7 +200,7 @@ const PostModal = ({
                   }}
                   required
                 ></textarea>
-                <button className="commentButton">Comentar</button>
+                <button className="principal">Comentar</button>
               </form>
             )}
           </section>

@@ -1,12 +1,21 @@
+import "./styles.css";
+
+import { Link } from "react-router-dom";
 import NewUserForm from "../../components/RegisterForm";
 import logoHackaGram from "../../assets/images/logo.png";
-import "./styles.css";
 
 const RegisterPage = () => {
   return (
     <main className="registerUserMain">
       <section className="registerUserFormContainer">
-        <img src={logoHackaGram} alt="Logo de Hack a Gram" />
+        <Link to={`/`}>
+          <img
+            className="header-logo "
+            src={logoHackaGram}
+            alt="Logo Hack a Gram"
+          />
+        </Link>
+
         <h1>¡Bienvenid@!</h1>
         <p>
           Completa tu registro para formar parte de la comunidad Hack a Gram

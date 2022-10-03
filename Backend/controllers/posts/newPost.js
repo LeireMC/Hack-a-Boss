@@ -8,7 +8,6 @@ const {
 
 const newPost = async (req, res, next) => {
     try {
-        console.log(req.body);
         //Validar los datos recibidos por el body
         await validate(newPostSchema, req.body);
 
@@ -18,8 +17,6 @@ const newPost = async (req, res, next) => {
         if (hashtag && hashtag.split(',').length > 10) {
             throw generateError('No puedes incluir más de 10 hashtags', 400);
         }
-
-        console.log(req.files);
 
         if (!(req.files && req.files.post_photo)) {
             throw generateError('Tienes que subir al menos una imagen', 400);

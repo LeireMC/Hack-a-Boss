@@ -11,3 +11,8 @@
   align-items: center;
   color: white;
 }
+
+.post p {
+  margin-top: 2rem;
+  text-transform: uppercase;
+}

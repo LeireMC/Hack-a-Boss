@@ -65,7 +65,7 @@ async function insertLike(postId, userId) {
 }
 
 //Función que devuelve los post en base a una búsqueda
-async function getPostsBySearch(orderDirection, search) {
+async function getPostsBySearch(search) {
     let connection;
     try {
         connection = await getDB();
@@ -75,7 +75,7 @@ async function getPostsBySearch(orderDirection, search) {
         SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
         FROM post INNER JOIN user ON post.idUser = user.id
         WHERE authorComment LIKE ? OR hashtag LIKE ?
-        ORDER BY post.createdAt ${orderDirection} `,
+        ORDER BY post.createdAt DESC `,
             [`%${search}%`, `%${search}%`]
         );
 
@@ -86,7 +86,7 @@ async function getPostsBySearch(orderDirection, search) {
 }
 
 //Función que devuelve todos los post
-async function getPostsByOrderDirection(orderDirection) {
+async function getPostsByOrderDirection() {
     let connection;
     try {
         connection = await getDB();
@@ -95,7 +95,7 @@ async function getPostsByOrderDirection(orderDirection) {
             `
             SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
             FROM post INNER JOIN user ON post.idUser = user.id
-            ORDER BY post.createdAt ${orderDirection}`
+            ORDER BY post.createdAt DESC`
         );
 
         return posts;
@@ -105,7 +105,7 @@ async function getPostsByOrderDirection(orderDirection) {
 }
 
 //Función que devuelve los post de usuarios publicos en base a una búsqueda
-async function getPublicPostsBySearch(orderDirection, search) {
+async function getPublicPostsBySearch(search) {
     let connection;
     try {
         connection = await getDB();
@@ -115,7 +115,7 @@ async function getPublicPostsBySearch(orderDirection, search) {
         SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
         FROM post INNER JOIN user ON post.idUser = user.id
         WHERE user.privacy = ? AND authorComment LIKE ? OR hashtag LIKE ?
-        ORDER BY post.createdAt ${orderDirection}`,
+        ORDER BY post.createdAt DESC`,
             ['public', `%${search}%`, `%${search}%`]
         );
 
@@ -126,7 +126,7 @@ async function getPublicPostsBySearch(orderDirection, search) {
 }
 
 //Función que devuelve los post publicos
-async function getPublicPostsByOrderDirection(orderDirection) {
+async function getPublicPostsByOrderDirection() {
     let connection;
     try {
         connection = await getDB();
@@ -135,7 +135,7 @@ async function getPublicPostsByOrderDirection(orderDirection) {
             `
             SELECT post.id AS idPost, post.authorComment, post.hashtag, user.id AS idUser, user.username, user.name, user.lastname, user.avatar, user.privacy
             FROM post INNER JOIN user ON post.idUser = user.id WHERE user.privacy = ?
-            ORDER BY post.createdAt ${orderDirection}`,
+            ORDER BY post.createdAt DESC`,
             ['public']
         );
 

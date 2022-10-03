@@ -25,7 +25,6 @@ const NewPostForm = ({ loggedUser, token }) => {
       return;
     }
 
-    console.log(fileList);
     setImages([...images, ...fileList]);
   };
 
@@ -152,7 +151,7 @@ const NewPostForm = ({ loggedUser, token }) => {
                     onChange={handleAddImages}
                   />
                   <label className="button" htmlFor="image">
-                    Selecciona hasta {maxImages} imagenes más
+                    Selecciona hasta {maxImages} imágenes más
                   </label>
                 </>
               ) : null}
@@ -182,7 +181,7 @@ const NewPostForm = ({ loggedUser, token }) => {
               />
             </li>
 
-            <button className="button">Publicar Post</button>
+            <button className="principal">Publicar Post</button>
           </ul>
         </section>
       </form>

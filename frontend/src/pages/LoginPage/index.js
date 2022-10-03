@@ -6,7 +6,7 @@ const LoginPage = () => {
   return (
     <main className="loginFormMain">
       <section className="loginFormContainer">
-        <img class="logo" src={logoHackaGram} alt="Logo de Hack a Gram" />
+        <img className="logo" src={logoHackaGram} alt="Logo de Hack a Gram" />
         <LoginForm />
         <p>¿No tienes cuenta en Hack a Gram?</p>
         <button type="button" className="secundaryButton">

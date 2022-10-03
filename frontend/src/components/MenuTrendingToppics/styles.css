@@ -4,11 +4,11 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin: 1rem 0;
+  margin-top: 2rem;
 }
 
 .menuTrendingToppic button {
-  background-color: #335c67;
+  background-color: var(--blue-color);
   color: white;
   height: 3.5rem;
   border-radius: 5px;

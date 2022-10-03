@@ -12,24 +12,6 @@ figure.avatarImage {
   height: 65%;
 }
 
-button.profileButton {
-  background-color: #9e2a2b;
-  border-radius: 12px;
-  transition-duration: 0.5s;
-  cursor: pointer;
-  width: fit-content;
-  padding: 0 1rem;
-  height: 2.5rem;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-button.profileButton:hover {
-  color: white;
-}
 img.userProfileAvatar {
   border-radius: 50%;
 }
@@ -41,14 +23,13 @@ section.userProfileInfo {
 }
 
 section.userProfileInfo h3.name {
-  color: #335c67;
+  color: var(--blue-color);
   font-size: 1.5rem;
-  /*   margin-bottom: 0.2rem; */
   text-transform: uppercase;
 }
 
 section.userProfileInfo h4 {
-  color: #335c67;
+  color: var(--blue-color);
   font-size: 1.2rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
@@ -69,7 +50,7 @@ section.userProfileInfo p {
 }
 
 section.userProfileInfo a {
-  color: #335c67;
+  color: var(--blue-color);
   font-size: 1.1rem;
   font-weight: 400;
   margin-bottom: 0.5rem;

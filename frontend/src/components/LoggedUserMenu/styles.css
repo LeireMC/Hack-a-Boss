@@ -35,6 +35,6 @@
 }
 
 .header-li:hover {
-  background-color: #9e2a2b;
+  background-color: var(--red-color);
   color: white;
 }

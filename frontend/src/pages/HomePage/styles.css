@@ -1,11 +1,3 @@
 .postListContainer {
   margin-bottom: 1rem;
 }
-
-.container > a {
-  text-transform: uppercase;
-  color: #9e2a2b;
-  text-decoration: underline;
-  font-weight: bold;
-  margin-top: 0.5rem;
-}

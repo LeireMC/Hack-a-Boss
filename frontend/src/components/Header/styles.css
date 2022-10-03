@@ -1,7 +1,7 @@
 .header {
   background-color: white;
-  color: #9e2a2b;
-  border-bottom: 2px solid #9e2a2b;
+  color: var(--red-color);
+  border-bottom: 2px solid var(--red-color);
   width: 100%;
 
   display: flex;
@@ -28,5 +28,5 @@ header > a > img {
 .header-button > svg {
   width: 1.7rem;
   height: 1.7rem;
-  fill: #9e2a2b;
+  fill: var(--red-color);
 }
