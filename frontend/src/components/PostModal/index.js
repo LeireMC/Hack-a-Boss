@@ -84,7 +84,6 @@ const PostModal = ({
 
   const loggedUserInfo = loggedUser[0];
 
-  console.log(loggedUserInfo.id);
   return (
     <>
       <button className="closeButton" onClick={() => setOpenModal(false)}>

@@ -29,8 +29,6 @@ const useUserById = (idUser) => {
       return post.id === idPost;
     });
 
-    console.log({ idPost, postIndex });
-
     userPosts[1].splice(postIndex, 1);
     setUserPosts([...userPosts]);
   };
