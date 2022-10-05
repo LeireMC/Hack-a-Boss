@@ -8,9 +8,30 @@ const userNew = async (req, res, next) => {
         connection = await getDB();
         const { name, username, email, password } = req.body;
 
-        if (!name || !username || !email || !password) {
+        if (!name) {
             throw generateError(
-                '¿Seguro que has puesto todos los datos necesarios? Hacen falta campos obligatorios',
+                '¡Ups! Has olvidado escribir tu nombre en el formulario.',
+                400
+            );
+        }
+
+        if (!username) {
+            throw generateError(
+                '¡Ups! Has olvidado escribir un nombre de usuario en el formulario.',
+                400
+            );
+        }
+
+        if (!email) {
+            throw generateError(
+                '¡Ups! Has olvidado escribir tu mail en el formulario.',
+                400
+            );
+        }
+
+        if (!password) {
+            throw generateError(
+                '¡Ups! Has olvidado escribir una contraseña en el formulario.',
                 400
             );
         }
