@@ -90,7 +90,9 @@ export const getUserByIdService = async (
   const body = await res.json();
 
   if (!res.ok) {
-    if (res.status === 404) {
+    if (res.status === 403) {
+      navigate("/error");
+    } else if (res.status === 404) {
       navigate("/notfound");
     }
 
