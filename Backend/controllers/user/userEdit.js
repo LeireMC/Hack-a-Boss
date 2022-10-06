@@ -45,10 +45,12 @@ const userEdit = async (req, res, next) => {
         );
 
         let userUrl;
-        if (!(url.includes('https://') || url.includes('http://'))) {
-            userUrl = 'http://' + url;
-        } else {
-            userUrl = url;
+        if (url) {
+            if (!(url.includes('https://') || url.includes('http://'))) {
+                userUrl = 'http://' + url;
+            } else {
+                userUrl = url;
+            }
         }
 
         let hashedPassword = null;
