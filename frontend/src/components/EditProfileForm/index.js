@@ -131,11 +131,12 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
             )}
           </figure>
 
-          <p>Clica en la imagen para cambiar tu avatar</p>
+          <p>Haz click en la imagen para cambiar tu avatar</p>
         </label>
         <input
           id="avatar"
           type="file"
+          accept="image/*"
           hidden
           ref={newAvatarRef}
           onChange={() => {
@@ -217,6 +218,7 @@ const EditProfileForm = ({ token, loggedUser, setLoggedUser }) => {
 
         <label htmlFor="newPass">Password nuevo:</label>
         <input
+          type="password"
           id="newPass"
           value={newPass}
           onChange={(event) => {
