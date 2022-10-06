@@ -44,6 +44,13 @@ const userEdit = async (req, res, next) => {
             [idUser]
         );
 
+        let userUrl;
+        if (!(url.includes('https://') || url.includes('http://'))) {
+            userUrl = 'http://' + url;
+        } else {
+            userUrl = url;
+        }
+
         let hashedPassword = null;
 
         if (newPass && !oldPass) {
@@ -109,7 +116,7 @@ const userEdit = async (req, res, next) => {
                 name || user.name,
                 lastname || user.lastname,
                 bio || user.bio,
-                url || user.url,
+                userUrl || user.url,
                 privacy || user.privacy,
                 avatarName || user.avatar,
                 hashedPassword || user.password,
