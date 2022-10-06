@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import logoHackAGram from "../../assets/images/logo.png";
 import AlertIcon from "../../components/AlertIcon";
 
-const ErrorPage = () => {
+const ForbiddenPage = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -50,4 +50,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default ForbiddenPage;

@@ -91,7 +91,7 @@ export const getUserByIdService = async (
 
   if (!res.ok) {
     if (res.status === 403) {
-      navigate("/error");
+      navigate("/forbidden");
     } else if (res.status === 404) {
       navigate("/notfound");
     }

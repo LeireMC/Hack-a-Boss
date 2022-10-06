@@ -14,7 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import FollowingPage from "./pages/FollowingPage";
 import { CustomTokenContextProvider } from "./Contexts/TokenContext";
 import NotFoundPage from "./pages/NotFoundPage";
-import ErrorPage from "./pages/ErrorPage";
+import ForbiddenPage from "./pages/ForbiddenPage";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
           <Route path="/editUserProfile" element={<EditUserProfilePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/following" element={<FollowingPage />} />
-          <Route path="/error" element={<ErrorPage />} />
+          <Route path="/forbidden" element={<ForbiddenPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <ToastContainer position="bottom-center" newestOnTop={true} />
