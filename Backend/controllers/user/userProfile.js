@@ -20,14 +20,19 @@ const userProfile = async (req, res, next) => {
         let user;
         if (!token) {
             [user] = await connection.query(
-                `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ? AND privacy = 'public'`,
+                `SELECT id, name, username, email, lastname, avatar, bio, privacy, url FROM user WHERE id = ?`,
                 [idUser]
             );
 
             if (user.length === 0) {
                 throw generateError(
-                    'No existe el usuario que estás buscando o no tienes permisos para ver su perfil.',
+                    'No existe el perfil que estas buscando.',
                     404
+                );
+            } else if (user[0].privacy === 'private') {
+                throw generateError(
+                    'No tienes permisos para ver este perfil',
+                    403
                 );
             }
         } else {

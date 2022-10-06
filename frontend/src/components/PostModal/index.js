@@ -86,11 +86,11 @@ const PostModal = ({
 
   return (
     <>
-      <button className="closeButton" onClick={() => setOpenModal(false)}>
-        <CloseButton />
-      </button>
       <section className="modalBackground">
         <article className="modalContainer">
+          <button className="closeButton" onClick={() => setOpenModal(false)}>
+            <CloseButton />
+          </button>
           <section className="postSlider">
             <PhotoSlider
               photos={photos}

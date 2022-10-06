@@ -114,8 +114,8 @@ async function main() {
 
         await connection.query(
             `INSERT INTO user (name, username, email, password, lastname, avatar, bio, url, privacy, createdAt)
-      VALUES ("Pablo", "Pablito", "pablo@gmail.com", ?, "López", null, "Me encanta dibujar", "www.domestika.com", "public", "2022-08-10" ),
-      ("Ana Belén", "Anita", "anabelen@gmail.com", ?, "Martínez", null, "Soy maestra de yoga", "www.yogawithadriene.com", "public", "2022-08-11" ),
+      VALUES ("Pablo", "Pablito", "pablo@gmail.com", ?, "López", null, "Me encanta dibujar", "http://www.domestika.com", "public", "2022-08-10" ),
+      ("Ana Belén", "Anita", "anabelen@gmail.com", ?, "Martínez", null, "Soy maestra de yoga", "http://www.yogawithadriene.com", "public", "2022-08-11" ),
       ("Hans", "Hans33", "hans@gmail.com", ?, "Pullman", null, "Amo viajar", null, "public", "2022-08-16" ),
       ("Arturo", "Arturito", "arturo@gmail.com", ?, "Fernández", null, "Mi lugar está en la cocina", null, "private", "2022-08-10" ),
       ("Lucía", "luchi", "lucia@gmail.com", ?, "Pérez", null, "Las plantas son vida.", null, "private", "2022-08-22" ),

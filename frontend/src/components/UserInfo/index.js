@@ -105,7 +105,9 @@ const UserInfo = ({ userInfo, token, loggedUserInfo }) => {
         {url !== null && (
           <>
             <h4 className="userWebTittle">Web</h4>
-            <a className="userUrl" href={url}>
+
+            <a className="userUrl" href={url} target="_blank" rel="noreferrer">
+
               {`${url}`}
             </a>
           </>

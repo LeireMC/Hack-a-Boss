@@ -24,9 +24,9 @@
 
 .closeButton {
   align-self: flex-start;
-  position: fixed;
-  top: 3rem;
-  right: 3rem;
+  position: relative;
+  /*   top: 3rem; */
+  left: 97%;
 }
 
 .postSlider {
